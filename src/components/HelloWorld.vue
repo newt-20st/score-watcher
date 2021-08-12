@@ -3,6 +3,9 @@
     <div style="display: flex">
       <button @click="open">ファイルを開く</button>
       <button @click="save">ファイルを保存</button>
+      <router-link :to="{ name: 'Control' }" target="_blank">
+        LINK TO OTHER WINDOW
+      </router-link>
     </div>
     <div style="width: 100%; flex-grow: 1">
       <textarea
