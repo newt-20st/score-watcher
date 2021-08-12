@@ -69,7 +69,7 @@ export default {
     },
     minus(e) {
       store.commit("minus", e);
-      this.log.unshift({ type: "minus", position: e });
+      this.log.unshift({ type: "minus", position: e, timestamp: new Date() });
     },
     getHMS(e) {
       return e.getHours() + ":" + e.getMinutes() + ":" + e.getSeconds() + " ";
