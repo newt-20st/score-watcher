@@ -1,9 +1,12 @@
 <template>
-  <component :is="change"></component>
+  <transition mode="out-in">
+    <component :is="change"></component>
+  </transition>
 </template>
 
 <script>
 import error from "@/components/config/error.vue";
+import json from "@/components/config/json.vue";
 import nomx from "@/components/config/nomx.vue";
 export default {
   name: "Config",
@@ -14,6 +17,7 @@ export default {
   },
   components: {
     error,
+    json,
     nomx,
   },
   created() {

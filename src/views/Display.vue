@@ -1,12 +1,14 @@
 <template>
-  <component :is="change"></component>
+  <transition mode="out-in">
+    <component :is="change"></component>
+  </transition>
 </template>
 
 <script>
 import error from "@/components/display/error.vue";
 import nomx from "@/components/display/nomx.vue";
 export default {
-  name: "Control",
+  name: "Display",
   data() {
     return {
       change: "base",
@@ -22,5 +24,5 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
 </style>

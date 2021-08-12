@@ -25,7 +25,7 @@
         誤答数：<input type="number" v-model="player.score.wrong" />
       </div>
     </div>
-    <router-link to="/control/?type=nomx"> コントロール画面を開く </router-link>
+    <router-link to="/display/?type=nomx"> コントロール画面を開く </router-link>
     <button @click="configExport()">設定ファイルをエクスポート</button>
     <p>{{ this.data }}</p>
   </div>

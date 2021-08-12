@@ -1,7 +1,7 @@
 <template>
   <div class="control">
     <h1>{{ data.config.correct }}o{{ data.config.wrong }}x</h1>
-    <router-link to="/setting?type=nomx">設定に戻る</router-link>
+    <router-link to="/config?type=nomx">設定に戻る</router-link>
     <button @click="undo()">undo</button>
     <div class="players">
       <div
@@ -132,7 +132,7 @@ export default {
       display: flex;
       div {
         cursor: pointer;
-        background-color: $color-primary;
+        background-color: $base-color;
       }
     }
   }

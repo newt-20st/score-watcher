@@ -3,6 +3,9 @@ import base from '../assets/json/default'
 
 const store = new createStore({
     state: {
+        common: {
+            header: true,
+        },
         config: {
             format: base
         }
