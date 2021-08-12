@@ -14,14 +14,26 @@ const store = new createStore({
         update(state, data) {
             state.config.format[data.type] = data
         },
-        plus(state, parameter) {
-            state.config.format[parameter.format].players[parameter.position].score.correct += 1;
+        correct(state, parameter) {
+            if (parameter.phase == "nomal") {
+                state.config.format[parameter.format].players[parameter.position].score.correct += 1;
+            } else if (parameter.phase == "undo") {
+                state.config.format[parameter.format].players[parameter.position].score.correct -= 1;
+            }
         },
-        minus(state, parameter) {
-            state.config.format[parameter.format].players[parameter.position].score.wrong += 1;
+        wrong(state, parameter) {
+            if (parameter.phase == "nomal") {
+                state.config.format[parameter.format].players[parameter.position].score.wrong += 1;
+            } else if (parameter.phase == "undo") {
+                state.config.format[parameter.format].players[parameter.position].score.wrong -= 1;
+            }
         },
         log(state, parameter) {
-            state.config.format[parameter.format].log.push(parameter);
+            if (parameter.phase == "nomal") {
+                state.config.format[parameter.format].log.unshift(parameter);
+            } else if (parameter.phase == "undo") {
+                state.config.format[parameter.format].log.shift();
+            }
         },
         loadConfig(state, data) {
             state.config.format[data.type] = data

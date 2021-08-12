@@ -2,6 +2,7 @@
   <div class="control">
     <h1>{{ data.config.correct }}o{{ data.config.wrong }}x</h1>
     <router-link to="/setting?type=nomx">設定に戻る</router-link>
+    <button @click="undo()">undo</button>
     <div class="players">
       <div
         class="player"
@@ -41,14 +42,14 @@
         v-for="(eachLog, index) in data.log"
         :key="index"
       >
-        <div v-if="eachLog.type === 'plus'">
+        <div v-if="eachLog.type === 'correct'">
           {{
             getHMS(eachLog.timestamp) +
             data.players[eachLog.position].name +
             "さんが1点獲得しました。"
           }}
         </div>
-        <div v-if="eachLog.type === 'minus'">
+        <div v-if="eachLog.type === 'wrong'">
           {{
             getHMS(eachLog.timestamp) +
             data.players[eachLog.position].name +
@@ -72,25 +73,50 @@ export default {
   },
   methods: {
     plus(e) {
-      store.commit("plus", { format: "nomx", position: e });
+      store.commit("correct", { format: "nomx", phase: "nomal", position: e });
       store.commit("log", {
         format: "nomx",
-        type: "plus",
+        phase: "nomal",
+        type: "correct",
         position: e,
         timestamp: new Date(),
       });
     },
     minus(e) {
-      store.commit("minus", { format: "nomx", position: e });
+      store.commit("wrong", { format: "nomx", phase: "nomal", position: e });
       store.commit("log", {
         format: "nomx",
-        type: "minus",
+        phase: "nomal",
+        type: "wrong",
         position: e,
         timestamp: new Date(),
       });
     },
     getHMS(e) {
       return e.getHours() + ":" + e.getMinutes() + ":" + e.getSeconds() + " ";
+    },
+    undo() {
+      if (this.data.length > 0) {
+        const action = this.data.log[0];
+        if (action.type == "correct") {
+          store.commit("correct", {
+            format: "nomx",
+            phase: "undo",
+            position: action.position,
+          });
+        } else if (action.type == "wrong") {
+          store.commit("wrong", {
+            format: "nomx",
+            phase: "undo",
+            position: action.position,
+          });
+        }
+        store.commit("log", {
+          format: "nomx",
+          phase: "undo",
+          long: -1,
+        });
+      }
     },
   },
 };
