@@ -27,6 +27,8 @@ export default {
   name: "ConfigError",
   data: function () {
     return {
+      type: {},
+      config: {},
       players: [{ name: "", score: 0 }],
     };
   },

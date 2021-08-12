@@ -1,8 +1,13 @@
 <template>
   <div class="control">
-    <h1>7o3x</h1>
+    <h1>{{ data.config.correct }}o{{ data.config.wrong }}x</h1>
+    <router-link to="/setting?type=nomx">設定に戻る</router-link>
     <div class="players">
-      <div class="player" v-for="(player, index) in players" :key="player.name">
+      <div
+        class="player"
+        v-for="(player, index) in data.players"
+        :key="player.name"
+      >
         <div class="playerPosition">
           {{ index + 1 }}
         </div>
@@ -10,8 +15,16 @@
           {{ player.name }}
         </div>
         <div class="playerScore">
-          <div v-if="player.score >= 7">WIN</div>
-          <div v-if="player.score < 7">{{ player.score }}</div>
+          <div v-if="player.score.correct >= data.config.correct">WIN</div>
+          <div v-if="player.score.correct < data.config.correct">
+            {{ player.score.correct }}o
+          </div>
+        </div>
+        <div class="playerWrong">
+          <div v-if="player.score.wrong >= data.config.wrong">LOSE</div>
+          <div v-if="player.score.wrong < data.config.wrong">
+            {{ player.score.wrong }}x
+          </div>
         </div>
         <div class="playerControl">
           <div class="plus" @click="plus(index)">+</div>
@@ -23,20 +36,20 @@
       <div
         class="eachLog"
         :name="index"
-        v-for="(eachLog, index) in log"
+        v-for="(eachLog, index) in data.log"
         :key="index"
       >
         <div v-if="eachLog.type === 'plus'">
           {{
             getHMS(eachLog.timestamp) +
-            players[eachLog.position].name +
+            data.players[eachLog.position].name +
             "さんが1点獲得しました。"
           }}
         </div>
         <div v-if="eachLog.type === 'minus'">
           {{
             getHMS(eachLog.timestamp) +
-            players[eachLog.position].name +
+            data.players[eachLog.position].name +
             "さんが1点失点しました。"
           }}
         </div>
@@ -52,24 +65,33 @@ export default {
   props: {
     msg: String,
   },
-  computed: {
-    players() {
-      return this.$store.state.players;
-    },
-  },
   data: function () {
     return {
       log: [],
     };
   },
+  computed: {
+    data() {
+      return this.$store.state.config.format.nomx;
+    },
+  },
   methods: {
     plus(e) {
-      store.commit("plus", e);
-      this.log.unshift({ type: "plus", position: e, timestamp: new Date() });
+      store.commit("plus", e, "nomx");
+      store.commit(
+        "log",
+        { type: "plus", position: e, timestamp: new Date() },
+        "nomx"
+      );
     },
     minus(e) {
-      store.commit("minus", e);
+      store.commit("minus", e, "nomx");
       this.log.unshift({ type: "minus", position: e, timestamp: new Date() });
+      store.commit(
+        "log",
+        { type: "plus", position: e, timestamp: new Date() },
+        "nomx"
+      );
     },
     getHMS(e) {
       return e.getHours() + ":" + e.getMinutes() + ":" + e.getSeconds() + " ";
