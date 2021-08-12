@@ -4,4 +4,11 @@ module.exports = {
             nodeIntegration: true,
         },
     },
+    css: {
+        loaderOptions: {
+            sass: {
+                data: `@import "./src/assets/scss/setting.scss";`
+            }
+        }
+    }
 };
