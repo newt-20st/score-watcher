@@ -60,9 +60,6 @@
 import store from "../../store";
 export default {
   name: "nomx",
-  props: {
-    msg: String,
-  },
   data() {
     return { data: this.$store.state.config.format.nomx };
   },

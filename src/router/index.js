@@ -16,9 +16,9 @@ const routes = [
     name: 'Setting',
     component: () => import('../views/Setting.vue')
   }, {
-    path: '/control',
-    name: 'Control',
-    component: () => import('../views/Control.vue')
+    path: '/display',
+    name: 'Display',
+    component: () => import('../views/Display.vue')
   }
 ]
 
