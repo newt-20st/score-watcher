@@ -13,6 +13,7 @@
   },
   "main": "background.js",
   "dependencies": {
+    "axios": "^0.21.1",
     "core-js": "^3.6.5",
     "electron-store": "^8.0.0",
     "node-sass": "^4.14.1",

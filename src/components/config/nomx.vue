@@ -27,18 +27,21 @@
     </div>
     <router-link to="/control/?type=nomx"> コントロール画面を開く </router-link>
     <button @click="configExport()">設定ファイルをエクスポート</button>
-    <p>{{ this.$store.state.config.format.nomx }}</p>
+    <p>{{ this.data }}</p>
   </div>
 </template>
 
 <script>
 import store from "../../store";
 const dialog = require("electron").remote.dialog;
-const fs = require("fs");
+import fs from "fs";
 export default {
   name: "ConfigNomx",
   data() {
-    return { data: this.$store.state.config.format.nomx };
+    return {
+      data: this.$store.state.config.format.nomx,
+      base: {},
+    };
   },
   updated() {
     store.commit("update", this.data);
