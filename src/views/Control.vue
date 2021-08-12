@@ -3,8 +3,8 @@
 </template>
 
 <script>
-import error from "@/components/format/error.vue";
-import nomx from "@/components/format/nomx.vue";
+import error from "@/components/display/error.vue";
+import nomx from "@/components/display/nomx.vue";
 export default {
   name: "Control",
   data() {
