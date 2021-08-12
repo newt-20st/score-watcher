@@ -19,17 +19,20 @@ const store = new createStore({
         }
     },
     mutations: {
-        plus(state, parameter, type) {
-            state.config.format[type].players[parameter].score.correct += 1;
+        plus(state, parameter) {
+            state.config.format[parameter.format].players[parameter.position].score.correct += 1;
         },
-        minus(state, parameter, type) {
-            state.config.format[type].players[parameter].score.wrong += 1;
+        minus(state, parameter) {
+            state.config.format[parameter.format].players[parameter.position].score.wrong += 1;
         },
         update(state, parameter, type) {
             state.config.format[type] = parameter
         },
-        log(state, parameter, type) {
-            state.config.format[type].log.push(parameter);
+        log(state, parameter) {
+            state.config.format[parameter.format].log.push(parameter);
+        },
+        loadConfig(state, data) {
+            state.config.format[data.type] = data
         }
     }
 });

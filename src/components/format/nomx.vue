@@ -27,11 +27,13 @@
           </div>
         </div>
         <div class="playerControl">
+          {{ index }}
           <div class="plus" @click="plus(index)">+</div>
           <div class="minus" @click="minus(index)">-</div>
         </div>
       </div>
     </div>
+    {{ this.$store.state.config.format.nomx }}
     <div class="log">
       <div
         class="eachLog"
@@ -65,33 +67,27 @@ export default {
   props: {
     msg: String,
   },
-  data: function () {
-    return {
-      log: [],
-    };
-  },
-  computed: {
-    data() {
-      return this.$store.state.config.format.nomx;
-    },
+  data() {
+    return { data: this.$store.state.config.format.nomx };
   },
   methods: {
     plus(e) {
-      store.commit("plus", e, "nomx");
-      store.commit(
-        "log",
-        { type: "plus", position: e, timestamp: new Date() },
-        "nomx"
-      );
+      store.commit("plus", { format: "nomx", position: e });
+      store.commit("log", {
+        format: "nomx",
+        type: "plus",
+        position: e,
+        timestamp: new Date(),
+      });
     },
     minus(e) {
-      store.commit("minus", e, "nomx");
-      this.log.unshift({ type: "minus", position: e, timestamp: new Date() });
-      store.commit(
-        "log",
-        { type: "plus", position: e, timestamp: new Date() },
-        "nomx"
-      );
+      store.commit("minus", { format: "nomx", position: e });
+      store.commit("log", {
+        format: "nomx",
+        type: "minus",
+        position: e,
+        timestamp: new Date(),
+      });
     },
     getHMS(e) {
       return e.getHours() + ":" + e.getMinutes() + ":" + e.getSeconds() + " ";

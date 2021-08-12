@@ -26,15 +26,18 @@
       </div>
     </div>
     <router-link to="/control/?type=nomx"> コントロール画面を開く </router-link>
+    <button @click="configExport()">設定ファイルをエクスポート</button>
     <p>{{ this.$store.state.config.format.nomx }}</p>
   </div>
 </template>
 
 <script>
 import store from "../../store";
+const dialog = require("electron").remote.dialog;
+const fs = require("fs");
 export default {
   name: "ConfigNomx",
-  data: function () {
+  data() {
     return { data: this.$store.state.config.format.nomx };
   },
   updated() {
@@ -49,6 +52,21 @@ export default {
         });
       } else if (this.data.players.length > value) {
         this.data.players.pop();
+      }
+    },
+    configExport() {
+      const jsonData = this.$store.state.config.format.nomx;
+      jsonData.exportDate = new Date();
+      const options = {
+        title: "設定ファイルを保存",
+        filters: [{ name: "Documents", extensions: ["json"] }],
+      };
+      const result = dialog.showSaveDialogSync(options);
+      if (result) {
+        fs.writeFileSync(
+          result,
+          JSON.stringify(this.$store.state.config.format.nomx, null, "\t")
+        );
       }
     },
   },
