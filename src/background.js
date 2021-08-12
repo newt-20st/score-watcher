@@ -3,6 +3,7 @@
 import { app, protocol, BrowserWindow } from 'electron'
 import { createProtocol } from 'vue-cli-plugin-electron-builder/lib'
 import installExtension, { VUEJS3_DEVTOOLS } from 'electron-devtools-installer'
+import Store from 'electron-store'
 const isDevelopment = process.env.NODE_ENV !== 'production'
 
 // Scheme must be registered before the app is ready
@@ -11,10 +12,13 @@ protocol.registerSchemesAsPrivileged([
 ])
 
 async function createWindow() {
+  const store = new Store();
   // Create the browser window.
   const win = new BrowserWindow({
-    width: 800,
-    height: 600,
+    x: store.get("window.x"),
+    y: store.get("window.y"),
+    width: store.get("window.width", 800),
+    height: store.get("window.height", 600),
     webPreferences: {
       enableRemoteModule: true,
       // Use pluginOptions.nodeIntegration, leave this alone
@@ -33,6 +37,13 @@ async function createWindow() {
     // Load the index.html when not in development
     win.loadURL('app://./index.html')
   }
+  win.on("close", () => {
+    const store = new Store();
+    store.set("window.x", win.getPosition()[0]);
+    store.set("window.y", win.getPosition()[1]);
+    store.set("window.height", win.getSize()[1]);
+    store.set("window.width", win.getSize()[0]);
+  });
 }
 
 // Quit when all windows are closed.
