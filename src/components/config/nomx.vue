@@ -59,7 +59,8 @@ export default {
     },
     configExport() {
       const jsonData = this.$store.state.config.format.nomx;
-      jsonData.exportDate = new Date();
+      jsonData.version = 0;
+      jsonData.exportTimestamp = new Date();
       const options = {
         title: "設定ファイルを保存",
         filters: [{ name: "Documents", extensions: ["json"] }],

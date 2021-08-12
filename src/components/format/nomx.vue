@@ -15,22 +15,17 @@
         <div class="playerName">
           {{ player.name }}
         </div>
-        <div class="playerScore">
+        <div class="playerCorrect" @click="correct(index)">
           <div v-if="player.score.correct >= data.config.correct">WIN</div>
           <div v-if="player.score.correct < data.config.correct">
             {{ player.score.correct }}o
           </div>
         </div>
-        <div class="playerWrong">
+        <div class="playerWrong" @click="wrong(index)">
           <div v-if="player.score.wrong >= data.config.wrong">LOSE</div>
           <div v-if="player.score.wrong < data.config.wrong">
             {{ player.score.wrong }}x
           </div>
-        </div>
-        <div class="playerControl">
-          {{ index }}
-          <div class="plus" @click="plus(index)">+</div>
-          <div class="minus" @click="minus(index)">-</div>
         </div>
       </div>
     </div>
@@ -72,7 +67,7 @@ export default {
     return { data: this.$store.state.config.format.nomx };
   },
   methods: {
-    plus(e) {
+    correct(e) {
       store.commit("correct", { format: "nomx", phase: "nomal", position: e });
       store.commit("log", {
         format: "nomx",
@@ -82,7 +77,7 @@ export default {
         timestamp: new Date(),
       });
     },
-    minus(e) {
+    wrong(e) {
       store.commit("wrong", { format: "nomx", phase: "nomal", position: e });
       store.commit("log", {
         format: "nomx",
@@ -96,7 +91,7 @@ export default {
       return e.getHours() + ":" + e.getMinutes() + ":" + e.getSeconds() + " ";
     },
     undo() {
-      if (this.data.length > 0) {
+      if (this.data.log.length > 0) {
         const action = this.data.log[0];
         if (action.type == "correct") {
           store.commit("correct", {
@@ -135,7 +130,8 @@ export default {
       vertical-align: top;
       height: 50vh;
     }
-    .playerControl {
+    .playerCorrect,
+    .playerWrong {
       display: flex;
       div {
         cursor: pointer;
