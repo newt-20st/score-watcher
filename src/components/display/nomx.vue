@@ -1,5 +1,5 @@
 <template>
-  <div class="control">
+  <div class="display">
     <h2>
       {{ data.config.correct }}o{{ data.config.wrong }}x -
       {{ data.log.length + 1 }}問目

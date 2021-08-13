@@ -5,7 +5,7 @@
 </template>
 
 <script>
-import error from "@/components/display/error.vue";
+import error from "@/components/error.vue";
 import nomx from "@/components/display/nomx.vue";
 export default {
   name: "Display",

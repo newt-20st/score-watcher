@@ -5,7 +5,7 @@
 </template>
 
 <script>
-import error from "@/components/config/error.vue";
+import error from "@/components/error.vue";
 import json from "@/components/config/json.vue";
 import nomx from "@/components/config/nomx.vue";
 export default {
