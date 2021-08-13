@@ -1,6 +1,6 @@
 <template>
   <div class="header" v-if="this.$route.name != 'Display'">
-    <router-link to="/">scoreboard</router-link>
+    <router-link class="btn btn-success btn-sm" to="/">scoreboard</router-link>
   </div>
 </template>
 
@@ -16,18 +16,6 @@ export default {
 <style lang="scss" scoped>
 .header {
   text-align: right;
-}
-a {
-  display: inline-block;
-  text-decoration: none;
-  margin: 0.5rem;
-  padding: 0.5rem 1rem;
-  background-color: $base-color;
-  color: $back-color;
-  border-radius: 2rem;
-  transition: all ease-in 0.2s;
-  &:hover {
-    opacity: 0.5;
-  }
+  padding: 0.5rem;
 }
 </style>

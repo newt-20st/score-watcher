@@ -1,7 +1,5 @@
 <template>
-  <transition mode="out-in">
-    <component :is="change"></component>
-  </transition>
+  <component :is="change"></component>
 </template>
 
 <script>
@@ -31,5 +29,11 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
+.config {
+  margin: 1rem;
+  form {
+    margin: 1rem 2rem;
+  }
+}
 </style>

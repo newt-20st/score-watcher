@@ -4,7 +4,7 @@
     <h2>形式を選択</h2>
     <div class="formatList">
       <router-link to="/config?type=json"> 設定ファイルを読み込む </router-link>
-      <router-link to="/config?type=nomx"> nomx </router-link>
+      <router-link to="/config?type=nomx"> NoMx </router-link>
       <router-link to="/config?type=nbyn"> N by N </router-link>
     </div>
   </div>
@@ -16,6 +16,9 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
+.home {
+  margin: 1rem;
+}
 .formatList {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
@@ -29,7 +32,7 @@ export default {
     text-decoration: none;
     border: 0.3rem solid $base-color;
     border-radius: 2rem;
-    padding: 2rem;
+    padding: 1rem;
     height: 25vh;
     transition: all ease-in 0.3s;
     &:hover {

@@ -1,14 +1,24 @@
 <template>
-  <div class="control">
+  <div class="config">
     <h1>設定ファイルを読み込む</h1>
-    <button @click="openConfig()">設定ファイルを開く</button>
+    <button class="btn btn-primary" @click="openConfig()">
+      設定ファイルを開く
+    </button>
     <div v-if="this.load">
-      <router-link
-        :to="
-          '/display/?type=' + this.$store.state.config.format[this.load].type
-        "
-        >このゲームを開始する</router-link
-      >
+      <h2>読み込み結果</h2>
+      <h3>形式</h3>
+      {{ data.type }}
+      <p>
+        <router-link
+          class="btn btn-success"
+          :to="
+            '/display/?type=' + this.$store.state.config.format[this.load].type
+          "
+          >このゲームを開始する</router-link
+        >
+      </p>
+
+      <p></p>
     </div>
   </div>
 </template>
@@ -22,6 +32,7 @@ export default {
   data() {
     return {
       load: false,
+      data: {},
     };
   },
   methods: {
@@ -39,8 +50,8 @@ export default {
       const result = dialog.showOpenDialogSync(options);
       if (result.length) {
         const jsonData = JSON.parse(fs.readFileSync(result[0]));
-        console.log(jsonData);
         this.load = jsonData.type;
+        this.data = jsonData;
         store.commit("loadConfig", jsonData.type, jsonData);
       }
     },

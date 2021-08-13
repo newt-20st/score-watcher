@@ -1,33 +1,84 @@
 <template>
   <div class="config">
     <h1>NoMx</h1>
-    <h2>形式設定</h2>
-    <h3>勝ち抜け正解数</h3>
-    <input v-model="data.config.correct" type="number" min="0" />
-    <h3>失格誤答数</h3>
-    <input v-model="data.config.wrong" type="number" min="0" />
-    <h2>参加者設定</h2>
-    <h3>プレイヤーの人数</h3>
-    ※最大10人
-    <input
-      :value="data.players.length"
-      @input="number($event.target.value)"
-      min="1"
-      max="10"
-      type="number"
-    />
-    <h3>各プレイヤーの設定</h3>
-    <div class="playerSetting">
-      <div v-for="(player, index) of data.players" :key="index">
-        <h4>{{ index + 1 }}人目のプレイヤーデータ</h4>
-        プレイヤーネーム：<input type="text" v-model="player.name" /><br />
-        正解数：<input type="number" v-model="player.score.correct" /><br />
-        誤答数：<input type="number" v-model="player.score.wrong" />
+    <form>
+      <h2>形式設定</h2>
+      <div class="form-group">
+        <label>勝ち抜け正解数</label>
+        <input
+          class="form-control"
+          v-model="data.config.correct"
+          type="number"
+          min="0"
+        />
+        <small class="form-text text-muted"
+          >勝ち抜けまでに必要な正解数を設定してください</small
+        >
       </div>
-    </div>
-    <router-link to="/display/?type=nomx"> コントロール画面を開く </router-link>
-    <button @click="configExport()">設定ファイルをエクスポート</button>
-    <p>{{ this.data }}</p>
+      <div class="form-group">
+        <label>失格誤答数</label>
+        <input
+          class="form-control"
+          v-model="data.config.wrong"
+          type="number"
+          min="0"
+        />
+        <small class="form-text text-muted"
+          >失格に必要な誤答数を設定してください</small
+        >
+      </div>
+      <h2>参加者設定</h2>
+      <div class="form-group">
+        <label>プレイヤーの人数</label>
+        <select
+          class="form-control"
+          @input="number($event.target.value)"
+          :value="data.players.length"
+        >
+          <option v-for="i in 10" :key="i">{{ i }}</option>
+        </select>
+        <small class="form-text text-muted">※最大10人</small>
+      </div>
+      <div class="playerSetting">
+        <div v-for="(player, index) of data.players" :key="index">
+          <h3>{{ index + 1 }}人目のプレイヤーデータ</h3>
+          <div class="form-group">
+            <label>プレイヤーネーム</label>
+            <input class="form-control" type="text" v-model="player.name" />
+          </div>
+          <div class="form-group">
+            <label>正解数</label>
+            <input
+              class="form-control"
+              type="text"
+              v-model="player.score.correct"
+            />
+          </div>
+          <div class="form-group">
+            <label>誤答数</label>
+            <input
+              class="form-control"
+              type="text"
+              v-model="player.score.wrong"
+            />
+          </div>
+        </div>
+      </div>
+      <router-link class="btn btn-primary" to="/display/?type=nomx">
+        コントロール画面を開く
+      </router-link>
+      <button class="btn btn-success" @click="configExport()">
+        設定ファイルをエクスポート
+      </button>
+      <div class="form-group my-5">
+        <label>json config data</label>
+        <textarea
+          :value="JSON.stringify(data)"
+          class="form-control"
+          placeholder="json config data"
+        ></textarea>
+      </div>
+    </form>
   </div>
 </template>
 
@@ -48,14 +99,24 @@ export default {
   },
   methods: {
     number(value) {
-      if (this.data.players.length <= value) {
-        this.data.players.push({
-          name: "Player" + String(this.data.players.length + 1),
-          score: { correct: 0, wrong: 0 },
-        });
-      } else if (this.data.players.length > value) {
-        this.data.players.pop();
+      const list = [];
+      for (let i = 0; i < value; i++) {
+        if (this.data.players[i]) {
+          list.push({
+            name: this.data.players[i].name,
+            score: {
+              correct: this.data.players[i].score.correct,
+              wrong: this.data.players[i].score.wrong,
+            },
+          });
+        } else {
+          list.push({
+            name: "Player" + String(i + 1),
+            score: { correct: 0, wrong: 0 },
+          });
+        }
       }
+      this.data.players = list;
     },
     configExport() {
       const jsonData = this.$store.state.config.format.nomx;

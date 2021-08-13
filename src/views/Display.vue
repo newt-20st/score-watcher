@@ -1,7 +1,5 @@
 <template>
-  <transition mode="out-in">
-    <component :is="change"></component>
-  </transition>
+  <component :is="change"></component>
 </template>
 
 <script>
