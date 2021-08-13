@@ -7,6 +7,10 @@
 <script>
 import error from "@/components/error.vue";
 import nomx from "@/components/display/nomx.vue";
+const list = {
+  error,
+  nomx,
+};
 export default {
   name: "Display",
   data() {
@@ -14,12 +18,13 @@ export default {
       change: "base",
     };
   },
-  components: {
-    error,
-    nomx,
-  },
+  components: list,
   created() {
-    this.change = this.$route.query.type;
+    if (this.$route.query.type in list) {
+      this.change = this.$route.query.type;
+    } else {
+      this.change = "error";
+    }
   },
 };
 </script>
