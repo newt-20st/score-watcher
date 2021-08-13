@@ -1,6 +1,6 @@
 <template>
   <div class="home">
-    <h1>nomx</h1>
+    <h1>NoMx</h1>
     <h2>形式設定</h2>
     <h3>勝ち抜け正解数</h3>
     <input v-model="data.config.correct" type="number" min="0" />
