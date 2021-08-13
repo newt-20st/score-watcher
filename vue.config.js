@@ -3,14 +3,8 @@ module.exports = {
         electronBuilder: {
             nodeIntegration: true,
             builderOptions: {
-                "publish": {
-                    "provider": "github",
-                    "owner": "newt-20st",
-                    "repo": "scoreboard",
-                    "releaseType": "release"
-                },
-                productName: "my-application",
-                appId: "com.sample.myapplication",
+                productName: "scoreboard",
+                appId: "app.web.newt-house",
                 win: {
                     target: [
                         {
