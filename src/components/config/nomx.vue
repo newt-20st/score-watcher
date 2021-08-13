@@ -1,5 +1,5 @@
 <template>
-  <div class="home">
+  <div class="config">
     <h1>NoMx</h1>
     <h2>形式設定</h2>
     <h3>勝ち抜け正解数</h3>

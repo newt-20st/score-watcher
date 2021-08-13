@@ -17,6 +17,10 @@
         class="player"
         v-for="(player, index) in data.players"
         :key="player.name"
+        :class="{
+          win: player.score.correct >= data.config.correct,
+          lose: player.score.wrong >= data.config.wrong,
+        }"
       >
         <div class="playerPosition">
           {{ index + 1 }}
@@ -26,13 +30,17 @@
         </div>
         <div class="playerScore">
           <div class="playerCorrect" @click="correct(index)">
-            <div v-if="player.score.correct >= data.config.correct">WIN</div>
+            <div v-if="player.score.correct >= data.config.correct" class="win">
+              <span>WIN</span>
+            </div>
             <div v-if="player.score.correct < data.config.correct">
               <span> {{ player.score.correct }}</span>
             </div>
           </div>
           <div class="playerWrong" @click="wrong(index)">
-            <div v-if="player.score.wrong >= data.config.wrong">LOSE</div>
+            <div v-if="player.score.wrong >= data.config.wrong" class="lose">
+              <span>LOSE</span>
+            </div>
             <div v-if="player.score.wrong < data.config.wrong">
               <span>{{ player.score.wrong }}</span>
             </div>
@@ -171,12 +179,13 @@ h3 {
     text-align: center;
     .playerName {
       font-size: clamp(8vh, 2rem, 8vw);
+      font-weight: 800;
       writing-mode: vertical-rl;
       vertical-align: top;
       height: 40vh;
     }
     .playerScore {
-      div {
+      div div {
         font-size: 2rem;
         position: relative;
         margin: 1vh auto;
@@ -186,6 +195,7 @@ h3 {
         width: 10vh;
         border-radius: 50%;
         transition: all ease-in 0.3s;
+        user-select: none;
         span {
           position: absolute;
           top: 50%;
@@ -197,13 +207,23 @@ h3 {
           opacity: 0.5;
         }
       }
-      .playerCorrect {
+      .playerCorrect div {
         background-color: $correct-color;
       }
-      .playerWrong {
+      .playerWrong div {
         background-color: $wrong-color;
       }
     }
+  }
+  .win {
+    background-color: $correct-color;
+    color: $back-color;
+    border-radius: 3rem;
+  }
+  .lose {
+    background-color: $wrong-color;
+    color: $back-color;
+    border-radius: 3rem;
   }
 }
 .log {

@@ -1,6 +1,6 @@
 <template>
   <div class="header" v-if="this.$route.name != 'Display'">
-    <router-link to="/">Back to Top</router-link>
+    <router-link to="/">scoreboard</router-link>
   </div>
 </template>
 
@@ -14,6 +14,9 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.header {
+  text-align: right;
+}
 a {
   display: inline-block;
   text-decoration: none;
