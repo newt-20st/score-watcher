@@ -32,8 +32,5 @@ export default {
 <style lang="scss">
 .config {
   margin: 1rem;
-  form {
-    margin: 1rem 2rem;
-  }
 }
 </style>

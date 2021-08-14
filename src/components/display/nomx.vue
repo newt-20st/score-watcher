@@ -177,6 +177,8 @@ h3 {
   justify-content: space-evenly;
   .player {
     text-align: center;
+    padding: 1rem;
+    border-radius: 4rem;
     .playerName {
       font-size: clamp(8vh, 2rem, 8vw);
       font-weight: 800;
@@ -218,16 +220,14 @@ h3 {
   .win {
     background-color: $correct-color;
     color: $back-color;
-    border-radius: 3rem;
   }
   .lose {
     background-color: $wrong-color;
     color: $back-color;
-    border-radius: 3rem;
   }
 }
 .log {
-  margin: 0 1rem;
+  margin: 1rem;
   margin-top: 1rem;
   padding: 1rem;
   border: 0.3rem solid $base-color;

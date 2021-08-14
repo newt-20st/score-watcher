@@ -1,84 +1,87 @@
 <template>
   <div class="config">
     <h1>NoMx</h1>
-    <form>
-      <h2>形式設定</h2>
-      <div class="form-group">
-        <label>勝ち抜け正解数</label>
-        <input
-          class="form-control"
-          v-model="data.config.correct"
-          type="number"
-          min="0"
-        />
-        <small class="form-text text-muted"
-          >勝ち抜けまでに必要な正解数を設定してください</small
-        >
-      </div>
-      <div class="form-group">
-        <label>失格誤答数</label>
-        <input
-          class="form-control"
-          v-model="data.config.wrong"
-          type="number"
-          min="0"
-        />
-        <small class="form-text text-muted"
-          >失格に必要な誤答数を設定してください</small
-        >
-      </div>
-      <h2>参加者設定</h2>
-      <div class="form-group">
-        <label>プレイヤーの人数</label>
-        <select
-          class="form-control"
-          @input="number($event.target.value)"
-          :value="data.players.length"
-        >
-          <option v-for="i in 10" :key="i">{{ i }}</option>
-        </select>
-        <small class="form-text text-muted">※最大10人</small>
-      </div>
-      <div class="playerSetting">
-        <div v-for="(player, index) of data.players" :key="index">
-          <h3>{{ index + 1 }}人目のプレイヤーデータ</h3>
-          <div class="form-group">
-            <label>プレイヤーネーム</label>
-            <input class="form-control" type="text" v-model="player.name" />
-          </div>
-          <div class="form-group">
-            <label>正解数</label>
-            <input
-              class="form-control"
-              type="text"
-              v-model="player.score.correct"
-            />
-          </div>
-          <div class="form-group">
-            <label>誤答数</label>
-            <input
-              class="form-control"
-              type="text"
-              v-model="player.score.wrong"
-            />
+    <div class="content">
+      <form>
+        <h2>形式設定</h2>
+        <div class="form-group">
+          <label>勝ち抜け正解数</label>
+          <input
+            class="form-control"
+            v-model="data.config.correct"
+            type="number"
+            min="0"
+          />
+          <small class="form-text text-muted"
+            >勝ち抜けまでに必要な正解数を設定してください</small
+          >
+        </div>
+        <div class="form-group">
+          <label>失格誤答数</label>
+          <input
+            class="form-control"
+            v-model="data.config.wrong"
+            type="number"
+            min="0"
+          />
+          <small class="form-text text-muted"
+            >失格に必要な誤答数を設定してください</small
+          >
+        </div>
+        <h2>参加者設定</h2>
+        <div class="form-group">
+          <label>プレイヤーの人数</label>
+          <select
+            class="form-control"
+            @input="number($event.target.value)"
+            :value="data.players.length"
+          >
+            <option v-for="i in 20" :key="i">{{ i }}</option>
+          </select>
+          <small class="form-text text-muted">※最大10人</small>
+        </div>
+        <div class="playerSetting">
+          <div v-for="(player, index) of data.players" :key="index">
+            <h3>{{ index + 1 }}人目のプレイヤーデータ</h3>
+            <div class="form-group">
+              <label>プレイヤーネーム</label>
+              <input class="form-control" type="text" v-model="player.name" />
+            </div>
+            <div class="form-group">
+              <label>正解数</label>
+              <input
+                class="form-control"
+                type="text"
+                v-model="player.score.correct"
+              />
+            </div>
+            <div class="form-group">
+              <label>誤答数</label>
+              <input
+                class="form-control"
+                type="text"
+                v-model="player.score.wrong"
+              />
+            </div>
           </div>
         </div>
-      </div>
-      <router-link class="btn btn-primary" to="/display/?type=nomx">
-        コントロール画面を開く
-      </router-link>
-      <button class="btn btn-success" @click="configExport()">
-        設定ファイルをエクスポート
-      </button>
-      <div class="form-group my-5">
-        <label>json config data</label>
-        <textarea
-          :value="JSON.stringify(data)"
-          class="form-control"
-          placeholder="json config data"
-        ></textarea>
-      </div>
-    </form>
+        <router-link class="btn btn-primary" to="/display/?type=nomx">
+          コントロール画面を開く
+        </router-link>
+        <button class="btn btn-success" @click="configExport()">
+          設定ファイルをエクスポート
+        </button>
+        <div class="form-group my-5">
+          <label>json config data</label>
+          <textarea
+            id="jsonConfigOutput"
+            :value="JSON.stringify(data)"
+            class="form-control"
+            placeholder="json config data"
+          ></textarea>
+        </div>
+      </form>
+    </div>
   </div>
 </template>
 
@@ -137,3 +140,8 @@ export default {
   },
 };
 </script>
+<style lang="scss" scoped>
+#jsonConfigOutput {
+  min-height: 50vh;
+}
+</style>

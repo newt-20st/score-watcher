@@ -2,8 +2,8 @@ $base-color: #28a745;
 $light-color: #4AE066;
 $dark-color: #233812;
 $back-color: #ffffff;
-$correct-color: red;
-$wrong-color: blue;
+$correct-color: #dc3545;
+$wrong-color: #007bff;
 
 body {
     font-family: 'BIZ UDPGothic', suns-serif;
@@ -16,4 +16,7 @@ h1 {
 }
 h2 {
     color: $base-color;
+}
+.content {
+    margin: 1rem 2rem;
 }

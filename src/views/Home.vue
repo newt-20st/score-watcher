@@ -1,11 +1,15 @@
 <template>
   <div class="home">
-    <h1>scoreboard</h1>
-    <h2>形式を選択</h2>
-    <div class="formatList">
-      <router-link to="/config?type=json"> 設定ファイルを読み込む </router-link>
-      <router-link to="/config?type=nomx"> NoMx </router-link>
-      <router-link to="/config?type=nbyn"> N by N </router-link>
+    <h1>Scoreboard</h1>
+    <div class="content">
+      <h2>形式を選択</h2>
+      <div class="formatList">
+        <router-link to="/config?type=json">
+          設定ファイルを読み込む
+        </router-link>
+        <router-link to="/config?type=nomx"> NoMx </router-link>
+        <router-link to="/config?type=nbyn"> N by N </router-link>
+      </div>
     </div>
   </div>
 </template>
@@ -24,7 +28,7 @@ export default {
   grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
   gap: 2vw;
   font-size: 2rem;
-  margin: 2vw;
+  margin: 2vw 0;
   a {
     display: block;
     background-color: $back-color;
