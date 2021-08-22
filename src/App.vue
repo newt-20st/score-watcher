@@ -10,6 +10,7 @@ export default {
   components: { Header },
 };
 </script>
+
 <style lang="scss">
 body {
   font-size: 20px;

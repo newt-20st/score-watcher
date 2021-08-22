@@ -4,29 +4,90 @@
     <div class="content">
       <form>
         <h2>形式設定</h2>
-        <div class="form-group">
-          <label>勝ち抜け正解数</label>
-          <input
-            class="form-control"
-            v-model="data.config.correct"
-            type="number"
-            min="0"
-          />
-          <small class="form-text text-muted"
-            >勝ち抜けまでに必要な正解数を設定してください</small
-          >
+        <div class="row">
+          <div class="form-group col-sm">
+            <label>勝ち抜け正解数</label>
+            <input
+              class="form-control"
+              v-model="data.config.correct"
+              type="number"
+              min="0"
+            />
+            <small class="form-text text-muted"
+              >勝ち抜けまでに必要な正解数を設定してください</small
+            >
+          </div>
+          <div class="form-group col-sm">
+            <label>失格誤答数</label>
+            <input
+              class="form-control"
+              v-model="data.config.wrong"
+              type="number"
+              min="0"
+            />
+            <small class="form-text text-muted"
+              >失格に必要な誤答数を設定してください</small
+            >
+          </div>
         </div>
-        <div class="form-group">
-          <label>失格誤答数</label>
-          <input
-            class="form-control"
-            v-model="data.config.wrong"
-            type="number"
-            min="0"
-          />
-          <small class="form-text text-muted"
-            >失格に必要な誤答数を設定してください</small
-          >
+        <div class="row">
+          <div class="form-group col-sm">
+            <div class="form-check">
+              <input
+                class="form-check-input"
+                v-model="data.config.end.enable"
+                id="endEnable"
+                type="checkbox"
+                checked
+              />
+              <label class="form-check-label" for="endEnable">
+                限定問題数を
+                <span v-if="data.config.end.enable">設定する</span
+                ><span v-else>設定しない</span>
+              </label>
+              <small class="form-text text-muted"
+                >設定しない場合1000問が上限となり、それ以降は不具合が発生する可能性があります</small
+              >
+            </div>
+          </div>
+          <div class="form-group col-sm" v-show="data.config.end.enable">
+            <label>限定問題数</label>
+            <input
+              class="form-control"
+              v-model="data.config.end.count"
+              type="number"
+              min="1"
+              max="1000"
+            />
+          </div>
+        </div>
+        <div class="row">
+          <div class="form-group col-sm">
+            <div class="form-check">
+              <input
+                class="form-check-input"
+                v-model="data.config.winThrough.enable"
+                id="winThroughEnable"
+                type="checkbox"
+                checked
+              />
+              <label class="form-check-label" for="winThroughEnable">
+                勝ち抜け順を
+                <span v-if="data.config.winThrough.enable">表示する</span
+                ><span v-else>表示しない</span>
+              </label>
+            </div>
+          </div>
+          <div class="form-group col-sm" v-show="data.config.winThrough.enable">
+            <label>勝ち抜け人数</label>
+            <input
+              class="form-control"
+              v-model="data.config.winThrough.count"
+              type="number"
+              min="1"
+              :max="data.players.length"
+            />
+          </div>
         </div>
         <h2>参加者設定</h2>
         <div class="form-group">
@@ -43,25 +104,27 @@
         <div class="playerSetting">
           <div v-for="(player, index) of data.players" :key="index">
             <h3>{{ index + 1 }}人目のプレイヤーデータ</h3>
-            <div class="form-group">
-              <label>プレイヤーネーム</label>
-              <input class="form-control" type="text" v-model="player.name" />
-            </div>
-            <div class="form-group">
-              <label>正解数</label>
-              <input
-                class="form-control"
-                type="text"
-                v-model="player.score.correct"
-              />
-            </div>
-            <div class="form-group">
-              <label>誤答数</label>
-              <input
-                class="form-control"
-                type="text"
-                v-model="player.score.wrong"
-              />
+            <div class="row">
+              <div class="form-group col-sm">
+                <label>プレイヤーネーム</label>
+                <input class="form-control" type="text" v-model="player.name" />
+              </div>
+              <div class="form-group col-sm">
+                <label>正解数</label>
+                <input
+                  class="form-control"
+                  type="text"
+                  v-model="player.score.correct"
+                />
+              </div>
+              <div class="form-group col-sm">
+                <label>誤答数</label>
+                <input
+                  class="form-control"
+                  type="text"
+                  v-model="player.score.wrong"
+                />
+              </div>
             </div>
           </div>
         </div>
@@ -110,12 +173,13 @@ export default {
             score: {
               correct: this.data.players[i].score.correct,
               wrong: this.data.players[i].score.wrong,
+              evaluation: 0,
             },
           });
         } else {
           list.push({
             name: "Player" + String(i + 1),
-            score: { correct: 0, wrong: 0 },
+            score: { correct: 0, wrong: 0, evaluation: 0 },
           });
         }
       }

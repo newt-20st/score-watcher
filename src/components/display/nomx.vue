@@ -3,6 +3,11 @@
     <h2>
       {{ data.config.correct }}o{{ data.config.wrong }}x -
       {{ data.log.length + 1 }}問目
+      <span v-show="data.config.end.enable">
+        /
+        <span v-if="data.log.length + 1 > data.config.end.count">(終了)</span>
+        <span v-else>{{ data.config.end.count }}</span>
+      </span>
     </h2>
     <div class="topMenu">
       <div>
@@ -18,7 +23,7 @@
         v-for="(player, index) in data.players"
         :key="player.name"
         :class="{
-          win: player.score.correct >= data.config.correct,
+          win: isNaN(calcOrder(index)),
           lose: player.score.wrong >= data.config.wrong,
         }"
       >
@@ -30,11 +35,8 @@
         </div>
         <div class="playerScore">
           <div class="playerCorrect" @click="correct(index)">
-            <div v-if="player.score.correct >= data.config.correct" class="win">
-              <span>WIN</span>
-            </div>
-            <div v-if="player.score.correct < data.config.correct">
-              <span> {{ player.score.correct }}</span>
+            <div>
+              <span>{{ calcOrder(index) }}</span>
             </div>
           </div>
           <div class="playerWrong" @click="wrong(index)">
@@ -78,15 +80,15 @@
 
 <script>
 import store from "../../store";
+var numeral = require("numeral");
 export default {
   name: "nomx",
   data() {
-    return { data: this.$store.state.config.format.nomx };
+    return { data: this.$store.state.config.format.nomx, order: [] };
   },
   methods: {
     correct(e) {
-      store.commit("correct", { format: "nomx", phase: "nomal", position: e });
-      store.commit("log", {
+      store.commit("correct", {
         format: "nomx",
         phase: "nomal",
         type: "correct",
@@ -95,8 +97,7 @@ export default {
       });
     },
     wrong(e) {
-      store.commit("wrong", { format: "nomx", phase: "nomal", position: e });
-      store.commit("log", {
+      store.commit("wrong", {
         format: "nomx",
         phase: "nomal",
         type: "wrong",
@@ -123,11 +124,37 @@ export default {
             position: action.position,
           });
         }
-        store.commit("log", {
-          format: "nomx",
-          phase: "undo",
-          long: -1,
-        });
+      }
+    },
+    calcOrder(index) {
+      const correct = this.data.players[index].score.correct;
+      const order =
+        this.data.players
+          .map((x) => x.score.evaluation)
+          .sort((a, b) => b - a)
+          .indexOf(this.data.players[index].score.evaluation) + 1;
+      if (this.data.config.winThrough.enable) {
+        if (this.data.config.end.enable) {
+          if (this.data.log.length < this.data.config.end.count) {
+            if (correct < this.data.config.correct) {
+              return correct;
+            } else {
+              return numeral(order).format("0o");
+            }
+          } else {
+            if (order <= this.data.config.winThrough.count) {
+              return numeral(order).format("0o");
+            } else {
+              return correct;
+            }
+          }
+        }
+      } else {
+        if (correct < this.data.config.correct) {
+          return correct;
+        } else {
+          return "WIN";
+        }
       }
     },
   },
