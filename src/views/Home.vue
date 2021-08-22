@@ -1,6 +1,13 @@
 <template>
   <div class="home">
     <h1>Scoreboard</h1>
+    <p>Ver.0.6.0</p>
+    <p>
+      最新のバージョンは<a
+        href="https://github.com/newt-20st/scoreboard/releases"
+        >こちらのリポジトリ</a
+      >から確認してください。
+    </p>
     <div class="content">
       <h2>形式を選択</h2>
       <div class="formatList">
