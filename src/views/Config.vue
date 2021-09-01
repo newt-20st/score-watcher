@@ -4,11 +4,13 @@
 
 <script>
 import error from "@/components/error.vue";
+import count from "@/components/config/count.vue";
 import json from "@/components/config/json.vue";
 import nomx from "@/components/config/nomx.vue";
 const list = {
   error,
   json,
+  count,
   nomx,
 };
 export default {

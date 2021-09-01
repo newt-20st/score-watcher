@@ -1,6 +1,23 @@
 const jsonData = {
+    "count": {
+        "type": "count",
+        "name": "カウンター",
+        "config": {
+            "minus": false,
+        },
+        "players": [
+            {
+                "name": "Player 1",
+                "score": {
+                    "count": 0
+                }
+            }
+        ],
+        "log": []
+    },
     "nomx": {
         "type": "nomx",
+        "name": "〇〇大会",
         "config": {
             "correct": 7,
             "wrong": 3,

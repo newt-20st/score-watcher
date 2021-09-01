@@ -1,14 +1,41 @@
 <template>
   <div class="display">
-    <h2>
-      {{ data.config.correct }}o{{ data.config.wrong }}x -
-      {{ data.log.length + 1 }}問目
-      <span v-show="data.config.end.enable">
-        /
-        <span v-if="data.log.length + 1 > data.config.end.count">(終了)</span>
-        <span v-else>{{ data.config.end.count }}</span>
-      </span>
-    </h2>
+    <div class="header">
+      <div class="base">
+        <div class="name">
+          <h2>{{ data.name }}</h2>
+          <div>{{ data.config.correct }}o{{ data.config.wrong }}x</div>
+        </div>
+        <div class="info">
+          <div class="count">
+            {{ data.log.length + 1 }}
+            <span v-show="data.config.end.enable">
+              /
+              <span v-if="data.log.length + 1 > data.config.end.count"
+                >(終了)</span
+              >
+              <span v-else>{{ data.config.end.count }} 問目</span>
+            </span>
+          </div>
+          <div class="quiz">
+            <div class="question"></div>
+            <div class="answer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="menu">
+        <div>
+          <router-link class="btn btn-sm btn-primary" to="/config?type=count"
+            >設定に戻る</router-link
+          >
+        </div>
+        <div>
+          <button class="btn btn-sm btn-primary" @click="undo()">
+            一つ戻す
+          </button>
+        </div>
+      </div>
+    </div>
     <div class="topMenu">
       <div>
         <router-link to="/config?type=nomx">設定に戻る</router-link>
@@ -17,7 +44,7 @@
         <button @click="undo()">一つ戻す</button>
       </div>
     </div>
-    <div class="players">
+    <div class="players" :class="getWidth()">
       <div
         class="player"
         v-for="(player, index) in data.players"
@@ -87,6 +114,13 @@ export default {
     return { data: this.$store.state.config.format.nomx, order: [] };
   },
   methods: {
+    getWidth() {
+      console.log(this.data.players.length * 115);
+      console.log(window.innerWidth);
+      return this.data.players.length * 115 > window.innerWidth
+        ? "over"
+        : "default";
+    },
     correct(e) {
       store.commit("correct", {
         format: "nomx",
@@ -163,42 +197,6 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang="scss" scoped>
-h2 {
-  background-color: $base-color;
-  color: $back-color;
-  margin: 0;
-  padding: 0.5rem 1rem;
-  border-radius: 0 0 2rem 2rem;
-  text-align: center;
-}
-h3 {
-  color: $base-color;
-  margin: 0;
-}
-.topMenu {
-  margin: 0.5rem 1rem;
-  display: flex;
-  gap: 0.5rem;
-  div {
-    color: $back-color;
-    transition: all ease-in 0.3s;
-    a,
-    button {
-      cursor: pointer;
-      display: block;
-      padding: 0.5rem 1rem;
-      font-size: 1.5rem;
-      border: 1px solid $base-color;
-      border-radius: 2rem;
-      background-color: $base-color;
-      text-decoration: none;
-      color: $back-color;
-    }
-    &:hover {
-      opacity: 0.5;
-    }
-  }
-}
 .players {
   display: flex;
   justify-content: space-evenly;

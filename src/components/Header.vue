@@ -7,9 +7,6 @@
 <script>
 export default {
   name: "Header",
-  data() {
-    return { visible: this.$store.state.common.header };
-  },
 };
 </script>
 

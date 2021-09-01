@@ -17,6 +17,13 @@ const store = new createStore({
         update(state, data) {
             state.config.format[data.type] = data
         },
+        count(state, parameter) {
+            if (parameter.phase == "nomal") {
+                state.config.format[parameter.format].players[parameter.position].score.count += 1;
+            } else if (parameter.phase == "undo") {
+                state.config.format[parameter.format].players[parameter.position].score.count -= 1;
+            }
+        },
         correct(state, parameter) {
             if (parameter.phase == "nomal") {
                 state.config.format[parameter.format].players[parameter.position].score.correct += 1;

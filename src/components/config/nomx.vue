@@ -6,6 +6,11 @@
         <h2>形式設定</h2>
         <div class="row">
           <div class="form-group col-sm">
+            <label>イベント名</label>
+            <input class="form-control" v-model="data.name" type="text" />
+            <small class="form-text text-muted">画面の右上に表示されます</small>
+          </div>
+          <div class="form-group col-sm">
             <label>勝ち抜け正解数</label>
             <input
               class="form-control"
@@ -113,7 +118,7 @@
                 <label>正解数</label>
                 <input
                   class="form-control"
-                  type="text"
+                  type="number"
                   v-model="player.score.correct"
                 />
               </div>
@@ -121,7 +126,7 @@
                 <label>誤答数</label>
                 <input
                   class="form-control"
-                  type="text"
+                  type="number"
                   v-model="player.score.wrong"
                 />
               </div>

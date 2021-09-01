@@ -1,19 +1,21 @@
 <template>
   <div class="home">
     <h1>Scoreboard</h1>
-    <p>Ver.0.6.0</p>
-    <p>
-      最新のバージョンは<a
-        href="https://github.com/newt-20st/scoreboard/releases"
-        >こちらのリポジトリ</a
-      >から確認してください。
-    </p>
     <div class="content">
+      <p>Ver.0.7.0</p>
+      <p>
+        最新のバージョンは<a
+          href="https://github.com/newt-20st/scoreboard/releases"
+          target="_blank"
+          >こちらのリポジトリ</a
+        >から確認してください。
+      </p>
       <h2>形式を選択</h2>
       <div class="formatList">
         <router-link to="/config?type=json">
           設定ファイルを読み込む
         </router-link>
+        <router-link to="/config?type=count"> スコア計算 </router-link>
         <router-link to="/config?type=nomx"> NoMx </router-link>
         <router-link to="/config?type=nbyn"> N by N </router-link>
       </div>
