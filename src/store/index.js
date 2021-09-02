@@ -8,7 +8,8 @@ const store = new createStore({
         },
         config: {
             format: base
-        }
+        },
+        quiz: []
     },
     mutations: {
         reset(state, data) {
@@ -16,6 +17,9 @@ const store = new createStore({
         },
         update(state, data) {
             state.config.format[data.type] = data
+        },
+        quiz(state, data) {
+            state.quiz = data
         },
         count(state, parameter) {
             if (parameter.phase == "nomal") {

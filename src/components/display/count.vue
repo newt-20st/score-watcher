@@ -8,8 +8,8 @@
         <div class="info">
           <div class="count">{{ data.log.length + 1 }} 問目</div>
           <div class="quiz">
-            <div class="question"></div>
-            <div class="answer"></div>
+            <div class="question">{{ data.quiz[data.log.length][0] }}</div>
+            <div class="answer">{{ data.quiz[data.log.length][1] }}</div>
           </div>
         </div>
       </div>

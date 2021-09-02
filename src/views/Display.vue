@@ -48,6 +48,7 @@ export default {
         flex-direction: column;
         background-color: $base-color;
         border-radius: 0 3rem 3rem 0;
+        min-width: 200px;
         width: 30vw;
         padding: 1rem;
         h2 {
@@ -61,14 +62,29 @@ export default {
       }
       .info {
         display: flex;
+        align-items: center;
         .count {
+          white-space: nowrap;
           font-size: 1.5rem;
-          padding: 1rem;
-          border-right: 3px solid $base-color;
+          padding-right: 1rem;
         }
         .quiz {
+          border-left: 3px solid $base-color;
+          line-height: 1rem;
+          padding: 0 0.5rem;
           display: flex;
           flex-direction: column;
+          justify-content: space-between;
+          gap: 0.5rem;
+          .question {
+            max-height: 4rem;
+            overflow-y: hidden;
+          }
+          .answer {
+            color: $correct-color;
+            max-height: 1rem;
+            overflow-y: hidden;
+          }
         }
       }
     }
@@ -98,30 +114,6 @@ export default {
         writing-mode: vertical-rl;
         vertical-align: top;
         height: 40vh;
-      }
-    }
-  }
-  .topMenu {
-    margin: 0.5rem 1rem;
-    display: flex;
-    gap: 0.5rem;
-    div {
-      color: $back-color;
-      transition: all ease-in 0.3s;
-      a,
-      button {
-        cursor: pointer;
-        display: block;
-        padding: 0.5rem 1rem;
-        font-size: 1.5rem;
-        border: 1px solid $base-color;
-        border-radius: 2rem;
-        background-color: $base-color;
-        text-decoration: none;
-        color: $back-color;
-      }
-      &:hover {
-        opacity: 0.5;
       }
     }
   }

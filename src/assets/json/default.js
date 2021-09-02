@@ -13,6 +13,7 @@ const jsonData = {
                 }
             }
         ],
+        "quiz": [],
         "log": []
     },
     "nomx": {
@@ -53,6 +54,7 @@ const jsonData = {
                 }
             }
         ],
+        "quiz": [],
         "log": []
     },
     "nbyn": {
@@ -90,6 +92,7 @@ const jsonData = {
                 }
             }
         ],
+        "quiz": [],
         "log": []
     }
 }

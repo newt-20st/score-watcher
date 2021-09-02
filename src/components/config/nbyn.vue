@@ -102,10 +102,24 @@
             </div>
           </div>
         </div>
+        <h2>問題の読み込み</h2>
+        <div class="form-group">
+          <label
+            >CSV形式で貼り付けてください。1列目が問題、2列目が解答として読み込まれます。</label
+          >
+          <textarea
+            id="quizRaw"
+            v-model="quizRaw"
+            class="form-control"
+            placeholder="quiz data"
+          ></textarea>
+        </div>
         <div class="menu">
           <router-link class="btn btn-primary" to="/display/?type=nbyn">
             コントロール画面を開く
-          </router-link>
+          </router-link>          <button class="btn btn-success" type="button" @click="quizUpdate()">
+            問題データを更新
+          </button>
           <button class="btn btn-success" @click="configExport()">
             設定ファイルをエクスポート
           </button>
@@ -134,10 +148,12 @@ export default {
     return {
       data: this.$store.state.config.format.nbyn,
       base: {},
+      quizRaw: this.$store.state.quiz,
     };
   },
   updated() {
     store.commit("update", this.data);
+    store.commit("quiz", this.quizRaw);
   },
   methods: {
     number(value) {
@@ -176,6 +192,14 @@ export default {
           JSON.stringify(this.$store.state.config.format.nomx, null, "\t")
         );
       }
+    },
+    quizUpdate() {
+      const quizRaw = document.getElementById("quizRaw").value.split("\n");
+      const dataArray = [];
+      for (let i = 0; i < quizRaw.length; i++) {
+        dataArray[i] = quizRaw[i].split(",");
+      }
+      this.data.quiz = dataArray;
     },
   },
 };

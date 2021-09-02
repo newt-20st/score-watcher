@@ -40,6 +40,7 @@ export default {
     min-height: 50vh;
   }
   .menu {
+    margin: 1rem;
     display: flex;
     gap: 1rem;
   }

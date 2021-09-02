@@ -18,8 +18,8 @@
             </span>
           </div>
           <div class="quiz">
-            <div class="question"></div>
-            <div class="answer"></div>
+            <div class="question">{{ data.quiz[data.log.length][0] }}</div>
+            <div class="answer">{{ data.quiz[data.log.length][1] }}</div>
           </div>
         </div>
       </div>
@@ -34,14 +34,6 @@
             一つ戻す
           </button>
         </div>
-      </div>
-    </div>
-    <div class="topMenu">
-      <div>
-        <router-link to="/config?type=nomx">設定に戻る</router-link>
-      </div>
-      <div>
-        <button @click="undo()">一つ戻す</button>
       </div>
     </div>
     <div class="players" :class="getWidth()">
