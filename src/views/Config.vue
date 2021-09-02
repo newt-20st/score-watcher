@@ -7,11 +7,13 @@ import error from "@/components/error.vue";
 import count from "@/components/config/count.vue";
 import json from "@/components/config/json.vue";
 import nomx from "@/components/config/nomx.vue";
+import nbyn from "@/components/config/nbyn.vue";
 const list = {
   error,
   json,
   count,
   nomx,
+  nbyn,
 };
 export default {
   name: "Config",
@@ -34,5 +36,12 @@ export default {
 <style lang="scss">
 .config {
   margin: 1rem;
+  #jsonConfigOutput {
+    min-height: 50vh;
+  }
+  .menu {
+    display: flex;
+    gap: 1rem;
+  }
 }
 </style>

@@ -54,6 +54,43 @@ const jsonData = {
             }
         ],
         "log": []
+    },
+    "nbyn": {
+        "type": "nbyn",
+        "name": "〇〇大会",
+        "config": {
+            "n": 7,
+            "winThrough": {
+                "count": 3,
+            },
+            "end": { "enable": true, "count": 15 },
+        },
+        "players": [
+            {
+                "name": "Player 1",
+                "score": {
+                    "correct": 0,
+                    "wrong": 0,
+                    "evaluation": 0
+                }
+            },
+            {
+                "name": "Player 2",
+                "score": {
+                    "correct": 0,
+                    "wrong": 0,
+                    "evaluation": 0
+                }
+            }, {
+                "name": "Player 3",
+                "score": {
+                    "correct": 0,
+                    "wrong": 0,
+                    "evaluation": 0
+                }
+            }
+        ],
+        "log": []
     }
 }
 export default jsonData

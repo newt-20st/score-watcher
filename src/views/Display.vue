@@ -6,10 +6,12 @@
 import error from "@/components/error.vue";
 import count from "@/components/display/count.vue";
 import nomx from "@/components/display/nomx.vue";
+import nbyn from "@/components/display/nbyn.vue";
 const list = {
   error,
   count,
   nomx,
+  nbyn,
 };
 export default {
   name: "Display",
