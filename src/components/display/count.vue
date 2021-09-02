@@ -4,12 +4,13 @@
       <div class="base">
         <div class="name">
           <h2>{{ data.name }}</h2>
+          <div>{{ data.config.correct }}o{{ data.config.wrong }}x</div>
         </div>
         <div class="info">
-          <div class="count">{{ data.log.length + 1 }} 問目</div>
-          <div class="quiz">
-            <div class="question">{{ data.quiz[data.log.length][0] }}</div>
-            <div class="answer">{{ data.quiz[data.log.length][1] }}</div>
+          <div class="count">{{ data.log.length }} 問目</div>
+          <div class="quiz" v-if="data.quiz[data.log.length]">
+            <div class="question">{{ data.quiz[data.log.length]?.[0] }}</div>
+            <div class="answer">{{ data.quiz[data.log.length]?.[1] }}</div>
           </div>
         </div>
       </div>
@@ -78,8 +79,6 @@ export default {
   },
   methods: {
     getWidth() {
-      console.log(this.data.players.length * 115);
-      console.log(window.innerWidth);
       return this.data.players.length * 115 > window.innerWidth
         ? "over"
         : "default";

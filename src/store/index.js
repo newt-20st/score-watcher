@@ -24,8 +24,10 @@ const store = new createStore({
         count(state, parameter) {
             if (parameter.phase == "nomal") {
                 state.config.format[parameter.format].players[parameter.position].score.count += 1;
+                state.config.format[parameter.format].log.unshift(parameter);
             } else if (parameter.phase == "undo") {
                 state.config.format[parameter.format].players[parameter.position].score.count -= 1;
+                state.config.format[parameter.format].log.shift();
             }
         },
         correct(state, parameter) {

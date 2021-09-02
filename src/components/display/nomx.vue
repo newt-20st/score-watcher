@@ -17,9 +17,9 @@
               <span v-else>{{ data.config.end.count }} 問目</span>
             </span>
           </div>
-          <div class="quiz">
-            <div class="question">{{ data.quiz[data.log.length][0] }}</div>
-            <div class="answer">{{ data.quiz[data.log.length][1] }}</div>
+          <div class="quiz" v-if="data.quiz[data.log.length]">
+            <div class="question">{{ data.quiz[data.log.length]?.[0] }}</div>
+            <div class="answer">{{ data.quiz[data.log.length]?.[1] }}</div>
           </div>
         </div>
       </div>
