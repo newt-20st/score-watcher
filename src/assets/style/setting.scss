@@ -15,7 +15,10 @@ h1 {
     padding: 1rem 2rem;
 }
 h2 {
+    padding: 0 1rem;
+    display: inline-block;
     color: $base-color;
+    border-bottom: 3px solid $base-color;
 }
 .content {
     margin: 1rem 2rem;

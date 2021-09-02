@@ -40,9 +40,15 @@ export default {
     min-height: 50vh;
   }
   .menu {
-    margin: 1rem;
+    width: 100%;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    background-color: $back-color;
+    padding: 1rem;
     display: flex;
     gap: 1rem;
+    border-top: 3px solid $base-color;
   }
 }
 </style>

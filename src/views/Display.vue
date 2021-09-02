@@ -52,6 +52,7 @@ export default {
         width: 30vw;
         padding: 1rem;
         h2 {
+          padding: 0;
           margin: 0;
           color: $back-color;
         }
@@ -109,10 +110,10 @@ export default {
       padding: 1rem;
       border-radius: 4rem;
       .playerName {
+        display: flex;
         font-size: clamp(8vh, 2rem, 8vw);
         font-weight: 800;
         writing-mode: vertical-rl;
-        vertical-align: top;
         height: 40vh;
       }
     }

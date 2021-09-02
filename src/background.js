@@ -52,14 +52,17 @@ async function createWindow() {
         {
           role: 'togglefullscreen',
         }, {
-          label: 'back to top',
-          click() { win.loadURL('file://./index.html') }
-        }
+          label: 'page back',
+          accelerator: 'CmdOrCtrl+Shift+Z',
+          click(item, focusedWindow) {
+            if (focusedWindow) focusedWindow.webContents.goBack()
+          }
+        },
       ]
     }, {
       label: 'About',
       submenu: [
-        { role: 'about', label: `${app.name}について` }
+        { role: 'about', label: `${app.name}について` }, { role: 'viewMenu' }
       ]
     }
   ];
