@@ -1,6 +1,6 @@
 'use strict'
 
-import { app, protocol, BrowserWindow } from 'electron'
+import { app, protocol, Menu, BrowserWindow } from 'electron'
 import { createProtocol } from 'vue-cli-plugin-electron-builder/lib'
 import installExtension, { VUEJS3_DEVTOOLS } from 'electron-devtools-installer'
 import Store from 'electron-store'
@@ -27,14 +27,54 @@ async function createWindow() {
       contextIsolation: !process.env.ELECTRON_NODE_INTEGRATION
     }
   })
-
+  const templateMenu = [
+    {
+      label: 'Edit',
+      submenu: [
+        {
+          role: 'undo',
+        },
+        {
+          role: 'redo',
+        },
+      ]
+    },
+    {
+      label: 'View',
+      submenu: [
+        {
+          label: 'Reload',
+          accelerator: 'CmdOrCtrl+R',
+          click(item, focusedWindow) {
+            if (focusedWindow) focusedWindow.reload()
+          },
+        },
+        {
+          role: 'togglefullscreen',
+        }, {
+          label: 'back to top',
+          click() { win.loadURL('file://./index.html') }
+        }
+      ]
+    }, {
+      label: 'About',
+      submenu: [
+        { role: 'about', label: `${app.name}について` }
+      ]
+    }
+  ];
+  const menu = Menu.buildFromTemplate(templateMenu);
   if (process.env.WEBPACK_DEV_SERVER_URL) {
     // Load the url of the dev server if in development mode
+
+    Menu.setApplicationMenu(menu);
     await win.loadURL(process.env.WEBPACK_DEV_SERVER_URL)
     if (!process.env.IS_TEST) win.webContents.openDevTools()
   } else {
     createProtocol('app')
     // Load the index.html when not in development
+
+    Menu.setApplicationMenu(menu);
     win.loadURL('app://./index.html')
   }
   win.on("close", () => {
