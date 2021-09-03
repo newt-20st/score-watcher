@@ -41,10 +41,6 @@ jobs:
         if: matrix.os == 'macos-latest'
         run: |
           yarn run electron:build --macos dmg --x64  --publish never
-      - name: Build for Linux
-        if: matrix.os == 'ubuntu-latest'
-        run: |
-          yarn run electron:build --linux AppImage --x64  --publish never
       - name: Upload Artifacts for Windows Zip
         if: matrix.os == 'windows-latest'
         uses: actions/upload-artifact@v2
@@ -63,12 +59,6 @@ jobs:
         with:
           name: ${{ github.event.repository.name }}-Dmg Package
           path: dist_electron/*.dmg
-      - name: Upload Artifacts for Linux
-        if: matrix.os == 'ubuntu-latest'
-        uses: actions/upload-artifact@v2
-        with:
-          name: ${{ github.event.repository.name }}-AppImage Package
-          path: dist_electron/*.AppImage
       - name: Release
         uses: softprops/action-gh-release@v1
         if: startsWith(github.ref, 'refs/tags/')
@@ -77,6 +67,5 @@ jobs:
             dist_electron/*.zip
             dist_electron/*.exe
             dist_electron/*.dmg
-            dist_electron/*.AppImage
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
