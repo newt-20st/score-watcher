@@ -3,7 +3,7 @@ module.exports = {
         electronBuilder: {
             nodeIntegration: true,
             builderOptions: {
-                productName: "scoreboard",
+                productName: "ScoreWatcher",
                 appId: "app.web.newt-house",
                 win: {
                     target: [

@@ -1,11 +1,10 @@
 <template>
   <div class="home">
-    <h1>Scoreboard</h1>
     <div class="content">
-      <p>Ver.0.7.0</p>
+      <p>Ver.0.8.0</p>
       <p>
         最新のバージョンは<a
-          href="https://github.com/newt-20st/scoreboard/releases"
+          href="https://github.com/newt-20st/score-watcher/releases"
           target="_blank"
           >こちらのリポジトリ</a
         >から確認してください。
