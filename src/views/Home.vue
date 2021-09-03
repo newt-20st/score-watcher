@@ -56,8 +56,8 @@ export default {
 .formatList {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  gap: 2vw;
-  margin: 2vw 0;
+  gap: 1vw;
+  margin: 1vw 0;
   a {
     display: block;
     background-color: $back-color;

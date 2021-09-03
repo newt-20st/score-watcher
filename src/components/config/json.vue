@@ -1,24 +1,38 @@
 <template>
   <div class="config">
     <h1>設定ファイルを読み込む</h1>
-    <button class="btn btn-primary" @click="openConfig()">
-      設定ファイルを開く
-    </button>
-    <div v-if="this.load">
-      <h2>読み込み結果</h2>
-      <h3>形式</h3>
-      {{ data.type }}
-      <p>
-        <router-link
-          class="btn btn-success"
-          :to="
-            '/display/?type=' + this.$store.state.config.format[this.load].type
-          "
-          >このゲームを開始する</router-link
-        >
-      </p>
-
-      <p></p>
+    <div class="content">
+      <button class="btn btn-primary" @click="openConfig()">
+        設定ファイルを開く
+      </button>
+      <div v-if="this.load">
+        <h2>読み込み結果</h2>
+        <h3>形式</h3>
+        <p>{{ data.type }}</p>
+        <h3>参加者 ( {{ data.players.length }}人 )</h3>
+        <ul>
+          <li v-for="player in data.players" :key="player.name">
+            {{ player.name }}
+          </li>
+        </ul>
+        <h3>現在の進行状況</h3>
+        <p>{{ data.log.length }}問目</p>
+        <div class="menu">
+          <router-link
+            class="btn btn-success"
+            :to="
+              '/display?type=' + this.$store.state.config.format[this.load].type
+            "
+            >このゲームを開始する</router-link
+          >
+          <router-link
+            class="btn btn-success"
+            :to="'?type=' + this.$store.state.config.format[this.load].type"
+            >形式を編集する</router-link
+          >
+          <!--TODO: ↑ページ遷移できないので後で修正-->
+        </div>
+      </div>
     </div>
   </div>
 </template>

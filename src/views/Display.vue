@@ -3,7 +3,7 @@
 </template>
 
 <script>
-import error from "@/components/error.vue";
+import error from "@/views/Error.vue";
 import count from "@/components/display/count.vue";
 import nomx from "@/components/display/nomx.vue";
 import nbyn from "@/components/display/nbyn.vue";
@@ -52,6 +52,8 @@ export default {
         width: 30vw;
         padding: 1rem;
         h2 {
+          color: $back-color;
+          background-color: $base-color;
           padding: 0;
           margin: 0;
           color: $back-color;

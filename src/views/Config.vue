@@ -5,7 +5,7 @@
 </template>
 
 <script>
-import error from "@/components/error.vue";
+import error from "@/views/Error.vue";
 import count from "@/components/config/count.vue";
 import json from "@/components/config/json.vue";
 import nomx from "@/components/config/nomx.vue";
@@ -39,7 +39,7 @@ export default {
 .config {
   h3 {
     font-size: 1.5rem;
-    margin: 2rem 0 1rem 0;
+    margin: 1rem 0;
     padding-left: 0.5rem;
     color: $base-color;
     border-left: 0.5rem solid $base-color;
