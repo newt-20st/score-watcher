@@ -51,12 +51,12 @@ export default {
 <style lang="scss" scoped>
 .home {
   margin: 1rem;
+  border-top: 3px solid $base-color;
 }
 .formatList {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
   gap: 2vw;
-  font-size: 2rem;
   margin: 2vw 0;
   a {
     display: block;
@@ -70,8 +70,8 @@ export default {
     transition: all ease-in 0.3s;
     overflow-y: hidden;
     h3 {
-      font-size: 2rem;
-      line-height: 2rem;
+      font-size: 1.5rem;
+      line-height: 1.5rem;
     }
     div {
       font-size: 1rem;

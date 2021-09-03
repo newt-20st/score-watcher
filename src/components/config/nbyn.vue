@@ -3,6 +3,11 @@
     <h1>N by N</h1>
     <div class="content">
       <form>
+        <div class="formNotice">
+          ※
+          <span class="badge badge-danger">必須</span>
+          ：必ず設定の確認が必要と思われる項目です
+        </div>
         <h2>形式設定</h2>
         <div class="row">
           <div class="form-group col-sm">
@@ -10,8 +15,8 @@
             <input class="form-control" v-model="data.name" type="text" />
             <small class="form-text text-muted">画面の右上に表示されます</small>
           </div>
-          <div class="form-group col-sm">
-            <label>N</label>
+          <div class="form-group col-sm-4">
+            <label>N <span class="badge badge-danger">必須</span></label>
             <input
               class="form-control"
               v-model="data.config.n"
@@ -20,7 +25,7 @@
             />
             <small class="form-text text-muted">Nを設定してください</small>
           </div>
-          <div class="form-group col-sm">
+          <div class="form-group col-sm-4">
             <label>勝ち抜け人数</label>
             <input
               class="form-control"
@@ -33,7 +38,7 @@
           </div>
         </div>
         <div class="row">
-          <div class="form-group col-sm">
+          <div class="form-group col-sm-4">
             <div class="form-check">
               <input
                 class="form-check-input"
@@ -52,7 +57,7 @@
               >
             </div>
           </div>
-          <div class="form-group col-sm" v-show="data.config.end.enable">
+          <div class="form-group col-sm-4" v-show="data.config.end.enable">
             <label>限定問題数</label>
             <input
               class="form-control"
@@ -64,26 +69,31 @@
           </div>
         </div>
         <h2>参加者設定</h2>
-        <div class="form-group">
-          <label>プレイヤーの人数</label>
-          <select
-            class="form-control"
-            @input="number($event.target.value)"
-            :value="data.players.length"
-          >
-            <option v-for="i in 15" :key="i">{{ i }}</option>
-          </select>
-          <small class="form-text text-muted">※最大10人</small>
+        <div class="row">
+          <div class="form-group col-sm-4">
+            <label
+              >プレイヤーの人数
+              <span class="badge badge-danger">必須</span></label
+            >
+            <select
+              class="form-control"
+              @input="number($event.target.value)"
+              :value="data.players.length"
+            >
+              <option v-for="i in 15" :key="i">{{ i }}</option>
+            </select>
+            <small class="form-text text-muted">※最大10人</small>
+          </div>
         </div>
         <div class="playerSetting">
           <div v-for="(player, index) of data.players" :key="index">
             <h3>{{ index + 1 }}人目のプレイヤーデータ</h3>
             <div class="row">
-              <div class="form-group col-sm">
+              <div class="form-group col-sm-4">
                 <label>プレイヤーネーム</label>
                 <input class="form-control" type="text" v-model="player.name" />
               </div>
-              <div class="form-group col-sm">
+              <div class="form-group col-sm-4">
                 <label>正解数</label>
                 <input
                   class="form-control"
@@ -91,7 +101,7 @@
                   v-model="player.score.correct"
                 />
               </div>
-              <div class="form-group col-sm">
+              <div class="form-group col-sm-4">
                 <label>誤答数</label>
                 <input
                   class="form-control"
@@ -117,7 +127,8 @@
         <div class="menu">
           <router-link class="btn btn-primary" to="/display/?type=nbyn">
             コントロール画面を開く
-          </router-link>          <button class="btn btn-success" type="button" @click="quizUpdate()">
+          </router-link>
+          <button class="btn btn-success" type="button" @click="quizUpdate()">
             問題データを更新
           </button>
           <button class="btn btn-success" @click="configExport()">

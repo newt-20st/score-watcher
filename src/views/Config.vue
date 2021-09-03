@@ -1,5 +1,7 @@
 <template>
-  <component :is="change"></component>
+  <div>
+    <component :is="change"></component>
+  </div>
 </template>
 
 <script>
@@ -35,6 +37,13 @@ export default {
 
 <style lang="scss">
 .config {
+  h3 {
+    font-size: 1.5rem;
+    margin: 2rem 0 1rem 0;
+    padding-left: 0.5rem;
+    color: $base-color;
+    border-left: 0.5rem solid $base-color;
+  }
   margin: 1rem;
   #jsonConfigOutput {
     min-height: 50vh;

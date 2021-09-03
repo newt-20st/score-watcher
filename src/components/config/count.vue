@@ -3,51 +3,45 @@
     <h1>スコア計算</h1>
     <div class="content">
       <form>
+        <div class="formNotice">
+          ※
+          <span class="badge badge-danger">必須</span>
+          ：必ず設定の確認が必要と思われる項目です
+        </div>
         <h2>形式設定</h2>
         <div class="row">
-          <div class="form-group col-sm">
+          <div class="form-group col-sm-4">
             <label>イベント名</label>
             <input class="form-control" v-model="data.name" type="text" />
             <small class="form-text text-muted">画面の右上に表示されます</small>
           </div>
-          <div class="form-group col-sm">
-            <div class="form-check">
-              <input
-                class="form-check-input"
-                v-model="data.config.minus"
-                id="minus"
-                type="checkbox"
-                checked
-              />
-              <label class="form-check-label" for="minus">
-                マイナスの値を
-                <span v-if="data.config.minus">許可する</span
-                ><span v-else>許可しない</span>
-              </label>
-            </div>
-          </div>
         </div>
         <h2>参加者設定</h2>
-        <div class="form-group">
-          <label>プレイヤーの人数</label>
-          <select
-            class="form-control"
-            @input="number($event.target.value)"
-            :value="data.players.length"
-          >
-            <option v-for="i in 20" :key="i">{{ i }}</option>
-          </select>
-          <small class="form-text text-muted">※最大10人</small>
+        <div class="row">
+          <div class="form-group col-sm-4">
+            <label
+              >プレイヤーの人数
+              <span class="badge badge-danger">必須</span></label
+            >
+            <select
+              class="form-control"
+              @input="number($event.target.value)"
+              :value="data.players.length"
+            >
+              <option v-for="i in 20" :key="i">{{ i }}</option>
+            </select>
+            <small class="form-text text-muted">※最大10人</small>
+          </div>
         </div>
         <div class="playerSetting">
           <div v-for="(player, index) of data.players" :key="index">
             <h3>{{ index + 1 }}人目のプレイヤーデータ</h3>
             <div class="row">
-              <div class="form-group col-sm">
+              <div class="form-group col-sm-4">
                 <label>プレイヤーネーム</label>
                 <input class="form-control" type="text" v-model="player.name" />
               </div>
-              <div class="form-group col-sm">
+              <div class="form-group col-sm-4">
                 <label>初期値</label>
                 <input
                   class="form-control"

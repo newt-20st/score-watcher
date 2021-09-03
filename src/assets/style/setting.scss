@@ -9,16 +9,20 @@ body {
     font-family: 'BIZ UDPGothic', suns-serif;
 }
 h1 {
+    font-size: 2.3rem;
     background-color: $base-color;
     color: $back-color;
     border-radius: 3rem;
-    padding: 1rem 2rem;
+    padding: .5rem 2rem;
 }
 h2 {
+    font-size: 2rem;
+    margin: 1rem 0;
     padding: 0 1rem;
     display: inline-block;
     color: $base-color;
-    border-bottom: 3px solid $base-color;
+    background-color: $back-color;
+    border-bottom: 5px double $base-color;
 }
 .content {
     margin: 1rem 2rem;
