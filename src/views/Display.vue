@@ -8,12 +8,14 @@ import count from "@/components/display/count.vue";
 import nomx from "@/components/display/nomx.vue";
 import nbyn from "@/components/display/nbyn.vue";
 import nupdown from "@/components/display/nupdown.vue";
+import SwedishX from "@/components/display/SwedishX.vue";
 const list = {
   error,
   count,
   nomx,
   nbyn,
   nupdown,
+  SwedishX,
 };
 export default {
   name: "Display",

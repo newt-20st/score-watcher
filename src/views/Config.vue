@@ -11,13 +11,14 @@ import json from "@/components/config/json.vue";
 import nomx from "@/components/config/nomx.vue";
 import nbyn from "@/components/config/nbyn.vue";
 import nupdown from "@/components/config/nupdown.vue";
+import SwedishX from "@/components/config/SwedishX.vue";
 const list = {
   error,
   json,
   count,
   nomx,
   nbyn,
-  nupdown,
+  nupdown,SwedishX
 };
 export default {
   name: "Config",

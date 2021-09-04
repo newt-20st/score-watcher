@@ -38,6 +38,12 @@
             N回正解で勝ち抜けですが、途中で一度でも誤答すると0に戻る形式です。
           </div></router-link
         >
+        <router-link to="/config?type=SwedishX">
+          <h3>Swedish X</h3>
+          <div>
+            1回の正答で+1,n回目の誤答で-nでXを目指す形式です。
+          </div></router-link
+        >
       </div>
     </div>
   </div>
