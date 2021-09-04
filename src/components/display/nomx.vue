@@ -116,7 +116,7 @@ export default {
     correct(e) {
       store.commit("correct", {
         format: "nomx",
-        phase: "nomal",
+        phase: "normal",
         type: "correct",
         position: e,
         timestamp: new Date(),
@@ -125,7 +125,7 @@ export default {
     wrong(e) {
       store.commit("wrong", {
         format: "nomx",
-        phase: "nomal",
+        phase: "normal",
         type: "wrong",
         position: e,
         timestamp: new Date(),

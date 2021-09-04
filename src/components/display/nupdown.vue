@@ -4,7 +4,7 @@
       <div class="base">
         <div class="name">
           <h2>{{ data.name }}</h2>
-          <div>{{ data.config.correct }}o{{ data.config.wrong }}x</div>
+          <div>{{ data.config.n }} updown</div>
         </div>
         <div class="info">
           <div class="count">
@@ -25,7 +25,9 @@
       </div>
       <div class="menu">
         <div>
-          <router-link class="btn btn-sm btn-primary" to="/config?type=nbyn"
+          <router-link
+            class="btn btn-sm btn-primary"
+            :to="'/config?type=' + data.type"
             >設定に戻る</router-link
           >
         </div>
@@ -36,13 +38,14 @@
         </div>
       </div>
     </div>
+
     <div class="players" :class="getWidth()">
       <div
         class="player"
         v-for="(player, index) in data.players"
         :key="player.name"
         :class="{
-          win: isNaN(calcOrder(index)) && calcOrder(index) !== 'LOSE',
+          win: isNaN(calcScore(index)),
           lose: player.score.wrong >= data.config.n,
         }"
       >
@@ -53,13 +56,13 @@
           {{ player.name }}
         </div>
         <div class="playerScore">
-          <div class="productScore">{{ calcOrder(index) }}</div>
+          <div class="productScore">{{ calcScore(index) }}</div>
           <div class="eachScore">
             <div class="playerCorrect" @click="correct(index)">
-              <span>{{ player.score.correct }}</span>
+              <span>○</span>
             </div>
             <div class="playerWrong" @click="wrong(index)">
-              <span>{{ data.config.n - player.score.wrong }}</span>
+              <span>×</span>
             </div>
           </div>
         </div>
@@ -74,18 +77,11 @@
         v-for="(eachLog, index) in data.log"
         :key="index"
       >
-        <div v-if="eachLog.type === 'correct'">
+        <div v-if="eachLog.type === 'count'">
           {{
             getHMS(eachLog.timestamp) +
             data.players[eachLog.position].name +
-            "さんが正解しました。"
-          }}
-        </div>
-        <div v-if="eachLog.type === 'wrong'">
-          {{
-            getHMS(eachLog.timestamp) +
-            data.players[eachLog.position].name +
-            "さんが誤答しました。"
+            "さんが1点獲得しました。"
           }}
         </div>
       </div>
@@ -97,9 +93,12 @@
 import store from "../../store";
 var numeral = require("numeral");
 export default {
-  name: "nbyn",
+  name: "nupdown",
   data() {
-    return { data: this.$store.state.config.format.nbyn, order: [] };
+    return {
+      data: this.$store.state.config.format.nupdown,
+      order: [],
+    };
   },
   methods: {
     getWidth() {
@@ -109,7 +108,7 @@ export default {
     },
     correct(e) {
       store.commit("correct", {
-        format: "nbyn",
+        format: "nupdown",
         phase: "normal",
         type: "correct",
         position: e,
@@ -118,57 +117,39 @@ export default {
     },
     wrong(e) {
       store.commit("wrong", {
-        format: "nbyn",
+        format: "nupdown",
         phase: "normal",
         type: "wrong",
         position: e,
         timestamp: new Date(),
       });
     },
-    getHMS(e) {
-      return e.getHours() + ":" + e.getMinutes() + ":" + e.getSeconds() + " ";
-    },
-    undo() {
-      if (this.data.log.length > 0) {
-        const action = this.data.log[0];
-        if (action.type == "correct") {
-          store.commit("correct", {
-            format: "nbyn",
-            phase: "undo",
-            position: action.position,
-          });
-        } else if (action.type == "wrong") {
-          store.commit("wrong", {
-            format: "nbyn",
-            phase: "undo",
-            position: action.position,
-          });
+    calcScore(index) {
+      const orderList = this.data.players
+        .map((x) => x)
+        .sort((a, b) => {
+          if (a.score.score > b.score.score) return -1;
+          if (a.score.score < b.score.score) return 1;
+          if (a.score.correct > b.score.correct) return -1;
+          if (a.score.correct < b.score.correct) return 1;
+          if (a.score.wrong > b.score.wrong) return 1;
+          if (a.score.wrong < b.score.wrong) return -1;
+          return 0;
+        });
+      const order = orderList.indexOf(this.data.players[index]) + 1;
+      var score = 0;
+      for (let eachLog of this.data.log) {
+        if (eachLog.position === index && eachLog.type == "correct") {
+          score++;
+        } else if (eachLog.position === index && eachLog.type == "wrong") {
+          break;
         }
       }
-    },
-    winJudge(index) {
-      const score =
-        this.data.players[index].score.correct *
-        (this.data.config.n - this.data.players[index].score.wrong);
-      return score >= this.data.config.n ** 2;
-    },
-    calcOrder(index) {
-      const score =
-        this.data.players[index].score.correct *
-        (this.data.config.n - this.data.players[index].score.wrong);
-      const order =
-        this.data.players
-          .map((x) => x.score.evaluation)
-          .sort((a, b) => b - a)
-          .indexOf(this.data.players[index].score.evaluation) + 1;
+      this.data.players[index].score.score = score;
       if (this.data.config.end.enable) {
         if (this.data.log.length < this.data.config.end.count) {
-          if (score < this.data.config.n ** 2) {
-            if (this.data.players[index].score.wrong >= this.data.config.n) {
-              return "LOSE";
-            } else {
-              return score;
-            }
+          if (score < this.data.config.n) {
+            return score;
           } else {
             return numeral(order).format("0o");
           }
@@ -180,6 +161,28 @@ export default {
           }
         }
       }
+      return score;
+    },
+    getHMS(e) {
+      return e.getHours() + ":" + e.getMinutes() + ":" + e.getSeconds() + " ";
+    },
+    undo() {
+      if (this.data.log.length > 0) {
+        const action = this.data.log[0];
+        if (action.type == "correct") {
+          store.commit("correct", {
+            format: this.data.type,
+            phase: "undo",
+            position: action.position,
+          });
+        } else if (action.type == "wrong") {
+          store.commit("wrong", {
+            format: this.data.type,
+            phase: "undo",
+            position: action.position,
+          });
+        }
+      }
     },
   },
 };
@@ -188,8 +191,6 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang="scss" scoped>
 .players {
-  display: flex;
-  justify-content: space-evenly;
   .player {
     display: flex;
     flex-direction: column;
@@ -214,7 +215,6 @@ export default {
       .eachScore {
         display: flex;
         div {
-          background-color: $back-color;
           border-radius: 50%;
           font-size: 1.5rem;
           position: relative;
@@ -251,23 +251,15 @@ export default {
       .productScore {
         color: $back-color;
       }
-    }
-  }
-  .lose {
-    background-color: $wrong-color;
-    color: $back-color;
-    .playerScore {
-      .productScore {
-        color: $back-color;
+      .eachScore {
+        .playerCorrect span {
+          color: $back-color;
+        }
+        .playerWrong span {
+          color: $back-color;
+        }
       }
     }
   }
-}
-.log {
-  margin: 1rem;
-  margin-top: 1rem;
-  padding: 1rem;
-  border: 0.3rem solid $base-color;
-  border-radius: 2rem;
 }
 </style>

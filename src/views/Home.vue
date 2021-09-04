@@ -32,8 +32,8 @@
             ** 2に達したら勝ち抜けの形式です。
           </div></router-link
         >
-        <router-link to="/config?type=nupdown" class="wait">
-          <h3>[creating]N updown</h3>
+        <router-link to="/config?type=nupdown">
+          <h3>N updown</h3>
           <div>
             N回正解で勝ち抜けですが、途中で一度でも誤答すると0に戻る形式です。
           </div></router-link

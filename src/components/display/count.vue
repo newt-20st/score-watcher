@@ -73,7 +73,7 @@
 <script>
 import store from "../../store";
 export default {
-  name: "nomx",
+  name: "count",
   data() {
     return { data: this.$store.state.config.format.count, order: [] };
   },
@@ -86,7 +86,7 @@ export default {
     count(e) {
       store.commit("count", {
         format: "count",
-        phase: "nomal",
+        phase: "normal",
         position: e,
         timestamp: new Date(),
       });

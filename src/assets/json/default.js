@@ -94,6 +94,47 @@ const jsonData = {
         ],
         "quiz": [],
         "log": []
-    }
+    },
+    "nupdown": {
+        "type": "nupdown",
+        "name": "〇〇大会",
+        "config": {
+            "n": 7,
+            "end": { "enable": true, "count": 15 },
+            "winThrough": {
+                "count": 3,
+            }
+        },
+        "players": [
+            {
+                "name": "Player 1",
+                "score": {
+                    "score": 0,
+                    "correct": 0,
+                    "wrong": 0,
+                    "evaluation": 0
+                }
+            },
+            {
+                "name": "Player 2",
+                "score": {
+                    "score": 0,
+                    "correct": 0,
+                    "wrong": 0,
+                    "evaluation": 0
+                }
+            }, {
+                "name": "Player 3",
+                "score": {
+                    "score": 0,
+                    "correct": 0,
+                    "wrong": 0,
+                    "evaluation": 0
+                }
+            }
+        ],
+        "quiz": [],
+        "log": []
+    },
 }
 export default jsonData

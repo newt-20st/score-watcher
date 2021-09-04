@@ -7,11 +7,13 @@ import error from "@/views/Error.vue";
 import count from "@/components/display/count.vue";
 import nomx from "@/components/display/nomx.vue";
 import nbyn from "@/components/display/nbyn.vue";
+import nupdown from "@/components/display/nupdown.vue";
 const list = {
   error,
   count,
   nomx,
   nbyn,
+  nupdown,
 };
 export default {
   name: "Display",
