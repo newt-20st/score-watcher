@@ -3,6 +3,13 @@
 ## What is this?
 クイズ大会におけるプレイヤーのリアルタイムでの得点情報を可視化するためのソフトです。
 
+### How to install
+[リリースページ](https://github.com/newt-20st/score-watcher/releases)で最新のバージョンの`Assets`からインストーラーをダウンロードしてください。Windowsの方は`.exe`、Mac OSの方は`.dmg`です。
+
+ダウロード後インストーラーを起動するとインストールが始まります。完了後、デスクトップにショートカットが追加されるのでそこから起動してください。
+
+※Mac OS版は未検証です。
+
 ## For developer
 
 ### Project setup
