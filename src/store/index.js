@@ -46,11 +46,30 @@ const store = new createStore({
                 state.config.format[parameter.format].players[parameter.position].score.evaluation += evaluation;
                 parameter.evaluation = evaluation;
                 state.config.format[parameter.format].log.unshift(parameter);
+                if (parameter.format == "AttackSurvival") {
+                    for (let i = 0; i < state.config.format[parameter.format].players.length; i++) {
+                        console.log(state.config.format[parameter.format].config.correct)
+                        if (parameter.position == i) {
+                            state.config.format[parameter.format].players[i].score.score += state.config.format[parameter.format].config.correct.me
+                        } else {
+                            state.config.format[parameter.format].players[i].score.score += state.config.format[parameter.format].config.correct.other
+                        }
+                    }
+                }
             } else if (parameter.phase == "undo") {
-                state.config.format[parameter.format].players[parameter.position].score.correct -= 1;
+                state.config.format[parameter.format].players[parameter.action.position].score.correct -= 1;
                 const evaluation = state.config.format[parameter.format].log[0].evaluation
-                state.config.format[parameter.format].players[parameter.position].score.evaluation -= evaluation;
+                state.config.format[parameter.format].players[parameter.action.position].score.evaluation -= evaluation;
                 state.config.format[parameter.format].log.shift();
+                if (parameter.format == "AttackSurvival") {
+                    for (let i = 0; i < state.config.format[parameter.format].players.length; i++) {
+                        if (parameter.action.position == i) {
+                            state.config.format[parameter.format].players[i].score.score -= state.config.format[parameter.format].config.correct.me
+                        } else {
+                            state.config.format[parameter.format].players[i].score.score -= state.config.format[parameter.format].config.correct.other
+                        }
+                    }
+                }
             }
         },
         wrong(state, parameter) {
@@ -65,18 +84,46 @@ const store = new createStore({
                 state.config.format[parameter.format].players[parameter.position].score.evaluation -= evaluation;
                 parameter.evaluation = evaluation;
                 state.config.format[parameter.format].log.unshift(parameter);
+                if (parameter.format == "AttackSurvival") {
+                    for (let i = 0; i < state.config.format[parameter.format].players.length; i++) {
+                        if (parameter.position == i) {
+                            state.config.format[parameter.format].players[i].score.score += state.config.format[parameter.format].config.wrong.me
+                        } else {
+                            state.config.format[parameter.format].players[i].score.score += state.config.format[parameter.format].config.wrong.other
+                        }
+                    }
+                }
             } else if (parameter.phase == "undo") {
-                state.config.format[parameter.format].players[parameter.position].score.wrong -= 1;
+                state.config.format[parameter.format].players[parameter.action.position].score.wrong -= 1;
                 let evaluation = state.config.format[parameter.format].log[0].evaluation
-                state.config.format[parameter.format].players[parameter.position].score.evaluation += evaluation;
+                state.config.format[parameter.format].players[parameter.action.position].score.evaluation += evaluation;
                 state.config.format[parameter.format].log.shift();
+                if (parameter.format == "AttackSurvival") {
+                    for (let i = 0; i < state.config.format[parameter.format].players.length; i++) {
+                        if (parameter.action.position == i) {
+                            state.config.format[parameter.format].players[i].score.score -= state.config.format[parameter.format].config.wrong.me
+                        } else {
+                            state.config.format[parameter.format].players[i].score.score -= state.config.format[parameter.format].config.wrong.other
+                        }
+                    }
+                }
             }
         },
         through(state, parameter) {
             if (parameter.phase == "normal") {
                 state.config.format[parameter.format].log.unshift(parameter);
+                if (parameter.format === "AttackSurvival") {
+                    for (let i = 0; i < state.config.format[parameter.format].players.length; i++) {
+                        state.config.format[parameter.format].players[i].score.score += state.config.format[parameter.format].config.through
+                    }
+                }
             } else if (parameter.phase == "undo") {
                 state.config.format[parameter.format].log.shift();
+                if (parameter.format === "AttackSurvival") {
+                    for (let i = 0; i < state.config.format[parameter.format].players.length; i++) {
+                        state.config.format[parameter.format].players[i].score.score -= state.config.format[parameter.format].config.through
+                    }
+                }
             }
         },
         loadConfig(state, data) {

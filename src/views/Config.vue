@@ -12,13 +12,16 @@ import nomx from "@/components/config/nomx.vue";
 import nbyn from "@/components/config/nbyn.vue";
 import nupdown from "@/components/config/nupdown.vue";
 import SwedishX from "@/components/config/SwedishX.vue";
+import AttackSurvival from "@/components/config/AttackSurvival.vue";
 const list = {
   error,
   json,
   count,
   nomx,
   nbyn,
-  nupdown,SwedishX
+  nupdown,
+  SwedishX,
+  AttackSurvival,
 };
 export default {
   name: "Config",

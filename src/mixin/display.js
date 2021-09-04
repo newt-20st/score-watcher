@@ -42,7 +42,7 @@ export default {
                 store.commit(action.type, {
                     format: this.data.type,
                     phase: "undo",
-                    position: action.position,
+                    action: action,
                 });
             }
         },

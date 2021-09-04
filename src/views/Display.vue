@@ -9,6 +9,7 @@ import nomx from "@/components/display/nomx.vue";
 import nbyn from "@/components/display/nbyn.vue";
 import nupdown from "@/components/display/nupdown.vue";
 import SwedishX from "@/components/display/SwedishX.vue";
+import AttackSurvival from "@/components/display/AttackSurvival.vue";
 const list = {
   error,
   count,
@@ -16,6 +17,7 @@ const list = {
   nbyn,
   nupdown,
   SwedishX,
+  AttackSurvival
 };
 export default {
   name: "Display",

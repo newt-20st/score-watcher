@@ -44,6 +44,10 @@
             1回の正答で+1,n回目の誤答で-nでXを目指す形式です。
           </div></router-link
         >
+        <router-link to="/config?type=AttackSurvival">
+          <h3>Attack Survival</h3>
+          <div></div
+        ></router-link>
       </div>
     </div>
   </div>

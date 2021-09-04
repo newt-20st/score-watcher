@@ -177,5 +177,71 @@ const jsonData = {
         "quiz": [],
         "log": []
     },
+    "AttackSurvival": {
+        "type": "AttackSurvival",
+        "name": "〇〇大会",
+        "config": {
+            "n": 15,
+            "correct": {
+                "me": 0,
+                "other": -1,
+            },
+            "wrong": {
+                "me": -2,
+                "other": 0,
+            },
+            "through": 0,
+            "end": { "enable": true, "count": 15 },
+            "winThrough": {
+                "count": 3,
+            }
+        },
+        "players": [
+            {
+                "name": "Player 1",
+                "score": {
+                    "score": 15,
+                    "correct": 0,
+                    "wrong": 0,
+                    "evaluation": 0
+                }
+            },
+            {
+                "name": "Player 2",
+                "score": {
+                    "score": 15,
+                    "correct": 0,
+                    "wrong": 0,
+                    "evaluation": 0
+                }
+            }, {
+                "name": "Player 3",
+                "score": {
+                    "score": 15,
+                    "correct": 0,
+                    "wrong": 0,
+                    "evaluation": 0
+                }
+            }, {
+                "name": "Player 4",
+                "score": {
+                    "score": 15,
+                    "correct": 0,
+                    "wrong": 0,
+                    "evaluation": 0
+                }
+            }, {
+                "name": "Player 5",
+                "score": {
+                    "score": 15,
+                    "correct": 0,
+                    "wrong": 0,
+                    "evaluation": 0
+                }
+            }
+        ],
+        "quiz": [],
+        "log": []
+    },
 }
 export default jsonData
