@@ -17,7 +17,7 @@ const list = {
   nbyn,
   nupdown,
   SwedishX,
-  AttackSurvival
+  AttackSurvival,
 };
 export default {
   name: "Display",
@@ -102,6 +102,12 @@ export default {
       justify-content: flex-end;
       padding: 0.5rem;
       gap: 1rem;
+      align-items: center;
+      .timer {
+        .badge {
+          cursor: pointer;
+        }
+      }
     }
   }
   .players {

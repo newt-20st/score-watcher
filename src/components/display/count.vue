@@ -15,6 +15,11 @@
         </div>
       </div>
       <div class="menu">
+        <div class="timer">
+          <span @click="timerPause()" class="badge badge-primary">・</span>
+          <span @click="timerStart()" class="badge badge-primary">＞</span>
+          {{ timer }}
+        </div>
         <div>
           <router-link
             class="btn btn-sm btn-success"
@@ -34,7 +39,6 @@
         </div>
       </div>
     </div>
-
     <div class="players" :class="getWidth()">
       <div
         class="player"
@@ -89,7 +93,11 @@ import displayMixin from "../../mixin/display.js";
 export default {
   name: "count",
   data() {
-    return { data: this.$store.state.config.format.count, order: [] };
+    return {
+      data: this.$store.state.config.format.count,
+      order: [],
+      timer: "",
+    };
   },
   mixins: [displayMixin],
 };

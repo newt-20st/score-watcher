@@ -1,5 +1,10 @@
 import store from "../store";
+import { Timer } from 'easytimer.js'
+var aTimer = new Timer()
 export default {
+    created() {
+        this.InitTimer()
+    },
     methods: {
         count(e) {
             store.commit("count", {
@@ -35,6 +40,18 @@ export default {
         },
         getHMS(e) {
             return e.getHours() + ":" + e.getMinutes() + ":" + e.getSeconds() + " ";
+        },
+        InitTimer() {
+            aTimer.start({ precision: 'seconds', startValues: { seconds: this.seconds } })
+            aTimer.addEventListener('secondsUpdated', () => {
+                this.timer = aTimer.getTimeValues().toString()
+            })
+        },
+        timerStart() {
+            aTimer.start();
+        },
+        timerPause() {
+            aTimer.pause();
         },
         undo() {
             if (this.data.log.length > 0) {

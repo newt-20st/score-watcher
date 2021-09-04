@@ -16,6 +16,7 @@
     "axios": "^0.21.1",
     "bootstrap-vue": "^2.21.2",
     "core-js": "^3.6.5",
+    "easytimer.js": "^4.5.0",
     "electron-store": "^8.0.0",
     "node-sass": "^4.14.1",
     "numeral": "^2.0.6",
