@@ -42,7 +42,7 @@ import store from "../../store";
 const dialog = require("electron").remote.dialog;
 const fs = require("fs");
 export default {
-  name: "nomx",
+  name: "json",
   data() {
     return {
       load: false,

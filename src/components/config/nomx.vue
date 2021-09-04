@@ -164,13 +164,16 @@
           ></textarea>
         </div>
         <div class="menu">
-          <router-link class="btn btn-primary" to="/display/?type=nomx">
+          <router-link
+            class="btn btn-success"
+            :to="'/display/?type=' + this.data.type"
+          >
             コントロール画面を開く
           </router-link>
-          <button class="btn btn-success" type="button" @click="quizUpdate()">
+          <button class="btn btn-primary" type="button" @click="quizUpdate()">
             問題データを更新
           </button>
-          <button class="btn btn-success" @click="configExport()">
+          <button class="btn btn-primary" type="button" @click="configExport()">
             設定ファイルをエクスポート
           </button>
         </div>
@@ -193,7 +196,7 @@ import store from "../../store";
 const dialog = require("electron").remote.dialog;
 import fs from "fs";
 export default {
-  name: "ConfigNomx",
+  name: "nomx",
   data() {
     return {
       data: this.$store.state.config.format.nomx,

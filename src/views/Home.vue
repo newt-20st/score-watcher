@@ -71,6 +71,7 @@ export default {
     overflow-y: hidden;
     h3 {
       font-size: 1.5rem;
+      font-weight: 800;
       line-height: 1.5rem;
     }
     div {

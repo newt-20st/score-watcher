@@ -4,11 +4,16 @@
     <div class="content">
       <form>
         <div class="formNotice">
-          <ul><li>
-          ※
-          <span class="badge badge-danger">必須</span>
-          ：必ず設定の確認が必要と思われる項目です</li>
-          <li>勝ち抜け順の判定は「最終スコア」→「正答数の多さ」→「誤答数の多さ」で行われます</li></ul>
+          <ul>
+            <li>
+              ※
+              <span class="badge badge-danger">必須</span>
+              ：必ず設定の確認が必要と思われる項目です
+            </li>
+            <li>
+              勝ち抜け順の判定は「最終スコア」→「正答数の多さ」→「誤答数の多さ」で行われます
+            </li>
+          </ul>
         </div>
         <h2>形式設定</h2>
         <div class="row">
@@ -128,15 +133,15 @@
         </div>
         <div class="menu">
           <router-link
-            class="btn btn-primary"
-            :to="'/display/?type=' + data.type"
+            class="btn btn-success"
+            :to="'/display/?type=' + this.data.type"
           >
             コントロール画面を開く
           </router-link>
-          <button class="btn btn-success" type="button" @click="quizUpdate()">
+          <button class="btn btn-primary" type="button" @click="quizUpdate()">
             問題データを更新
           </button>
-          <button class="btn btn-success" @click="configExport()">
+          <button class="btn btn-primary" type="button" @click="configExport()">
             設定ファイルをエクスポート
           </button>
         </div>

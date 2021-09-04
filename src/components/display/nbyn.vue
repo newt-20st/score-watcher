@@ -25,13 +25,20 @@
       </div>
       <div class="menu">
         <div>
-          <router-link class="btn btn-sm btn-primary" to="/config?type=nbyn"
+          <router-link
+            class="btn btn-sm btn-success"
+            :to="'/config?type=' + data.type"
             >設定に戻る</router-link
           >
         </div>
         <div>
           <button class="btn btn-sm btn-primary" @click="undo()">
             一つ戻す
+          </button>
+        </div>
+        <div>
+          <button class="btn btn-sm btn-primary" @click="through()">
+            スルー
           </button>
         </div>
       </div>
@@ -88,6 +95,11 @@
             "さんが誤答しました。"
           }}
         </div>
+        <div v-if="eachLog.type === 'through'">
+          {{
+            getHMS(eachLog.timestamp) + (index + 1) + "問目はスルーされました。"
+          }}
+        </div>
       </div>
     </div>
   </div>
@@ -131,20 +143,20 @@ export default {
     undo() {
       if (this.data.log.length > 0) {
         const action = this.data.log[0];
-        if (action.type == "correct") {
-          store.commit("correct", {
-            format: "nbyn",
-            phase: "undo",
-            position: action.position,
-          });
-        } else if (action.type == "wrong") {
-          store.commit("wrong", {
-            format: "nbyn",
-            phase: "undo",
-            position: action.position,
-          });
-        }
+        store.commit(action.type, {
+          format: this.data.type,
+          phase: "undo",
+          position: action.position,
+        });
       }
+    },
+    through() {
+      store.commit("through", {
+        format: "nbyn",
+        phase: "normal",
+        type: "through",
+        timestamp: new Date(),
+      });
     },
     winJudge(index) {
       const score =

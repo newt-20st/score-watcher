@@ -74,6 +74,13 @@ const store = new createStore({
                 state.config.format[parameter.format].log.shift();
             }
         },
+        through(state, parameter) {
+            if (parameter.phase == "normal") {
+                state.config.format[parameter.format].log.unshift(parameter);
+            } else if (parameter.phase == "undo") {
+                state.config.format[parameter.format].log.shift();
+            }
+        },
         loadConfig(state, data) {
             state.config.format[data.type] = data
         },

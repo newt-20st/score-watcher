@@ -16,13 +16,20 @@
       </div>
       <div class="menu">
         <div>
-          <router-link class="btn btn-sm btn-primary" to="/config?type=count"
+          <router-link
+            class="btn btn-sm btn-success"
+            :to="'/config?type=' + data.type"
             >設定に戻る</router-link
           >
         </div>
         <div>
           <button class="btn btn-sm btn-primary" @click="undo()">
             一つ戻す
+          </button>
+        </div>
+        <div>
+          <button class="btn btn-sm btn-primary" @click="through()">
+            スルー
           </button>
         </div>
       </div>
@@ -65,6 +72,11 @@
             "さんが1点獲得しました。"
           }}
         </div>
+        <div v-if="eachLog.type === 'through'">
+          {{
+            getHMS(eachLog.timestamp) + (index + 1) + "問目はスルーされました。"
+          }}
+        </div>
       </div>
     </div>
   </div>
@@ -97,12 +109,20 @@ export default {
     undo() {
       if (this.data.log.length > 0) {
         const action = this.data.log[0];
-        store.commit("count", {
-          format: "count",
+        store.commit(action.type, {
+          format: this.data.type,
           phase: "undo",
           position: action.position,
         });
       }
+    },
+    through() {
+      store.commit("through", {
+        format: this.data.type,
+        phase: "normal",
+        type: "through",
+        timestamp: new Date(),
+      });
     },
   },
 };
