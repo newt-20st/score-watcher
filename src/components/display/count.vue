@@ -65,7 +65,7 @@
         v-for="(eachLog, index) in data.log"
         :key="index"
       >
-        <div v-if="eachLog.type === 'count'">
+        <div v-if="eachLog.type === 'correct'">
           {{
             getHMS(eachLog.timestamp) +
             data.players[eachLog.position].name +
@@ -74,7 +74,9 @@
         </div>
         <div v-if="eachLog.type === 'through'">
           {{
-            getHMS(eachLog.timestamp) + (index + 1) + "問目はスルーされました。"
+            getHMS(eachLog.timestamp) +
+            (data.log.length - index) +
+            "問目はスルーされました。"
           }}
         </div>
       </div>
@@ -83,48 +85,13 @@
 </template>
 
 <script>
-import store from "../../store";
+import displayMixin from "../../mixin/display.js";
 export default {
   name: "count",
   data() {
     return { data: this.$store.state.config.format.count, order: [] };
   },
-  methods: {
-    getWidth() {
-      return this.data.players.length * 115 > window.innerWidth
-        ? "over"
-        : "default";
-    },
-    count(e) {
-      store.commit("count", {
-        format: "count",
-        phase: "normal",
-        position: e,
-        timestamp: new Date(),
-      });
-    },
-    getHMS(e) {
-      return e.getHours() + ":" + e.getMinutes() + ":" + e.getSeconds() + " ";
-    },
-    undo() {
-      if (this.data.log.length > 0) {
-        const action = this.data.log[0];
-        store.commit(action.type, {
-          format: this.data.type,
-          phase: "undo",
-          position: action.position,
-        });
-      }
-    },
-    through() {
-      store.commit("through", {
-        format: this.data.type,
-        phase: "normal",
-        type: "through",
-        timestamp: new Date(),
-      });
-    },
-  },
+  mixins: [displayMixin],
 };
 </script>
 

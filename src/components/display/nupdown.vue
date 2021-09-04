@@ -100,8 +100,8 @@
 </template>
 
 <script>
-import store from "../../store";
 var numeral = require("numeral");
+import displayMixin from "../../mixin/display.js";
 export default {
   name: "nupdown",
   data() {
@@ -110,30 +110,8 @@ export default {
       order: [],
     };
   },
+  mixins: [displayMixin],
   methods: {
-    getWidth() {
-      return this.data.players.length * 115 > window.innerWidth
-        ? "over"
-        : "default";
-    },
-    correct(e) {
-      store.commit("correct", {
-        format: "nupdown",
-        phase: "normal",
-        type: "correct",
-        position: e,
-        timestamp: new Date(),
-      });
-    },
-    wrong(e) {
-      store.commit("wrong", {
-        format: "nupdown",
-        phase: "normal",
-        type: "wrong",
-        position: e,
-        timestamp: new Date(),
-      });
-    },
     calcScore(index) {
       const orderList = this.data.players
         .map((x) => x)
@@ -172,27 +150,6 @@ export default {
         }
       }
       return score;
-    },
-    getHMS(e) {
-      return e.getHours() + ":" + e.getMinutes() + ":" + e.getSeconds() + " ";
-    },
-    undo() {
-      if (this.data.log.length > 0) {
-        const action = this.data.log[0];
-        store.commit(action.type, {
-          format: this.data.type,
-          phase: "undo",
-          position: action.position,
-        });
-      }
-    },
-    through() {
-      store.commit("through", {
-        format: this.data.type,
-        phase: "normal",
-        type: "through",
-        timestamp: new Date(),
-      });
     },
   },
 };

@@ -106,58 +106,15 @@
 </template>
 
 <script>
-import store from "../../store";
 var numeral = require("numeral");
+import displayMixin from "../../mixin/display.js";
 export default {
   name: "nbyn",
   data() {
     return { data: this.$store.state.config.format.nbyn, order: [] };
   },
+  mixins: [displayMixin],
   methods: {
-    getWidth() {
-      return this.data.players.length * 115 > window.innerWidth
-        ? "over"
-        : "default";
-    },
-    correct(e) {
-      store.commit("correct", {
-        format: "nbyn",
-        phase: "normal",
-        type: "correct",
-        position: e,
-        timestamp: new Date(),
-      });
-    },
-    wrong(e) {
-      store.commit("wrong", {
-        format: "nbyn",
-        phase: "normal",
-        type: "wrong",
-        position: e,
-        timestamp: new Date(),
-      });
-    },
-    getHMS(e) {
-      return e.getHours() + ":" + e.getMinutes() + ":" + e.getSeconds() + " ";
-    },
-    undo() {
-      if (this.data.log.length > 0) {
-        const action = this.data.log[0];
-        store.commit(action.type, {
-          format: this.data.type,
-          phase: "undo",
-          position: action.position,
-        });
-      }
-    },
-    through() {
-      store.commit("through", {
-        format: "nbyn",
-        phase: "normal",
-        type: "through",
-        timestamp: new Date(),
-      });
-    },
     winJudge(index) {
       const score =
         this.data.players[index].score.correct *

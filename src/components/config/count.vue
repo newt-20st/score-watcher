@@ -95,8 +95,7 @@
 
 <script>
 import store from "../../store";
-const dialog = require("electron").remote.dialog;
-import fs from "fs";
+import configMenu from "../../mixin/configMenu.js";
 export default {
   name: "count",
   data() {
@@ -110,6 +109,7 @@ export default {
     store.commit("update", this.data);
     store.commit("quiz", this.quizRaw);
   },
+  mixins: [configMenu],
   methods: {
     number(value) {
       const list = [];
@@ -129,30 +129,6 @@ export default {
         }
       }
       this.data.players = list;
-    },
-    configExport() {
-      const jsonData = this.$store.state.config.format.count;
-      jsonData.version = 0;
-      jsonData.exportTimestamp = new Date();
-      const options = {
-        title: "設定ファイルを保存",
-        filters: [{ name: "Documents", extensions: ["json"] }],
-      };
-      const result = dialog.showSaveDialogSync(options);
-      if (result) {
-        fs.writeFileSync(
-          result,
-          JSON.stringify(this.$store.state.config.format.count, null, "\t")
-        );
-      }
-    },
-    quizUpdate() {
-      const quizRaw = document.getElementById("quizRaw").value.split("\n");
-      const dataArray = [];
-      for (let i = 0; i < quizRaw.length; i++) {
-        dataArray[i] = quizRaw[i].split(",");
-      }
-      this.data.quiz = dataArray;
     },
   },
 };
