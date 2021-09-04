@@ -17,6 +17,20 @@
           </div>
           <div class="form-group col-sm-4">
             <label
+              >プレイヤーの人数
+              <span class="badge badge-danger">必須</span></label
+            >
+            <select
+              class="form-control"
+              @input="number($event.target.value)"
+              :value="data.players.length"
+            >
+              <option v-for="i in 15" :key="i">{{ i }}</option>
+            </select>
+            <small class="form-text text-muted">※最大15人</small>
+          </div>
+          <div class="form-group col-sm-4">
+            <label
               >勝ち抜け正解数
               <span class="badge badge-danger">必須</span></label
             >
@@ -108,22 +122,6 @@
           </div>
         </div>
         <h2>参加者設定</h2>
-        <div class="row">
-          <div class="form-group col-sm-4">
-            <label
-              >プレイヤーの人数
-              <span class="badge badge-danger">必須</span></label
-            >
-            <select
-              class="form-control"
-              @input="number($event.target.value)"
-              :value="data.players.length"
-            >
-              <option v-for="i in 20" :key="i">{{ i }}</option>
-            </select>
-            <small class="form-text text-muted">※最大10人</small>
-          </div>
-        </div>
         <div class="playerSetting">
           <div v-for="(player, index) of data.players" :key="index">
             <h3>{{ index + 1 }}人目のプレイヤーデータ</h3>
