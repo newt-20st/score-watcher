@@ -32,7 +32,6 @@ const store = new createStore({
         },
         correct(state, parameter) {
             if (parameter.phase == "normal") {
-                console.log(state.config.format[parameter.format].players[parameter.position].score.correct)
                 state.config.format[parameter.format].players[parameter.position].score.correct += 1;
                 let evaluation = 0;
                 if (parameter.format === "nupdown") {
@@ -47,7 +46,6 @@ const store = new createStore({
                 state.config.format[parameter.format].players[parameter.position].score.evaluation += evaluation;
                 parameter.evaluation = evaluation;
                 state.config.format[parameter.format].log.unshift(parameter);
-                console.log(parameter);
             } else if (parameter.phase == "undo") {
                 state.config.format[parameter.format].players[parameter.position].score.correct -= 1;
                 const evaluation = state.config.format[parameter.format].log[0].evaluation

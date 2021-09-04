@@ -97,7 +97,9 @@
         </div>
         <div v-if="eachLog.type === 'through'">
           {{
-            getHMS(eachLog.timestamp) + (index + 1) + "問目はスルーされました。"
+            getHMS(eachLog.timestamp) +
+            (data.log.length - index) +
+            "問目はスルーされました。"
           }}
         </div>
       </div>

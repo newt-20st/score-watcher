@@ -82,16 +82,25 @@
         v-for="(eachLog, index) in data.log"
         :key="index"
       >
-        <div v-if="eachLog.type === 'count'">
+        <div v-if="eachLog.type === 'correct'">
           {{
             getHMS(eachLog.timestamp) +
             data.players[eachLog.position].name +
             "さんが1点獲得しました。"
           }}
         </div>
+        <div v-if="eachLog.type === 'wrong'">
+          {{
+            getHMS(eachLog.timestamp) +
+            data.players[eachLog.position].name +
+            "さんが誤答しました。"
+          }}
+        </div>
         <div v-if="eachLog.type === 'through'">
           {{
-            getHMS(eachLog.timestamp) + (index + 1) + "問目はスルーされました。"
+            getHMS(eachLog.timestamp) +
+            (data.log.length - index) +
+            "問目はスルーされました。"
           }}
         </div>
       </div>
