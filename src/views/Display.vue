@@ -109,6 +109,11 @@ export default {
         display: flex;
         align-items: center;
         gap: 0.5rem;
+        span {
+          font-size: 1.5rem;
+          font-weight: 800;
+          color: $correct-color;
+        }
         .timerBtn {
           padding: 0 0.3rem;
         }

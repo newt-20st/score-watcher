@@ -24,6 +24,15 @@
         </div>
       </div>
       <div class="menu">
+        <div class="timer">
+          <span>{{ timer }}</span>
+          <button @click="timerPause()" class="timerBtn btn btn-outline-danger">
+            <i class="bi bi-pause-fill"></i>
+          </button>
+          <button @click="timerStart()" class="timerBtn btn btn-outline-danger">
+            <i class="bi bi-play-fill"></i>
+          </button>
+        </div>
         <div>
           <router-link
             class="btn btn-sm btn-success"
@@ -64,10 +73,10 @@
           <div class="productScore">{{ calcScore(index) }}</div>
           <div class="eachScore">
             <div class="playerCorrect" @click="correct(index)">
-              <span>{{player.score.correct}}○</span>
+              <span>{{ player.score.correct }}○</span>
             </div>
             <div class="playerWrong" @click="wrong(index)">
-              <span>{{player.score.wrong}}×</span>
+              <span>{{ player.score.wrong }}×</span>
             </div>
           </div>
         </div>
@@ -117,6 +126,7 @@ export default {
     return {
       data: this.$store.state.config.format.AttackSurvival,
       order: [],
+      timer: "",
     };
   },
   mixins: [displayMixin],

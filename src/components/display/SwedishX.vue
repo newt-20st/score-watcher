@@ -24,6 +24,15 @@
         </div>
       </div>
       <div class="menu">
+        <div class="timer">
+          <span>{{ timer }}</span>
+          <button @click="timerPause()" class="timerBtn btn btn-outline-danger">
+            <i class="bi bi-pause-fill"></i>
+          </button>
+          <button @click="timerStart()" class="timerBtn btn btn-outline-danger">
+            <i class="bi bi-play-fill"></i>
+          </button>
+        </div>
         <div>
           <router-link
             class="btn btn-sm btn-success"
@@ -117,6 +126,7 @@ export default {
     return {
       data: this.$store.state.config.format.SwedishX,
       order: [],
+      timer: "",
     };
   },
   mixins: [displayMixin],

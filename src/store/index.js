@@ -18,9 +18,6 @@ const store = new createStore({
         update(state, data) {
             state.config.format[data.type] = data
         },
-        timerUpdate(state, data) {
-            state.config.format[data.format].display.timer.start
-        },
         quiz(state, data) {
             state.quiz = data
         },

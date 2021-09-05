@@ -45,14 +45,10 @@ export default {
             if (this.data.display.timer.countdown) {
                 aTimer.start({ countdown: true, precision: 'seconds', startValues: { seconds: this.data.display.timer.start } })
             } else {
-                aTimer.start()
+                aTimer.start({ precision: 'seconds', startValues: { seconds: 0 } })
             }
             aTimer.addEventListener('secondsUpdated', () => {
                 this.timer = aTimer.getTimeValues().toString()
-                store.commit("timerUpdate", {
-                    format: this.data.type,
-                    time: aTimer.getTimeValues().toString(),
-                });
             })
             aTimer.addEventListener('started', () => {
                 this.timer = aTimer.getTimeValues().toString()

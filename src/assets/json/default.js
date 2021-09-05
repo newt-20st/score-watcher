@@ -26,6 +26,13 @@ const jsonData = {
     "nomx": {
         "type": "nomx",
         "name": "〇〇大会",
+        "display": {
+            "timer": {
+                "enable": true,
+                "countdown": true,
+                "start": 600,
+            },
+        },
         "config": {
             "correct": 7,
             "wrong": 3,
@@ -67,6 +74,13 @@ const jsonData = {
     "nbyn": {
         "type": "nbyn",
         "name": "〇〇大会",
+        "display": {
+            "timer": {
+                "enable": true,
+                "countdown": true,
+                "start": 600,
+            },
+        },
         "config": {
             "n": 7,
             "winThrough": {
@@ -105,6 +119,13 @@ const jsonData = {
     "nupdown": {
         "type": "nupdown",
         "name": "〇〇大会",
+        "display": {
+            "timer": {
+                "enable": true,
+                "countdown": true,
+                "start": 600,
+            },
+        },
         "config": {
             "n": 7,
             "end": { "enable": true, "count": 15 },
@@ -146,6 +167,13 @@ const jsonData = {
     "SwedishX": {
         "type": "SwedishX",
         "name": "〇〇大会",
+        "display": {
+            "timer": {
+                "enable": true,
+                "countdown": true,
+                "start": 600,
+            },
+        },
         "config": {
             "x": 10,
             "end": { "enable": true, "count": 15 },
@@ -187,6 +215,13 @@ const jsonData = {
     "AttackSurvival": {
         "type": "AttackSurvival",
         "name": "〇〇大会",
+        "display": {
+            "timer": {
+                "enable": true,
+                "countdown": true,
+                "start": 600,
+            },
+        },
         "config": {
             "n": 15,
             "correct": {
@@ -253,6 +288,13 @@ const jsonData = {
     "SquareX": {
         "type": "SquareX",
         "name": "〇〇大会",
+        "display": {
+            "timer": {
+                "enable": true,
+                "countdown": true,
+                "start": 600,
+            },
+        },
         "config": {
             "x": 16,
             "score": 0,
