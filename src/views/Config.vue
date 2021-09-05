@@ -13,6 +13,7 @@ import nbyn from "@/components/config/nbyn.vue";
 import nupdown from "@/components/config/nupdown.vue";
 import SwedishX from "@/components/config/SwedishX.vue";
 import AttackSurvival from "@/components/config/AttackSurvival.vue";
+import SquareX from "@/components/config/SquareX.vue";
 const list = {
   error,
   json,
@@ -22,6 +23,7 @@ const list = {
   nupdown,
   SwedishX,
   AttackSurvival,
+  SquareX,
 };
 export default {
   name: "Config",

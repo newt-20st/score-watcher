@@ -48,6 +48,12 @@
           <h3>Attack Survival</h3>
           <div></div
         ></router-link>
+        <router-link to="/config?type=SquareX">
+          <h3>Square X</h3>
+          <div>
+            奇数問目と偶数問目の正解数をかけた数がX以上になれば勝ち抜けの形式です。
+          </div></router-link
+        >
       </div>
     </div>
   </div>

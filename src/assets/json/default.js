@@ -243,5 +243,58 @@ const jsonData = {
         "quiz": [],
         "log": []
     },
+    "SquareX": {
+        "type": "SquareX",
+        "name": "〇〇大会",
+        "config": {
+            "x": 16,
+            "score": 0,
+            "odd": 1,
+            "even": 1,
+            "winThrough": {
+                "count": 3,
+            },
+            "end": { "enable": true, "count": 15 },
+        },
+        "players": [
+            {
+                "name": "Player 1",
+                "score": {
+                    "score": {
+                        "odd": 0,
+                        "even": 0,
+                    },
+                    "correct": 0,
+                    "wrong": 0,
+                    "evaluation": 0
+                }
+            },
+            {
+                "name": "Player 2",
+                "score": {
+                    "score": {
+                        "odd": 0,
+                        "even": 0,
+                    },
+                    "correct": 0,
+                    "wrong": 0,
+                    "evaluation": 0
+                }
+            }, {
+                "name": "Player 3",
+                "score": {
+                    "score": {
+                        "odd": 0,
+                        "even": 0,
+                    },
+                    "correct": 0,
+                    "wrong": 0,
+                    "evaluation": 0
+                }
+            }
+        ],
+        "quiz": [],
+        "log": []
+    },
 }
 export default jsonData
