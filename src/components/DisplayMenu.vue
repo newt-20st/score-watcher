@@ -8,9 +8,6 @@
       <button @click="timerStart()" class="timerBtn btn btn-outline-danger">
         <i class="bi bi-play-fill"></i>
       </button>
-      <button @click="timerReset()" class="timerBtn btn btn-outline-danger">
-        <i class="bi bi-arrow-repeat"></i>
-      </button>
     </div>
     <div>
       <router-link class="btn btn-sm btn-success" :to="'/config?type=' + format"
@@ -27,8 +24,8 @@
 </template>
 
 <script>
+import store from "../store";
 import { Timer } from "easytimer.js";
-var aTimer = new Timer();
 export default {
   name: "DisplayMenu",
   props: ["format"],
@@ -36,6 +33,7 @@ export default {
     return {
       timer: this.$store.state.config.format[this.format].display.timer,
       time: "",
+      aTimer: null,
     };
   },
   created() {
@@ -43,36 +41,38 @@ export default {
   },
   methods: {
     InitTimer() {
+      this.aTimer = new Timer();
       if (this.timer.countdown) {
-        aTimer.start({
+        this.aTimer.start({
           countdown: true,
           precision: "seconds",
           startValues: { seconds: this.timer.start },
         });
       } else {
-        aTimer.start({ precision: "seconds", startValues: { seconds: 0 } });
+        this.aTimer.start({
+          precision: "seconds",
+          startValues: { seconds: 0 },
+        });
       }
-      aTimer.addEventListener("secondsUpdated", () => {
-        this.time = aTimer.getTimeValues().toString();
+      this.aTimer.addEventListener("secondsUpdated", () => {
+        this.time = this.aTimer.getTimeValues().toString();
+        store.commit("timerUpdate", {
+          format: this.format,
+          time:
+            this.aTimer.getTimeValues().seconds +
+            this.aTimer.getTimeValues().minutes * 60 +
+            this.aTimer.getTimeValues().hours * 3600,
+        });
       });
-      aTimer.addEventListener("started", () => {
-        this.time = aTimer.getTimeValues().toString();
-      });
-      aTimer.addEventListener("pause", () => {
-        this.time = aTimer.getTimeValues().toString();
-      });
-      aTimer.addEventListener("targetAchieved", () => {
+      this.aTimer.addEventListener("targetAchieved", () => {
         this.time = "FINISH!";
       });
     },
     timerStart() {
-      aTimer.start();
+      this.aTimer.start();
     },
     timerPause() {
-      aTimer.pause();
-    },
-    timerReset() {
-      aTimer.reset();
+      this.aTimer.pause();
     },
     undo() {
       this.$emit("undo");
