@@ -1,10 +1,7 @@
 import store from "../store";
-import { Timer } from 'easytimer.js'
-var aTimer = new Timer()
+import Menu from '../components/DisplayMenu.vue'
 export default {
-    created() {
-        this.InitTimer()
-    },
+    components: { Menu },
     methods: {
         count(e) {
             store.commit("count", {
@@ -40,31 +37,6 @@ export default {
         },
         getHMS(e) {
             return e.getHours() + ":" + e.getMinutes() + ":" + e.getSeconds() + " ";
-        },
-        InitTimer() {
-            if (this.data.display.timer.countdown) {
-                aTimer.start({ countdown: true, precision: 'seconds', startValues: { seconds: this.data.display.timer.start } })
-            } else {
-                aTimer.start({ precision: 'seconds', startValues: { seconds: 0 } })
-            }
-            aTimer.addEventListener('secondsUpdated', () => {
-                this.timer = aTimer.getTimeValues().toString()
-            })
-            aTimer.addEventListener('started', () => {
-                this.timer = aTimer.getTimeValues().toString()
-            });
-            aTimer.addEventListener('pause', () => {
-                this.timer = aTimer.getTimeValues().toString()
-            });
-            aTimer.addEventListener('targetAchieved', () => {
-                this.timer = "FINISH!"
-            });
-        },
-        timerStart() {
-            aTimer.start();
-        },
-        timerPause() {
-            aTimer.pause();
         },
         undo() {
             if (this.data.log.length > 0) {

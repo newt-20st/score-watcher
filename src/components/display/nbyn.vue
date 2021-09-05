@@ -23,34 +23,7 @@
           </div>
         </div>
       </div>
-      <div class="menu">
-        <div class="timer">
-          <span>{{ timer }}</span>
-          <button @click="timerPause()" class="timerBtn btn btn-outline-danger">
-            <i class="bi bi-pause-fill"></i>
-          </button>
-          <button @click="timerStart()" class="timerBtn btn btn-outline-danger">
-            <i class="bi bi-play-fill"></i>
-          </button>
-        </div>
-        <div>
-          <router-link
-            class="btn btn-sm btn-success"
-            :to="'/config?type=' + data.type"
-            >設定に戻る</router-link
-          >
-        </div>
-        <div>
-          <button class="btn btn-sm btn-primary" @click="undo()">
-            一つ戻す
-          </button>
-        </div>
-        <div>
-          <button class="btn btn-sm btn-primary" @click="through()">
-            スルー
-          </button>
-        </div>
-      </div>
+      <Menu :format="data.type" @undo="undo()" @through="through()" />
     </div>
     <div class="players" :class="getWidth()">
       <div
