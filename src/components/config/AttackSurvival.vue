@@ -257,7 +257,6 @@
 </template>
 
 <script>
-import store from "../../store";
 import configMenu from "../../mixin/config.js";
 export default {
   name: "AttackSurvival",
@@ -267,10 +266,6 @@ export default {
       base: {},
       quizRaw: this.$store.state.quiz,
     };
-  },
-  updated() {
-    store.commit("update", this.data);
-    store.commit("quiz", this.quizRaw);
   },
   mixins: [configMenu],
   methods: {

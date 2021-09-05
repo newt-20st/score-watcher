@@ -40,13 +40,14 @@ export default {
       }
     },
     quizUpdate() {
-      const quizRaw = this.quizRaw.split("\n");
-      const dataArray = [];
-      for (let i = 0; i < quizRaw.length; i++) {
-        dataArray[i] = quizRaw[i].split(",");
+      if (this.quizRaw.length !== 0) {
+        const quizRaw = this.quizRaw.split("\n");
+        const dataArray = [];
+        for (let i = 0; i < quizRaw.length; i++) {
+          dataArray[i] = quizRaw[i].split(",");
+        }
+        this.$emit("quiz-field", dataArray);
       }
-      console.log(dataArray);
-      this.$emit("quiz-field", dataArray);
     },
   },
 };
