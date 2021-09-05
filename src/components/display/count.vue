@@ -4,7 +4,7 @@
       <div class="base">
         <div class="name">
           <h2>{{ data.name }}</h2>
-          <div>{{ data.config.correct }}o{{ data.config.wrong }}x</div>
+          <div>{{ data.type }}</div>
         </div>
         <div class="info">
           <div class="count">{{ data.log.length }} 問目</div>
@@ -16,9 +16,13 @@
       </div>
       <div class="menu">
         <div class="timer">
-          <span @click="timerPause()" class="badge badge-primary">・</span>
-          <span @click="timerStart()" class="badge badge-primary">＞</span>
-          {{ timer }}
+          <span>{{ timer }}</span>
+          <button @click="timerPause()" class="timerBtn btn btn-outline-danger">
+            <i class="bi bi-pause-fill"></i>
+          </button>
+          <button @click="timerStart()" class="timerBtn btn btn-outline-danger">
+            <i class="bi bi-play-fill"></i>
+          </button>
         </div>
         <div>
           <router-link

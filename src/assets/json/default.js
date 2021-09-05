@@ -2,6 +2,13 @@ const jsonData = {
     "count": {
         "type": "count",
         "name": "カウンター",
+        "display": {
+            "timer": {
+                "enable": true,
+                "countdown": true,
+                "start": 600,
+            },
+        },
         "config": {
             "minus": false,
         },

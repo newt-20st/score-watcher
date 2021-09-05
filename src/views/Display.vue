@@ -106,8 +106,11 @@ export default {
       gap: 1rem;
       align-items: center;
       .timer {
-        .badge {
-          cursor: pointer;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        .timerBtn {
+          padding: 0 0.3rem;
         }
       }
     }

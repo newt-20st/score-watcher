@@ -42,10 +42,27 @@ export default {
             return e.getHours() + ":" + e.getMinutes() + ":" + e.getSeconds() + " ";
         },
         InitTimer() {
-            aTimer.start({ precision: 'seconds', startValues: { seconds: this.seconds } })
+            if (this.data.display.timer.countdown) {
+                aTimer.start({ countdown: true, precision: 'seconds', startValues: { seconds: this.data.display.timer.start } })
+            } else {
+                aTimer.start()
+            }
             aTimer.addEventListener('secondsUpdated', () => {
                 this.timer = aTimer.getTimeValues().toString()
+                store.commit("timerUpdate", {
+                    format: this.data.type,
+                    time: aTimer.getTimeValues().toString(),
+                });
             })
+            aTimer.addEventListener('started', () => {
+                this.timer = aTimer.getTimeValues().toString()
+            });
+            aTimer.addEventListener('pause', () => {
+                this.timer = aTimer.getTimeValues().toString()
+            });
+            aTimer.addEventListener('targetAchieved', () => {
+                this.timer = "FINISH!"
+            });
         },
         timerStart() {
             aTimer.start();
