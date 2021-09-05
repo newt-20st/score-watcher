@@ -6,21 +6,21 @@
 
 <script>
 import error from "@/views/Error.vue";
-import count from "@/components/config/count.vue";
+import Count from "@/components/config/Count.vue";
 import json from "@/components/config/json.vue";
-import nomx from "@/components/config/nomx.vue";
-import nbyn from "@/components/config/nbyn.vue";
-import nupdown from "@/components/config/nupdown.vue";
+import NoMx from "@/components/config/NoMx.vue";
+import NbyN from "@/components/config/NbyN.vue";
+import Nupdown from "@/components/config/Nupdown.vue";
 import SwedishX from "@/components/config/SwedishX.vue";
 import AttackSurvival from "@/components/config/AttackSurvival.vue";
 import SquareX from "@/components/config/SquareX.vue";
 const list = {
   error,
   json,
-  count,
-  nomx,
-  nbyn,
-  nupdown,
+  Count,
+  NoMx,
+  NbyN,
+  Nupdown,
   SwedishX,
   AttackSurvival,
   SquareX,

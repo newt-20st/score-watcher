@@ -1,23 +1,16 @@
 <template>
   <div class="config">
-    <h1>{{ data.type }}</h1>
+    <h1>NoMx</h1>
     <div class="content">
       <form>
         <div class="formNotice">
-          <ul>
-            <li>
-              ※
-              <span class="badge badge-danger">必須</span>
-              ：必ず設定の確認が必要と思われる項目です
-            </li>
-            <li>
-              勝ち抜け順の判定は「最終スコア」→「正答数の多さ」→「誤答数の多さ」で行われます
-            </li>
-          </ul>
+          ※
+          <span class="badge badge-danger">必須</span>
+          ：必ず設定の確認が必要と思われる項目です
         </div>
         <h2>形式設定</h2>
         <div class="row">
-          <div class="form-group col-sm">
+          <div class="form-group col-sm-4">
             <label>イベント名</label>
             <input class="form-control" v-model="data.name" type="text" />
             <small class="form-text text-muted">画面の右上に表示されます</small>
@@ -37,25 +30,33 @@
             <small class="form-text text-muted">※最大15人</small>
           </div>
           <div class="form-group col-sm-4">
-            <label>N <span class="badge badge-danger">必須</span></label>
+            <label
+              >勝ち抜け正解数
+              <span class="badge badge-danger">必須</span></label
+            >
             <input
               class="form-control"
-              v-model="data.config.n"
+              v-model="data.config.correct"
               type="number"
-              min="1"
+              min="0"
             />
-            <small class="form-text text-muted">Nを設定してください</small>
+            <small class="form-text text-muted"
+              >勝ち抜けまでに必要な正解数を設定してください</small
+            >
           </div>
           <div class="form-group col-sm-4">
-            <label>勝ち抜け人数</label>
+            <label
+              >失格誤答数 <span class="badge badge-danger">必須</span></label
+            >
             <input
               class="form-control"
-              v-model="data.config.winThrough.count"
+              v-model="data.config.wrong"
               type="number"
-              min="1"
-              :max="data.players.length"
+              min="0"
             />
-            <small class="form-text text-muted"></small>
+            <small class="form-text text-muted"
+              >失格に必要な誤答数を設定してください</small
+            >
           </div>
         </div>
         <div class="row">
@@ -86,6 +87,37 @@
               type="number"
               min="1"
               max="1000"
+            />
+          </div>
+        </div>
+        <div class="row">
+          <div class="form-group col-sm-4">
+            <div class="form-check">
+              <input
+                class="form-check-input"
+                v-model="data.config.winThrough.enable"
+                id="winThroughEnable"
+                type="checkbox"
+                checked
+              />
+              <label class="form-check-label" for="winThroughEnable">
+                勝ち抜け順を
+                <span v-if="data.config.winThrough.enable">表示する</span
+                ><span v-else>表示しない</span>
+              </label>
+            </div>
+          </div>
+          <div
+            class="form-group col-sm-4"
+            v-show="data.config.winThrough.enable"
+          >
+            <label>勝ち抜け人数</label>
+            <input
+              class="form-control"
+              v-model="data.config.winThrough.count"
+              type="number"
+              min="1"
+              :max="data.players.length"
             />
           </div>
         </div>
@@ -197,10 +229,10 @@
 import store from "../../store";
 import configMenu from "../../mixin/configMenu.js";
 export default {
-  name: "nupdown",
+  name: "NoMx",
   data() {
     return {
-      data: this.$store.state.config.format.nupdown,
+      data: this.$store.state.config.format.NoMx,
       base: {},
       quizRaw: this.$store.state.quiz,
     };
@@ -218,7 +250,6 @@ export default {
           list.push({
             name: this.data.players[i].name,
             score: {
-              score: this.data.players[i].score.score,
               correct: this.data.players[i].score.correct,
               wrong: this.data.players[i].score.wrong,
               evaluation: 0,
@@ -227,7 +258,7 @@ export default {
         } else {
           list.push({
             name: "Player" + String(i + 1),
-            score: { score: 0, correct: 0, wrong: 0, evaluation: 0 },
+            score: { correct: 0, wrong: 0, evaluation: 0 },
           });
         }
       }
@@ -237,4 +268,7 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
+#jsonConfigOutput {
+  min-height: 50vh;
+}
 </style>

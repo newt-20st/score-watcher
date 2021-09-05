@@ -131,10 +131,10 @@
 import store from "../../store";
 import configMenu from "../../mixin/configMenu.js";
 export default {
-  name: "count",
+  name: "Count",
   data() {
     return {
-      data: this.$store.state.config.format.count,
+      data: this.$store.state.config.format.Count,
       base: {},
       quizRaw: this.$store.state.quiz,
     };

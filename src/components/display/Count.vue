@@ -68,10 +68,10 @@
 <script>
 import displayMixin from "../../mixin/display.js";
 export default {
-  name: "count",
+  name: "Count",
   data() {
     return {
-      data: this.$store.state.config.format.count,
+      data: this.$store.state.config.format.Count,
       order: [],
     };
   },

@@ -190,10 +190,10 @@
 import store from "../../store";
 import configMenu from "../../mixin/configMenu.js";
 export default {
-  name: "nbyn",
+  name: "NbyN",
   data() {
     return {
-      data: this.$store.state.config.format.nbyn,
+      data: this.$store.state.config.format.NbyN,
       base: {},
       quizRaw: this.$store.state.quiz,
     };

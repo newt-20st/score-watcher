@@ -1,6 +1,6 @@
 const jsonData = {
-    "count": {
-        "type": "count",
+    "Count": {
+        "type": "Count",
         "name": "カウンター",
         "display": {
             "timer": {
@@ -23,8 +23,8 @@ const jsonData = {
         "quiz": [],
         "log": []
     },
-    "nomx": {
-        "type": "nomx",
+    "NoMx": {
+        "type": "NoMx",
         "name": "〇〇大会",
         "display": {
             "timer": {
@@ -71,8 +71,8 @@ const jsonData = {
         "quiz": [],
         "log": []
     },
-    "nbyn": {
-        "type": "nbyn",
+    "NbyN": {
+        "type": "NbyN",
         "name": "〇〇大会",
         "display": {
             "timer": {
@@ -116,8 +116,8 @@ const jsonData = {
         "quiz": [],
         "log": []
     },
-    "nupdown": {
-        "type": "nupdown",
+    "Nupdown": {
+        "type": "Nupdown",
         "name": "〇〇大会",
         "display": {
             "timer": {

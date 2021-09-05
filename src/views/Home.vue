@@ -17,22 +17,22 @@
             過去に設定した際に出力したファイルから形式データを読み込みます。
           </div>
         </router-link>
-        <router-link to="/config?type=count"
+        <router-link to="/config?type=Count"
           ><h3>スコア計算</h3>
           <div>単純にスコアを計算します。</div></router-link
         >
-        <router-link to="/config?type=nomx">
+        <router-link to="/config?type=NoMx">
           <h3>N o M x</h3>
           <div>N回正解で勝ち抜け、M回誤答で失格の形式です。</div></router-link
         >
-        <router-link to="/config?type=nbyn">
+        <router-link to="/config?type=NbyN">
           <h3>N by N</h3>
           <div>
             正答数と誤答数2つの変数を持ち、それぞれの初期値は0とNです。2つの変数の積がN
             ** 2に達したら勝ち抜けの形式です。
           </div></router-link
         >
-        <router-link to="/config?type=nupdown">
+        <router-link to="/config?type=Nupdown">
           <h3>N updown</h3>
           <div>
             N回正解で勝ち抜けですが、途中で一度でも誤答すると0に戻る形式です。

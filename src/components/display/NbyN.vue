@@ -4,7 +4,7 @@
       <div class="base">
         <div class="name">
           <h2>{{ data.name }}</h2>
-          <div>{{ data.config.n }} updown</div>
+          <div>{{ data.config.correct }}o{{ data.config.wrong }}x</div>
         </div>
         <div class="info">
           <div class="count">
@@ -31,7 +31,7 @@
         v-for="(player, index) in data.players"
         :key="player.name"
         :class="{
-          win: isNaN(calcScore(index)),
+          win: isNaN(calcOrder(index)) && calcOrder(index) !== 'LOSE',
           lose: player.score.wrong >= data.config.n,
         }"
       >
@@ -42,13 +42,13 @@
           {{ player.name }}
         </div>
         <div class="playerScore">
-          <div class="productScore">{{ calcScore(index) }}</div>
+          <div class="productScore">{{ calcOrder(index) }}</div>
           <div class="eachScore">
             <div class="playerCorrect" @click="correct(index)">
-              <span>○</span>
+              <span>{{ player.score.correct }}</span>
             </div>
             <div class="playerWrong" @click="wrong(index)">
-              <span>×</span>
+              <span>{{ data.config.n - player.score.wrong }}</span>
             </div>
           </div>
         </div>
@@ -67,7 +67,7 @@
           {{
             getHMS(eachLog.timestamp) +
             data.players[eachLog.position].name +
-            "さんが1点獲得しました。"
+            "さんが正解しました。"
           }}
         </div>
         <div v-if="eachLog.type === 'wrong'">
@@ -93,42 +93,39 @@
 var numeral = require("numeral");
 import displayMixin from "../../mixin/display.js";
 export default {
-  name: "nupdown",
+  name: "NbyN",
   data() {
     return {
-      data: this.$store.state.config.format.nupdown,
+      data: this.$store.state.config.format.NbyN,
       order: [],
-      timer: "",
+      timer: ""
     };
   },
   mixins: [displayMixin],
   methods: {
-    calcScore(index) {
-      const orderList = this.data.players
-        .map((x) => x)
-        .sort((a, b) => {
-          if (a.score.score > b.score.score) return -1;
-          if (a.score.score < b.score.score) return 1;
-          if (a.score.correct > b.score.correct) return -1;
-          if (a.score.correct < b.score.correct) return 1;
-          if (a.score.wrong > b.score.wrong) return 1;
-          if (a.score.wrong < b.score.wrong) return -1;
-          return 0;
-        });
-      const order = orderList.indexOf(this.data.players[index]) + 1;
-      var score = 0;
-      for (let eachLog of this.data.log) {
-        if (eachLog.position === index && eachLog.type == "correct") {
-          score++;
-        } else if (eachLog.position === index && eachLog.type == "wrong") {
-          break;
-        }
-      }
-      this.data.players[index].score.score = score;
+    winJudge(index) {
+      const score =
+        this.data.players[index].score.correct *
+        (this.data.config.n - this.data.players[index].score.wrong);
+      return score >= this.data.config.n ** 2;
+    },
+    calcOrder(index) {
+      const score =
+        this.data.players[index].score.correct *
+        (this.data.config.n - this.data.players[index].score.wrong);
+      const order =
+        this.data.players
+          .map((x) => x.score.evaluation)
+          .sort((a, b) => b - a)
+          .indexOf(this.data.players[index].score.evaluation) + 1;
       if (this.data.config.end.enable) {
         if (this.data.log.length < this.data.config.end.count) {
-          if (score < this.data.config.n) {
-            return score;
+          if (score < this.data.config.n ** 2) {
+            if (this.data.players[index].score.wrong >= this.data.config.n) {
+              return "LOSE";
+            } else {
+              return score;
+            }
           } else {
             return numeral(order).format("0o");
           }
@@ -140,7 +137,6 @@ export default {
           }
         }
       }
-      return score;
     },
   },
 };
@@ -149,6 +145,8 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang="scss" scoped>
 .players {
+  display: flex;
+  justify-content: space-evenly;
   .player {
     display: flex;
     flex-direction: column;
@@ -173,6 +171,7 @@ export default {
       .eachScore {
         display: flex;
         div {
+          background-color: $back-color;
           border-radius: 50%;
           font-size: 1.5rem;
           position: relative;
@@ -209,15 +208,23 @@ export default {
       .productScore {
         color: $back-color;
       }
-      .eachScore {
-        .playerCorrect span {
-          color: $back-color;
-        }
-        .playerWrong span {
-          color: $back-color;
-        }
+    }
+  }
+  .lose {
+    background-color: $wrong-color;
+    color: $back-color;
+    .playerScore {
+      .productScore {
+        color: $back-color;
       }
     }
   }
+}
+.log {
+  margin: 1rem;
+  margin-top: 1rem;
+  padding: 1rem;
+  border: 0.3rem solid $base-color;
+  border-radius: 2rem;
 }
 </style>
