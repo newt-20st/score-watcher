@@ -226,7 +226,7 @@
         <Menu
           :format="data.type"
           :quizRaw="quizRaw"
-          @quiz-field="data.quiz == $event"
+          @quiz-field="data.quiz = $event"
         />
         <div class="menu">
           <button class="btn btn-primary" type="button" @click="quizUpdate()">
@@ -258,7 +258,7 @@
 
 <script>
 import store from "../../store";
-import configMenu from "../../mixin/configMenu.js";
+import configMenu from "../../mixin/config.js";
 export default {
   name: "AttackSurvival",
   data() {

@@ -209,7 +209,7 @@
         <Menu
           :format="data.type"
           :quizRaw="quizRaw"
-          @quiz-field="data.quiz == $event"
+          @quiz-field="data.quiz = $event"
         />
         <div class="form-group my-5">
           <label>json config data</label>
@@ -227,7 +227,7 @@
 
 <script>
 import store from "../../store";
-import configMenu from "../../mixin/configMenu.js";
+import configMenu from "../../mixin/config.js";
 export default {
   name: "NoMx",
   data() {

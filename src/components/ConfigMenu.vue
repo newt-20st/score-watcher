@@ -45,6 +45,7 @@ export default {
       for (let i = 0; i < quizRaw.length; i++) {
         dataArray[i] = quizRaw[i].split(",");
       }
+      console.log(dataArray);
       this.$emit("quiz-field", dataArray);
     },
   },
