@@ -8,13 +8,13 @@
         </div>
         <div class="info">
           <div class="count">
-            {{ data.log.length + 1 }}
+            Q{{ data.log.length + 1 }}
             <span v-show="data.config.end.enable">
               /
               <span v-if="data.log.length + 1 > data.config.end.count"
                 >(終了)</span
               >
-              <span v-else>{{ data.config.end.count }} 問目</span>
+              <span v-else>{{ data.config.end.count }}</span>
             </span>
           </div>
           <div class="quiz" v-if="data.quiz[data.log.length]">

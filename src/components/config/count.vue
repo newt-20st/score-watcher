@@ -108,20 +108,11 @@
             placeholder="quiz data"
           ></textarea>
         </div>
-        <div class="menu">
-          <router-link
-            class="btn btn-success"
-            :to="'/display/?type=' + this.data.type"
-          >
-            コントロール画面を開く
-          </router-link>
-          <button class="btn btn-primary" type="button" @click="quizUpdate()">
-            問題データを更新
-          </button>
-          <button class="btn btn-primary" type="button" @click="configExport()">
-            設定ファイルをエクスポート
-          </button>
-        </div>
+        <Menu
+          :format="data.type"
+          :quizRaw="quizRaw"
+          @quiz-field="data.quiz == $event"
+        />
         <div class="form-group my-5">
           <label>json config data</label>
           <textarea

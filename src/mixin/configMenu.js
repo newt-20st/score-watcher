@@ -1,6 +1,8 @@
 const dialog = require("electron").remote.dialog;
 import fs from "fs";
+import Menu from '../components/ConfigMenu.vue'
 export default {
+    components: { Menu },
     methods: {
         configExport() {
             const jsonData = this.$store.state.config.format[this.data.type];

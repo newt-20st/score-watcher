@@ -64,6 +64,7 @@ export default {
     background-color: $back-color;
     padding: 1rem;
     display: flex;
+    justify-content: flex-end;
     gap: 1rem;
     border-top: 3px solid $base-color;
   }
