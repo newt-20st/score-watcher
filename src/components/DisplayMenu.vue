@@ -8,6 +8,9 @@
       <button @click="timerStart()" class="timerBtn btn btn-outline-danger">
         <i class="bi bi-play-fill"></i>
       </button>
+      <button @click="timerReset()" class="timerBtn btn btn-outline-danger">
+        <i class="bi bi-arrow-repeat"></i>
+      </button>
     </div>
     <div>
       <router-link class="btn btn-sm btn-success" :to="'/config?type=' + format"
@@ -67,6 +70,9 @@ export default {
     },
     timerPause() {
       aTimer.pause();
+    },
+    timerReset() {
+      aTimer.reset();
     },
     undo() {
       this.$emit("undo");
