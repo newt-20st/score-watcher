@@ -164,15 +164,8 @@
         </div>
         <QuizLoad @quiz-update="data.quiz = $event" />
         <Menu :format="data.type" />
-        <div class="form-group my-5">
-          <label>json config data</label>
-          <textarea
-            id="jsonConfigOutput"
-            :value="JSON.stringify(data)"
-            class="form-control"
-            placeholder="json config data"
-          ></textarea>
-        </div>
+        <JsonOutput :data="data" />
+        <Menu :format="data.type" />
       </form>
     </div>
   </div>

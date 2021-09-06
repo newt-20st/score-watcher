@@ -212,30 +212,8 @@
           </div>
         </div>
         <QuizLoad @quiz-update="data.quiz = $event" />
+        <JsonOutput :data="data" />
         <Menu :format="data.type" />
-        <div class="menu">
-          <button class="btn btn-primary" type="button" @click="quizUpdate()">
-            問題データを更新
-          </button>
-          <button class="btn btn-primary" type="button" @click="configExport()">
-            設定ファイルをエクスポート
-          </button>
-          <router-link
-            class="btn btn-success"
-            :to="'/display/?type=' + this.data.type"
-          >
-            得点表示画面を開く
-          </router-link>
-        </div>
-        <div class="form-group my-5">
-          <label>json config data</label>
-          <textarea
-            id="jsonConfigOutput"
-            :value="JSON.stringify(data)"
-            class="form-control"
-            placeholder="json config data"
-          ></textarea>
-        </div>
       </form>
     </div>
   </div>
