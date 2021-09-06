@@ -1,5 +1,5 @@
 <template>
-  <div class="config">
+  <div class="json">
     <h1>設定ファイルを読み込む</h1>
     <div class="content">
       <button class="btn btn-primary" @click="openConfig()">
@@ -76,4 +76,26 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.json {
+  margin: 1rem;
+  h3 {
+    font-size: 1.5rem;
+    margin: 1rem 0;
+    padding-left: 0.5rem;
+    color: $base-color;
+    border-left: 0.5rem solid $base-color;
+  }
+  .menu {
+    width: 100%;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    background-color: $back-color;
+    padding: 1rem;
+    display: flex;
+    justify-content: flex-end;
+    gap: 1rem;
+    border-top: 3px solid $base-color;
+  }
+}
 </style>

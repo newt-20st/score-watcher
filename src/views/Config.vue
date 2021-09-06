@@ -43,6 +43,7 @@ export default {
 
 <style lang="scss">
 .config {
+  margin: 1rem;
   h3 {
     font-size: 1.5rem;
     margin: 1rem 0;
@@ -50,7 +51,6 @@ export default {
     color: $base-color;
     border-left: 0.5rem solid $base-color;
   }
-  margin: 1rem;
   #jsonConfigOutput {
     min-height: 50vh;
   }

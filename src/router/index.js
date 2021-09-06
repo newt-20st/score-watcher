@@ -17,7 +17,7 @@ const routes = [
   }, {
     path: '/json',
     name: 'Json',
-    component: () => import('../components/Json.vue')
+    component: () => import('../views/Json.vue')
   }, {
     path: '/display',
     name: 'Display',
