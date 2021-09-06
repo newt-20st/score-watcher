@@ -49,7 +49,7 @@
               <small class="form-text text-muted">右上に表示されます</small>
             </div>
           </div>
-          <div class="form-group col-sm-4">
+          <div class="form-group col-sm-4" v-show="data.display.timer.enable">
             <div class="form-check">
               <input
                 class="form-check-input"
@@ -68,7 +68,7 @@
           </div>
           <div
             class="form-group col-sm-4"
-            v-show="data.display.timer.countdown"
+            v-show="data.display.timer.enable && data.display.timer.countdown"
           >
             <label>初期値</label>
             <input class="form-control" v-model="data.display.timer.start" />
