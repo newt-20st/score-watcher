@@ -6,13 +6,13 @@
 
 <script>
 import error from "@/views/Error.vue";
-import Count from "@/components/config/Count.vue";
-import NoMx from "@/components/config/NoMx.vue";
-import NbyN from "@/components/config/NbyN.vue";
-import Nupdown from "@/components/config/Nupdown.vue";
-import SwedishX from "@/components/config/SwedishX.vue";
-import AttackSurvival from "@/components/config/AttackSurvival.vue";
-import SquareX from "@/components/config/SquareX.vue";
+import Count from "@/views/config/Count.vue";
+import NoMx from "@/views/config/NoMx.vue";
+import NbyN from "@/views/config/NbyN.vue";
+import Nupdown from "@/views/config/Nupdown.vue";
+import SwedishX from "@/views/config/SwedishX.vue";
+import AttackSurvival from "@/views/config/AttackSurvival.vue";
+import SquareX from "@/views/config/SquareX.vue";
 const list = {
   error,
   Count,
