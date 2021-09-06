@@ -22,6 +22,10 @@ const routes = [
     path: '/display',
     name: 'Display',
     component: () => import('../views/Display.vue')
+  }, {
+    path: '/*',
+    name: 'Error',
+    component: () => import('../views/Error.vue')
   }
 ]
 
