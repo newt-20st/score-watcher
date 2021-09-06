@@ -96,23 +96,8 @@
             </div>
           </div>
         </div>
-        <h2>問題の読み込み</h2>
-        <div class="form-group">
-          <label
-            >CSV形式で貼り付けてください。1列目が問題、2列目が解答として読み込まれます。</label
-          >
-          <textarea
-            id="quizRaw"
-            v-model="quizRaw"
-            class="form-control"
-            placeholder="quiz data"
-          ></textarea>
-        </div>
-        <Menu
-          :format="data.type"
-          :quizRaw="quizRaw"
-          @quiz-field="data.quiz = $event"
-        />
+        <QuizLoad @quiz-update="data.quiz = $event" />
+        <Menu :format="data.type" />
         <div class="form-group my-5">
           <label>json config data</label>
           <textarea
@@ -135,7 +120,6 @@ export default {
     return {
       data: this.$store.state.config.format.Count,
       base: {},
-      quizRaw: this.$store.state.quiz,
     };
   },
   mixins: [configMenu],

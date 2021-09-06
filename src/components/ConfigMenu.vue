@@ -1,8 +1,5 @@
 <template>
   <div class="menu">
-    <button class="btn btn-primary" type="button" @click="quizUpdate()">
-      問題データを更新
-    </button>
     <button class="btn btn-primary" type="button" @click="configExport()">
       設定ファイルをエクスポート
     </button>
@@ -17,7 +14,7 @@ const dialog = require("electron").remote.dialog;
 import fs from "fs";
 export default {
   name: "ConfigMenu",
-  props: ["format", "quizRaw"],
+  props: ["format"],
   methods: {
     configExport() {
       const jsonData = this.$store.state.config.format[this.format];
@@ -37,16 +34,6 @@ export default {
             "\t"
           )
         );
-      }
-    },
-    quizUpdate() {
-      if (this.quizRaw.length !== 0) {
-        const quizRaw = this.quizRaw.split("\n");
-        const dataArray = [];
-        for (let i = 0; i < quizRaw.length; i++) {
-          dataArray[i] = quizRaw[i].split(",");
-        }
-        this.$emit("quiz-field", dataArray);
       }
     },
   },
