@@ -27,7 +27,9 @@
           >
           <router-link
             class="btn btn-success"
-            :to="'?type=' + this.$store.state.config.format[this.load].type"
+            :to="
+              'config?type=' + this.$store.state.config.format[this.load].type
+            "
             >形式を編集する</router-link
           >
           <!--TODO: ↑ページ遷移できないので後で修正-->
@@ -38,7 +40,7 @@
 </template>
 
 <script>
-import store from "../../store";
+import store from "../store";
 const dialog = require("electron").remote.dialog;
 const fs = require("fs");
 export default {

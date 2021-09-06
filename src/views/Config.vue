@@ -7,7 +7,6 @@
 <script>
 import error from "@/views/Error.vue";
 import Count from "@/components/config/Count.vue";
-import json from "@/components/config/json.vue";
 import NoMx from "@/components/config/NoMx.vue";
 import NbyN from "@/components/config/NbyN.vue";
 import Nupdown from "@/components/config/Nupdown.vue";
@@ -16,7 +15,6 @@ import AttackSurvival from "@/components/config/AttackSurvival.vue";
 import SquareX from "@/components/config/SquareX.vue";
 const list = {
   error,
-  json,
   Count,
   NoMx,
   NbyN,

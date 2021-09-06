@@ -11,7 +11,7 @@
       </p>
       <h2>形式を選択</h2>
       <div class="formatList">
-        <router-link to="/config?type=json">
+        <router-link to="/json">
           <h3>設定ファイルから読み込む</h3>
           <div>
             過去に設定した際に出力したファイルから形式データを読み込みます。
