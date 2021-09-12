@@ -155,6 +155,16 @@ export default {
             return score;
           }
         }
+      } else {
+        if (score < this.data.config.x) {
+          if (this.data.players[index].score.wrong >= this.data.config.n) {
+            return "LOSE";
+          } else {
+            return score;
+          }
+        } else {
+          return numeral(order).format("0o");
+        }
       }
     },
   },

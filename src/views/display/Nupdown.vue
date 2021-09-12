@@ -147,8 +147,13 @@ export default {
             return score;
           }
         }
+      } else {
+        if (score < this.data.config.n) {
+          return score;
+        } else {
+          return numeral(order).format("0o");
+        }
       }
-      return score;
     },
   },
 };

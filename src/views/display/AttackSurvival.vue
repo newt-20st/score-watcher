@@ -145,8 +145,13 @@ export default {
             }
           }
         }
+      } else {
+        if (score < 0) {
+          return "LOSE";
+        } else {
+          return score;
+        }
       }
-      return score;
     },
   },
 };

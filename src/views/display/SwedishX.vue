@@ -150,8 +150,13 @@ export default {
             return score;
           }
         }
+      } else {
+        if (score < this.data.config.x) {
+          return score;
+        } else {
+          return numeral(order).format("0o");
+        }
       }
-      return score;
     },
   },
 };
