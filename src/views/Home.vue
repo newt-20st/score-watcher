@@ -1,7 +1,7 @@
 <template>
   <div class="home">
     <div class="content">
-      <p>Ver.0.9.0</p>
+      <p>Ver.0.10.0</p>
       <p>
         最新のバージョンは<a
           href="https://github.com/newt-20st/score-watcher/releases"
