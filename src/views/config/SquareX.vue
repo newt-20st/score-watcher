@@ -155,6 +155,14 @@
                 <label>プレイヤーネーム</label>
                 <input class="form-control" type="text" v-model="player.name" />
               </div>
+              <div v-show="data.display.belong" class="form-group col-sm-4">
+                <label>所属</label>
+                <input
+                  class="form-control"
+                  type="text"
+                  v-model="player.belong"
+                />
+              </div>
               <div class="form-group col-sm-4">
                 <label>正解数</label>
                 <input

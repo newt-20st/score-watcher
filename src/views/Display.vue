@@ -133,6 +133,11 @@ export default {
       text-align: center;
       padding: 1rem;
       border-radius: 4rem;
+      .playerPosition {
+        display: flex;
+        height: 3vh;
+        align-items: center;
+      }
       .playerName {
         display: flex;
         font-size: clamp(8vh, 2rem, 8vw);
