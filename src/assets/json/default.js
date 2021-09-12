@@ -18,7 +18,8 @@ const jsonData = {
                 "name": "Player 1",
                 "belong": "",
                 "score": {
-                    "count": 0
+                    "correct": 0,
+                    "evaluation": 0
                 }
             }
         ],

@@ -116,7 +116,7 @@
                 <input
                   class="form-control"
                   type="number"
-                  v-model="player.score.count"
+                  v-model="player.score.correct"
                   :min="data.config.minus ? -9999 : 0"
                 />
               </div>
@@ -150,13 +150,14 @@ export default {
           list.push({
             name: this.data.players[i].name,
             score: {
-              count: this.data.players[i].score.count,
+              correct: this.data.players[i].score.correct,
+              evaluation: this.data.players[i].score.evaluation,
             },
           });
         } else {
           list.push({
             name: "Player" + String(i + 1),
-            score: { count: 0 },
+            score: { correct: 0, evaluation: 0 },
           });
         }
       }

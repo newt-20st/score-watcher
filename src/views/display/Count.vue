@@ -37,9 +37,9 @@
           {{ player.name }}
         </div>
         <div class="playerScore">
-          <div class="playerCount" @click="count(index)">
+          <div class="playerCount" @click="correct(index)">
             <div>
-              <span>{{ player.score.count }}</span>
+              <span>{{ player.score.correct }}</span>
             </div>
           </div>
         </div>
