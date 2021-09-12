@@ -200,6 +200,7 @@ export default {
         if (this.data.players[i]) {
           list.push({
             name: this.data.players[i].name,
+            belong: this.data.players[i].belong,
             score: {
               score: {
                 odd: this.data.players[i].score.score.odd,
@@ -213,6 +214,7 @@ export default {
         } else {
           list.push({
             name: "Player" + String(i + 1),
+            belong: "",
             score: {
               score: {
                 odd: 0,

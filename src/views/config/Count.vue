@@ -149,6 +149,7 @@ export default {
         if (this.data.players[i]) {
           list.push({
             name: this.data.players[i].name,
+            belong: this.data.players[i].belong,
             score: {
               correct: this.data.players[i].score.correct,
               evaluation: this.data.players[i].score.evaluation,
@@ -157,6 +158,7 @@ export default {
         } else {
           list.push({
             name: "Player" + String(i + 1),
+            belong: "",
             score: { correct: 0, evaluation: 0 },
           });
         }
