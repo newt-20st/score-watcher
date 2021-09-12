@@ -144,6 +144,25 @@
             <div class="form-check">
               <input
                 class="form-check-input"
+                v-model="data.display.belong"
+                id="belongEnable"
+                type="checkbox"
+                checked
+              />
+              <label class="form-check-label" for="belongEnable">
+                名前の上に所属を
+                <span v-if="data.display.belong">表示する</span
+                ><span v-else>表示しない</span>
+              </label>
+              <small class="form-text text-muted"></small>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="form-group col-sm-4">
+            <div class="form-check">
+              <input
+                class="form-check-input"
                 v-model="data.display.timer.enable"
                 id="timerEnable"
                 type="checkbox"

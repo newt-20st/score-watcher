@@ -43,7 +43,8 @@
         }"
       >
         <div class="playerPosition">
-          {{ index + 1 }}
+          <span v-if="data.display.belong">{{ player.belong }}</span>
+          <span v-else>{{ index + 1 }}</span>
         </div>
         <div class="playerName">
           {{ player.name }}

@@ -3,6 +3,7 @@ const jsonData = {
         "type": "Count",
         "name": "カウンター",
         "display": {
+            "belong": false,
             "timer": {
                 "enable": true,
                 "countdown": true,
@@ -15,6 +16,7 @@ const jsonData = {
         "players": [
             {
                 "name": "Player 1",
+                "belong": "",
                 "score": {
                     "count": 0
                 }
@@ -27,6 +29,7 @@ const jsonData = {
         "type": "NoMx",
         "name": "〇〇大会",
         "display": {
+            "belong": false,
             "timer": {
                 "enable": true,
                 "countdown": true,
@@ -46,6 +49,7 @@ const jsonData = {
         "players": [
             {
                 "name": "Player 1",
+                "belong": "",
                 "score": {
                     "correct": 0,
                     "wrong": 0,
@@ -54,6 +58,7 @@ const jsonData = {
             },
             {
                 "name": "Player 2",
+                "belong": "",
                 "score": {
                     "correct": 0,
                     "wrong": 0,
@@ -61,6 +66,7 @@ const jsonData = {
                 }
             }, {
                 "name": "Player 3",
+                "belong": "",
                 "score": {
                     "correct": 0,
                     "wrong": 0,
@@ -75,6 +81,7 @@ const jsonData = {
         "type": "NbyN",
         "name": "〇〇大会",
         "display": {
+            "belong": false,
             "timer": {
                 "enable": true,
                 "countdown": true,
@@ -91,6 +98,7 @@ const jsonData = {
         "players": [
             {
                 "name": "Player 1",
+                "belong": "",
                 "score": {
                     "correct": 0,
                     "wrong": 0,
@@ -99,6 +107,7 @@ const jsonData = {
             },
             {
                 "name": "Player 2",
+                "belong": "",
                 "score": {
                     "correct": 0,
                     "wrong": 0,
@@ -106,6 +115,7 @@ const jsonData = {
                 }
             }, {
                 "name": "Player 3",
+                "belong": "",
                 "score": {
                     "correct": 0,
                     "wrong": 0,
@@ -120,6 +130,7 @@ const jsonData = {
         "type": "Nupdown",
         "name": "〇〇大会",
         "display": {
+            "belong": false,
             "timer": {
                 "enable": true,
                 "countdown": true,
@@ -136,6 +147,7 @@ const jsonData = {
         "players": [
             {
                 "name": "Player 1",
+                "belong": "",
                 "score": {
                     "score": 0,
                     "correct": 0,
@@ -145,6 +157,7 @@ const jsonData = {
             },
             {
                 "name": "Player 2",
+                "belong": "",
                 "score": {
                     "score": 0,
                     "correct": 0,
@@ -153,6 +166,7 @@ const jsonData = {
                 }
             }, {
                 "name": "Player 3",
+                "belong": "",
                 "score": {
                     "score": 0,
                     "correct": 0,
@@ -168,6 +182,7 @@ const jsonData = {
         "type": "SwedishX",
         "name": "〇〇大会",
         "display": {
+            "belong": false,
             "timer": {
                 "enable": true,
                 "countdown": true,
@@ -184,6 +199,7 @@ const jsonData = {
         "players": [
             {
                 "name": "Player 1",
+                "belong": "",
                 "score": {
                     "score": 0,
                     "correct": 0,
@@ -193,6 +209,7 @@ const jsonData = {
             },
             {
                 "name": "Player 2",
+                "belong": "",
                 "score": {
                     "score": 0,
                     "correct": 0,
@@ -201,6 +218,7 @@ const jsonData = {
                 }
             }, {
                 "name": "Player 3",
+                "belong": "",
                 "score": {
                     "score": 0,
                     "correct": 0,
@@ -216,6 +234,7 @@ const jsonData = {
         "type": "AttackSurvival",
         "name": "〇〇大会",
         "display": {
+            "belong": false,
             "timer": {
                 "enable": true,
                 "countdown": true,
@@ -241,6 +260,7 @@ const jsonData = {
         "players": [
             {
                 "name": "Player 1",
+                "belong": "",
                 "score": {
                     "score": 15,
                     "correct": 0,
@@ -250,6 +270,7 @@ const jsonData = {
             },
             {
                 "name": "Player 2",
+                "belong": "",
                 "score": {
                     "score": 15,
                     "correct": 0,
@@ -258,6 +279,7 @@ const jsonData = {
                 }
             }, {
                 "name": "Player 3",
+                "belong": "",
                 "score": {
                     "score": 15,
                     "correct": 0,
@@ -266,6 +288,7 @@ const jsonData = {
                 }
             }, {
                 "name": "Player 4",
+                "belong": "",
                 "score": {
                     "score": 15,
                     "correct": 0,
@@ -274,6 +297,7 @@ const jsonData = {
                 }
             }, {
                 "name": "Player 5",
+                "belong": "",
                 "score": {
                     "score": 15,
                     "correct": 0,
@@ -289,6 +313,7 @@ const jsonData = {
         "type": "SquareX",
         "name": "〇〇大会",
         "display": {
+            "belong": false,
             "timer": {
                 "enable": true,
                 "countdown": true,
@@ -308,6 +333,7 @@ const jsonData = {
         "players": [
             {
                 "name": "Player 1",
+                "belong": "",
                 "score": {
                     "score": {
                         "odd": 0,
@@ -320,6 +346,7 @@ const jsonData = {
             },
             {
                 "name": "Player 2",
+                "belong": "",
                 "score": {
                     "score": {
                         "odd": 0,
@@ -331,6 +358,7 @@ const jsonData = {
                 }
             }, {
                 "name": "Player 3",
+                "belong": "",
                 "score": {
                     "score": {
                         "odd": 0,

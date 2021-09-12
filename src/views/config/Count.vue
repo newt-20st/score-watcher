@@ -36,6 +36,25 @@
             <div class="form-check">
               <input
                 class="form-check-input"
+                v-model="data.display.belong"
+                id="belongEnable"
+                type="checkbox"
+                checked
+              />
+              <label class="form-check-label" for="belongEnable">
+                名前の上に所属を
+                <span v-if="data.display.belong">表示する</span
+                ><span v-else>表示しない</span>
+              </label>
+              <small class="form-text text-muted"></small>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="form-group col-sm-4">
+            <div class="form-check">
+              <input
+                class="form-check-input"
                 v-model="data.display.timer.enable"
                 id="timerEnable"
                 type="checkbox"
@@ -83,6 +102,14 @@
               <div class="form-group col-sm-4">
                 <label>プレイヤーネーム</label>
                 <input class="form-control" type="text" v-model="player.name" />
+              </div>
+              <div v-show="data.display.belong" class="form-group col-sm-4">
+                <label>所属</label>
+                <input
+                  class="form-control"
+                  type="text"
+                  v-model="player.belong"
+                />
               </div>
               <div class="form-group col-sm-4">
                 <label>初期値</label>
