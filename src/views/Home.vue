@@ -87,9 +87,9 @@ export default {
   a {
     display: block;
     background-color: $back-color;
-    color: $base-color;
+    color: var(--teal);
     text-decoration: none;
-    border: 0.3rem solid $base-color;
+    border: 0.3rem solid var(--teal);
     border-radius: 2rem;
     padding: 1rem;
     height: 25vh;
@@ -113,14 +113,14 @@ export default {
       }
     }
     &:hover {
-      background-color: $base-color;
+      background-color: var(--teal);
       color: $back-color;
     }
     &:first-child {
-      color: $correct-color;
-      border: 0.3rem solid $correct-color;
+      color: var(--info);
+      border: 0.3rem solid var(--info);
       &:hover {
-        background-color: $correct-color;
+        background-color: var(--info);
         color: $back-color;
       }
     }

@@ -65,7 +65,6 @@
       </div>
     </div>
     <div class="log">
-      p
       <p v-if="data.log.length == 0">ここに得点履歴が表示されます。</p>
       <ul>
         <li
