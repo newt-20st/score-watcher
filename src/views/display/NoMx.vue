@@ -212,11 +212,4 @@ export default {
     color: $back-color;
   }
 }
-.log {
-  margin: 1rem;
-  margin-top: 1rem;
-  padding: 1rem;
-  border: 0.3rem solid $base-color;
-  border-radius: 2rem;
-}
 </style>

@@ -136,6 +136,7 @@ export default {
       .playerPosition {
         display: flex;
         height: 3vh;
+        justify-content: center;
         align-items: center;
       }
       .playerName {
@@ -149,10 +150,13 @@ export default {
   }
   .log {
     margin: 1rem;
-    margin-top: 1rem;
     padding: 1rem;
     border: 0.3rem solid $base-color;
     border-radius: 2rem;
+    p,
+    ul {
+      margin: 0;
+    }
   }
 }
 </style>
