@@ -18,12 +18,14 @@ h1 {
 }
 h2 {
     font-size: 2rem;
+    font-weight: 800;
     margin: 1rem 0;
-    padding: 0 1rem;
+    padding: .5rem 1rem;
     display: inline-block;
     color: $base-color;
     background-color: $back-color;
-    border-bottom: 5px double $base-color;
+    border: .2rem solid $base-color;
+    border-radius: 2rem 2rem 0 0;
 }
 .content {
     margin: 1rem;

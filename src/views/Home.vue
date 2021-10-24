@@ -9,6 +9,12 @@
           >こちらのリポジトリ</a
         >から確認してください。
       </p>
+      <p>
+        今後の方針などについては<a
+          href="https://www.notion.so/newt-house/Score-Watcher-Info-e3605dc670724bc8adf0a5ee3f0c8392"
+          >こちらのページ</a
+        >から確認できます。
+      </p>
       <h2>形式を選択</h2>
       <div class="formatList">
         <router-link to="/json">
@@ -19,7 +25,7 @@
         </router-link>
         <router-link to="/config?type=Count"
           ><h3>スコア計算</h3>
-          <div>単純にスコアを計算します。</div></router-link
+          <div>単純なスコアを計算します。</div></router-link
         >
         <router-link to="/config?type=NoMx">
           <h3>N o M x</h3>
@@ -55,6 +61,10 @@
           </div></router-link
         >
       </div>
+      <h2>大会モード</h2>
+      <p>
+        複数の形式が連結した、複数組や複数ステージに対応したモードです。v1.0のリリースで実装予定です。
+      </p>
     </div>
   </div>
 </template>
