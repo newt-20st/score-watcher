@@ -44,7 +44,6 @@
               type="number"
               min="1"
             />
-            <small class="form-text text-muted">Nを設定してください</small>
           </div>
           <div class="form-group col-sm-4">
             <label>勝ち抜け人数</label>
@@ -56,6 +55,34 @@
               :max="data.players.length"
             />
             <small class="form-text text-muted"></small>
+          </div>
+        </div>
+        <div class="row">
+          <div class="form-group col-sm-4">
+            <div class="form-check">
+              <input
+                class="form-check-input"
+                v-model="data.config.wrong.enable"
+                id="endEnable"
+                type="checkbox"
+                checked
+              />
+              <label class="form-check-label" for="endEnable">
+                誤答数上限を
+                <span v-if="data.config.wrong.enable">設定する</span
+                ><span v-else>設定しない</span>
+              </label>
+            </div>
+          </div>
+          <div class="form-group col-sm-4" v-show="data.config.wrong.enable">
+            <label>失格誤答数</label>
+            <input
+              class="form-control"
+              v-model="data.config.wrong.count"
+              type="number"
+              min="1"
+              max="1000"
+            />
           </div>
         </div>
         <div class="row">

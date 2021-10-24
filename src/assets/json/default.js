@@ -140,6 +140,10 @@ const jsonData = {
         },
         "config": {
             "n": 7,
+            "wrong": {
+                "enable": true,
+                "count": 2
+            },
             "end": { "enable": true, "count": 15 },
             "winThrough": {
                 "count": 3,

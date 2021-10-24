@@ -39,7 +39,9 @@
         :key="player.name"
         :class="{
           win: isNaN(calcScore(index)),
-          lose: player.score.wrong >= data.config.n,
+          lose:
+            data.config.wrong.enable &&
+            player.score.wrong >= data.config.wrong.count,
         }"
       >
         <div class="playerPosition">
@@ -56,7 +58,7 @@
               <span>○</span>
             </div>
             <div class="playerWrong" @click="wrong(index)">
-              <span>×</span>
+              <span>{{ player.score.wrong }}×</span>
             </div>
           </div>
         </div>
@@ -138,12 +140,20 @@ export default {
       if (this.data.config.end.enable) {
         if (this.data.log.length < this.data.config.end.count) {
           if (score < this.data.config.n) {
-            return score;
+            if (
+              this.data.config.wrong.enable &&
+              this.data.players[index].score.wrong >=
+                this.data.config.wrong.count
+            ) {
+              return "LOSE";
+            } else {
+              return score;
+            }
           } else {
             return numeral(order).format("0o");
           }
         } else {
-          if (order <= this.data.config.winThrough.count) {
+          if (order <= this.data.config.n) {
             return numeral(order).format("0o");
           } else {
             return score;
@@ -219,6 +229,23 @@ export default {
   }
   .win {
     background-color: $correct-color;
+    color: $back-color;
+    .playerScore {
+      .productScore {
+        color: $back-color;
+      }
+      .eachScore {
+        .playerCorrect span {
+          color: $back-color;
+        }
+        .playerWrong span {
+          color: $back-color;
+        }
+      }
+    }
+  }
+  .lose {
+    background-color: $wrong-color;
     color: $back-color;
     .playerScore {
       .productScore {
