@@ -46,29 +46,30 @@
       </div>
     </div>
     <div class="log">
-      <h3>ログ</h3>
-      <div v-if="data.log.length == 0">ここに得点履歴が表示されます。</div>
-      <div
-        class="eachLog"
-        :name="index"
-        v-for="(eachLog, index) in data.log"
-        :key="index"
-      >
-        <div v-if="eachLog.type === 'correct'">
-          {{
-            getHMS(eachLog.timestamp) +
-            data.players[eachLog.position].name +
-            "さんが1点獲得しました。"
-          }}
-        </div>
-        <div v-if="eachLog.type === 'through'">
-          {{
-            getHMS(eachLog.timestamp) +
-            (data.log.length - index) +
-            "問目はスルーされました。"
-          }}
-        </div>
-      </div>
+      <p v-if="data.log.length == 0">ここに得点履歴が表示されます。</p>
+      <ul>
+        <li
+          class="eachLog"
+          :name="index"
+          v-for="(eachLog, index) in data.log"
+          :key="index"
+        >
+          <span v-if="eachLog.type === 'correct'">
+            {{
+              getHMS(eachLog.timestamp) +
+              data.players[eachLog.position].name +
+              "さんが1点獲得しました。"
+            }}
+          </span>
+          <span v-if="eachLog.type === 'through'">
+            {{
+              getHMS(eachLog.timestamp) +
+              (data.log.length - index) +
+              "問目はスルーされました。"
+            }}
+          </span>
+        </li>
+      </ul>
     </div>
   </div>
 </template>
