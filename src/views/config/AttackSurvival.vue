@@ -46,7 +46,6 @@
               type="number"
               min="1"
             />
-            <small class="form-text text-muted">Nを設定してください</small>
           </div>
           <div class="form-group col-sm-4">
             <label>勝ち抜け人数</label>
@@ -57,7 +56,6 @@
               min="1"
               :max="data.players.length"
             />
-            <small class="form-text text-muted"></small>
           </div>
         </div>
         <div class="row">
@@ -68,7 +66,6 @@
               v-model="data.config.correct.me"
               type="number"
             />
-            <small class="form-text text-muted"></small>
           </div>
           <div class="form-group col-sm-4">
             <label>他人が正答したときの増減</label>
@@ -77,7 +74,6 @@
               v-model="data.config.correct.other"
               type="number"
             />
-            <small class="form-text text-muted"></small>
           </div>
           <div class="form-group col-sm-4">
             <label>自分が誤答したときの増減</label>
@@ -86,7 +82,6 @@
               v-model="data.config.wrong.me"
               type="number"
             />
-            <small class="form-text text-muted"></small>
           </div>
           <div class="form-group col-sm-4">
             <label>他人が誤答したときの増減</label>
@@ -95,7 +90,6 @@
               v-model="data.config.wrong.other"
               type="number"
             />
-            <small class="form-text text-muted"></small>
           </div>
           <div class="form-group col-sm-4">
             <label>スルーされたときの増減</label>
@@ -104,7 +98,6 @@
               v-model="data.config.through"
               type="number"
             />
-            <small class="form-text text-muted"></small>
           </div>
         </div>
         <div class="row">
@@ -154,7 +147,6 @@
                 <span v-if="data.display.belong">表示する</span
                 ><span v-else>表示しない</span>
               </label>
-              <small class="form-text text-muted"></small>
             </div>
           </div>
         </div>

@@ -37,7 +37,6 @@
               type="number"
               min="1"
             />
-            <small class="form-text text-muted">Xを設定してください</small>
           </div>
           <div class="form-group col-sm-4">
             <label>勝ち抜け人数</label>
@@ -48,7 +47,6 @@
               min="1"
               :max="data.players.length"
             />
-            <small class="form-text text-muted"></small>
           </div>
         </div>
         <div class="row">
@@ -98,7 +96,6 @@
                 <span v-if="data.display.belong">表示する</span
                 ><span v-else>表示しない</span>
               </label>
-              <small class="form-text text-muted"></small>
             </div>
           </div>
         </div>
