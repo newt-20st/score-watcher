@@ -1,6 +1,6 @@
 <template>
   <div class="menu">
-    <div class="timer">
+    <div class="timer" v-show="display.timer.enable">
       <span>{{ time }}</span>
       <button @click="timerPause()" class="timerBtn btn btn-outline-danger">
         <i class="bi bi-pause-fill"></i>
@@ -28,7 +28,7 @@ import store from "../store";
 import { Timer } from "easytimer.js";
 export default {
   name: "DisplayMenu",
-  props: ["format"],
+  props: ["format", "display"],
   data() {
     return {
       timer: this.$store.state.config.format[this.format].display.timer,

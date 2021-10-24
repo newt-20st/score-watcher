@@ -30,7 +30,12 @@
           </div>
         </div>
       </div>
-      <Menu :format="data.type" @undo="undo()" @through="through()" />
+      <Menu
+        :format="data.type"
+        :display="data.display"
+        @undo="undo()"
+        @through="through()"
+      />
     </div>
     <div class="players" :class="getWidth()">
       <div
