@@ -1,4 +1,4 @@
-module changeme
+module github.com/newt239/score-watcher
 
 go 1.17
 
