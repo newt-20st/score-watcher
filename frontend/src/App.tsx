@@ -1,10 +1,20 @@
-import { Box, Input } from '@chakra-ui/react';
+import {
+    BrowserRouter,
+    Routes,
+    Route,
+} from "react-router-dom";
+
+import Home from "./pages/Home";
 
 function App() {
     return (
-        <Box>
-            Hello World
-        </Box>
+        <BrowserRouter>
+            <Routes>
+                <Route path="/">
+                    <Route index element={<Home />} />
+                </Route>
+            </Routes>
+        </BrowserRouter>
     )
 }
 
