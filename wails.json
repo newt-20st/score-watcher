@@ -1,0 +1,12 @@
+{
+  "name": "score-watcher",
+  "outputfilename": "score-watcher",
+  "frontend:install": "npm install",
+  "frontend:build": "npm run build",
+  "frontend:dev:watcher": "npm run dev",
+  "frontend:dev:serverUrl": "auto",
+  "author": {
+    "name": "newt239",
+    "email": "ysti2019.win2020.st@gmail.com"
+  }
+}
