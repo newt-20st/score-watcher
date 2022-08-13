@@ -48,19 +48,19 @@ const Home: React.FC = () => {
               </Box>
             </Card>
           </Link>
-          <Link to="/config?type=Count">
+          <Link to="/config/count">
             <Card>
               <Heading fontSize="xl">スコア計算</Heading>
               <Box>単純なスコアを計算します。</Box>
             </Card>
           </Link>
-          <Link to="/config?type=NoMx">
+          <Link to="/config/nomx">
             <Card>
               <Heading fontSize="xl">N o M x</Heading>
               <Box>N回正解で勝ち抜け、M回誤答で失格の形式です。</Box>
             </Card>
           </Link>
-          <Link to="/config?type=NbyN">
+          <Link to="/config/nbyn">
             <Card>
               <Heading fontSize="xl">N by N</Heading>
               <Box>
@@ -69,7 +69,7 @@ const Home: React.FC = () => {
               </Box>
             </Card>
           </Link>
-          <Link to="/config?type=Nupdown">
+          <Link to="/config/nupdown">
             <Card>
               <Heading fontSize="xl">N updown</Heading>
               <Box>
@@ -77,7 +77,7 @@ const Home: React.FC = () => {
               </Box>
             </Card>
           </Link>
-          <Link to="/config?type=SwedishX">
+          <Link to="/config/swedishx">
             <Card>
               <Heading fontSize="xl">Swedish X</Heading>
               <Box>
@@ -85,13 +85,13 @@ const Home: React.FC = () => {
               </Box>
             </Card>
           </Link>
-          <Link to="/config?type=AttackSurvival">
+          <Link to="/config/attacksurvival">
             <Card>
               <Heading fontSize="xl">Attack Survival</Heading>
               <Box></Box>
             </Card>
           </Link>
-          <Link to="/config?type=SquareX">
+          <Link to="/config/Squarex">
             <Card>
               <Heading fontSize="xl">Square X</Heading>
               <Box>
