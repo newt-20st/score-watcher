@@ -20,10 +20,10 @@ import {
   ListItem,
   Image
 } from "@chakra-ui/react";
-import { getNbynGameState, initialQuizData, NbynGameStateProps, NbynInitialGameState, QuizDataProps } from "../../libs/state";
+import { getNupdownGameState, initialQuizData, NupdownGameStateProps, NupdownInitialGameState, QuizDataProps } from "../../libs/state";
 
-export const NbynConfig: React.FC = () => {
-  const [gameState, setGameState] = useState<NbynGameStateProps>(getNbynGameState());
+export const NupdownConfig: React.FC = () => {
+  const [gameState, setGameState] = useState<NupdownGameStateProps>(getNupdownGameState());
   const [quizData, setQuizData] = useState<QuizDataProps[]>(initialQuizData);
 
   useEffect(() => {
@@ -44,7 +44,7 @@ export const NbynConfig: React.FC = () => {
   }, [gameState.config.count]);
 
   const reset = () => {
-    setGameState(NbynInitialGameState);
+    setGameState(NupdownInitialGameState);
   }
 
   return (
@@ -152,7 +152,7 @@ export const NbynConfig: React.FC = () => {
         <Box height={20}></Box>
         <Flex sx={{ position: "fixed", bottom: 0, left: 0, width: "100%", justifyContent: "end", bgColor: "white", p: 3, gap: 3 }}>
           <Button colorScheme="red" onClick={reset}>設定をリセット</Button>
-          <Link to="/board/nbyn">
+          <Link to="/board/nupdown">
             <Button colorScheme="green">ボードを表示</Button>
           </Link>
         </Flex>
@@ -161,30 +161,50 @@ export const NbynConfig: React.FC = () => {
   );
 };
 
-export const NbynBoard: React.FC = () => {
-  const [gameState, setGameState] = useState<NbynGameStateProps>(getNbynGameState());
+export const NupdownBoard: React.FC = () => {
+  const [gameState, setGameState] = useState<NupdownGameStateProps>(getNupdownGameState());
 
   useEffect(() => {
     localStorage.setItem("gameState", JSON.stringify(gameState));
   }, [gameState]);
 
+  const undo = () => {
+    setGameState(produce(gameState, draft => {
+      if (draft.logs[draft.logs.length - 1].variant === "correct") {
+        draft.players[draft.logs[draft.logs.length - 1].player].correct--;
+      } else {
+        draft.players[draft.logs[draft.logs.length - 1].player].incorrect--;
+        const i = draft.logs.lastIndexOf({ type: "nupdown", player: draft.logs[draft.logs.length - 1].player, variant: "incorrect" });
+        draft.players[draft.logs[draft.logs.length - 1].player].lastIncorrect = i == -1 ? undefined : i;
+      }
+      draft.logs.pop();
+    }))
+  }
+
   const correct = (playerIndex: number) => {
     setGameState(produce(gameState, draft => {
       draft.players[playerIndex].correct++;
-      draft.logs.unshift({ type: "nbyn", variant: "correct", player: playerIndex });
+      draft.logs.unshift({ type: "nupdown", variant: "correct", player: playerIndex });
     }));
   }
 
   const incorrect = (playerIndex: number) => {
     setGameState(produce(gameState, draft => {
       draft.players[playerIndex].incorrect++;
-      draft.logs.unshift({ type: "nbyn", variant: "incorrect", player: playerIndex });
+      draft.players[playerIndex].lastIncorrect = draft.logs.length + 1;
+      draft.logs.unshift({ type: "nupdown", variant: "incorrect", player: playerIndex });
     }));
   }
 
-  const calcScore = (i: number) => gameState.players[i].correct * (gameState.config.n - gameState.players[i].incorrect);
+  const calcScore = (i: number) => {
+    if (gameState.players[i].incorrect > 0 && gameState.players[i].lastIncorrect) {
+      return gameState.logs.slice(gameState.players[i].lastIncorrect, gameState.logs.length).filter(v => v.variant === "correct" && v.player == i).length;
+    } else {
+      return gameState.players[i].correct;
+    }
+  };
   const checkState = (i: number) => {
-    if (calcScore(i) >= gameState.config.n ** 2) {
+    if (calcScore(i) >= gameState.config.n) {
       return "WIN!"
     } else {
       return calcScore(i)
@@ -202,12 +222,12 @@ export const NbynBoard: React.FC = () => {
           <Text color="white">スコア計算</Text>
         </Box>
         <Flex sx={{ flexGrow: 1, alignItems: "center" }}>
-          <Box p={2}>Q1</Box>
+          <Box p={2}>Q {gameState.logs.length}</Box>
           <Box p={2}>quiz</Box>
         </Flex>
       </Flex>
       <Flex p={3} justifyContent="flex-end">
-        <Link to="/config/nbyn">
+        <Link to="/config/nupdown">
           <Button colorScheme="teal" size="xs">設定に戻る</Button>
         </Link>
       </Flex>

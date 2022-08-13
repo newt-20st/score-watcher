@@ -27,7 +27,7 @@ export const NomxConfig: React.FC = () => {
   const [quizData, setQuizData] = useState<QuizDataProps[]>(initialQuizData);
 
   useEffect(() => {
-    localStorage.setItem("gameConfig", JSON.stringify(gameState));
+    localStorage.setItem("gameState", JSON.stringify(gameState));
   }, [gameState]);
 
 
@@ -163,7 +163,7 @@ export const NomxBoard: React.FC = () => {
   const [gameState, setGameState] = useState<NomxGameStateProps>(getNomxGameState());
 
   useEffect(() => {
-    localStorage.setItem("gameConfig", JSON.stringify(gameState));
+    localStorage.setItem("gameState", JSON.stringify(gameState));
   }, [gameState,]);
 
   const correct = (playerIndex: number) => {

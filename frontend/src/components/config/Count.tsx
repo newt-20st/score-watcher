@@ -34,7 +34,7 @@ export const CountConfig: React.FC = () => {
   const [quizData, setQuizData] = useState<QuizDataProps[]>(localQuizData ? JSON.parse(localQuizData) : initialQuizData);
 
   useEffect(() => {
-    localStorage.setItem("gameConfig", JSON.stringify(gameState));
+    localStorage.setItem("gameState", JSON.stringify(gameState));
   }, [gameState]);
 
   useEffect(() => {
@@ -135,8 +135,7 @@ export const CountBoard: React.FC = () => {
   const [gameState, setGameState] = useState<CountGameStateProps>(getCountGameState());
 
   useEffect(() => {
-    localStorage.setItem("gameConfig", JSON.stringify(gameState));
-    localStorage.setItem("gameState.players", JSON.stringify(gameState.players));
+    localStorage.setItem("gameState", JSON.stringify(gameState));
   }, [gameState]);
 
   const correct = (playerIndex: number) => {

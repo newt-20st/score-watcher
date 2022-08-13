@@ -1,5 +1,3 @@
-const localGameState = localStorage.getItem("gameConfig");
-
 export type CountGameStateProps = {
   type: "count";
   config: {
@@ -24,6 +22,7 @@ export const countInitialGameState: CountGameStateProps = {
   logs: [],
 };
 export const getCountGameState = () => {
+  const localGameState = localStorage.getItem("gameState");
   if (localGameState) {
     const parsedLocalGameState: CountGameStateProps = JSON.parse(localGameState);
     if (parsedLocalGameState.type === "count") {
@@ -70,6 +69,7 @@ export const NomxInitialGameState: NomxGameStateProps = {
   logs: [],
 };
 export const getNomxGameState = () => {
+  const localGameState = localStorage.getItem("gameState");
   if (localGameState) {
     const parsedLocalGameConfig: NomxGameStateProps = JSON.parse(localGameState);
     if (parsedLocalGameConfig.type === "nomx") {
@@ -81,7 +81,7 @@ export const getNomxGameState = () => {
 
 
 export type NbynGameStateProps = {
-  type: "nomx";
+  type: "nbyn";
   config: {
     name: string;
     count: number;
@@ -101,7 +101,7 @@ export type NbynGameStateProps = {
   }[];
 }
 export const NbynInitialGameState: NbynGameStateProps = {
-  type: "nomx",
+  type: "nbyn",
   config: { name: "", count: 3, n: 7, end: 10 },
   players: [
     { name: "Player 1", correct: 0, incorrect: 0, group: "" },
@@ -111,13 +111,56 @@ export const NbynInitialGameState: NbynGameStateProps = {
   logs: [],
 };
 export const getNbynGameState = () => {
+  const localGameState = localStorage.getItem("gameState");
   if (localGameState) {
     const parsedLocalGameConfig: NbynGameStateProps = JSON.parse(localGameState);
-    if (parsedLocalGameConfig.type === "nomx") {
+    if (parsedLocalGameConfig.type === "nbyn") {
       return parsedLocalGameConfig;
     }
   }
   return NbynInitialGameState;
+}
+
+export type NupdownGameStateProps = {
+  type: "nupdown";
+  config: {
+    name: string;
+    count: number;
+    n: number;
+    end: number | null;
+  };
+  players: {
+    name: string;
+    correct: number;
+    incorrect: number;
+    lastIncorrect?: number;
+    group: string;
+  }[];
+  logs: {
+    type: string;
+    variant: "correct" | "incorrect";
+    player: number;
+  }[];
+}
+export const NupdownInitialGameState: NupdownGameStateProps = {
+  type: "nupdown",
+  config: { name: "", count: 3, n: 7, end: 10 },
+  players: [
+    { name: "Player 1", correct: 0, incorrect: 0, group: "" },
+    { name: "Player 2", correct: 0, incorrect: 0, group: "" },
+    { name: "Player 3", correct: 0, incorrect: 0, group: "" },
+  ],
+  logs: [],
+};
+export const getNupdownGameState = () => {
+  const localGameState = localStorage.getItem("gameState");
+  if (localGameState) {
+    const parsedLocalGameConfig: NupdownGameStateProps = JSON.parse(localGameState);
+    if (parsedLocalGameConfig.type === "nupdown") {
+      return parsedLocalGameConfig;
+    }
+  }
+  return NupdownInitialGameState;
 }
 
 
