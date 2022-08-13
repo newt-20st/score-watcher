@@ -2,7 +2,7 @@ import React from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { Box } from "@chakra-ui/react";
 
-import { CountConfig } from "./components/config/Count";
+import { CountBoard, CountConfig } from "./components/config/Count";
 
 import Home from "./pages/Home";
 
@@ -15,6 +15,9 @@ const App: React.FC = () => {
             <Route index element={<Home />} />
             <Route path="config">
               <Route path="count" element={<CountConfig />} />
+            </Route>
+            <Route path="board">
+              <Route path="count" element={<CountBoard />} />
             </Route>
           </Route>
         </Routes>
