@@ -1,60 +1,77 @@
 import React, { useEffect, useState } from "react";
 import produce from "immer";
 import { Link } from "react-router-dom";
-import { Badge, Box, Flex, FormControl, FormLabel, Heading, Text, Input, NumberDecrementStepper, NumberIncrementStepper, NumberInput, NumberInputField, NumberInputStepper, Button, UnorderedList, ListItem } from "@chakra-ui/react";
+import {
+  Badge,
+  Box,
+  Flex,
+  FormControl,
+  FormLabel,
+  Heading,
+  Text,
+  Input,
+  NumberDecrementStepper,
+  NumberIncrementStepper,
+  NumberInput,
+  NumberInputField,
+  NumberInputStepper,
+  Button,
+  UnorderedList,
+  ListItem,
+  Image
+} from "@chakra-ui/react";
+import { CountGameStateProps, countInitialGameState, getCountGameState } from "../../libs/state";
 
-
-type GameConfigProps = {
-  name: string;
-  count: number;
-}
-type PlayerProps = {
-  name: string;
-  score: number;
-  group: string;
-}
-type LogPropps = {
-  type: "correct";
-  player: number;
-}
+type QuizDataProps = {
+  q: string;
+  a: string;
+};
+const initialQuizData: QuizDataProps[] = [];
 
 export const CountConfig: React.FC = () => {
-  const localGameConfig = localStorage.getItem("gameConfig");
-  const [gameConfig, setGameConfig] = useState<GameConfigProps>(localGameConfig ? JSON.parse(localGameConfig) : { name: "", count: 5 });
-  const localPlayers = localStorage.getItem("players");
-  const [players, setPlayers] = useState<PlayerProps[]>(localPlayers ? JSON.parse(localPlayers) : []);
+  const [gameState, setGameState] = useState<CountGameStateProps>(getCountGameState());
+  const localQuizData = localStorage.getItem("quizData");
+  const [quizData, setQuizData] = useState<QuizDataProps[]>(localQuizData ? JSON.parse(localQuizData) : initialQuizData);
 
   useEffect(() => {
-    localStorage.setItem("gameConfig", JSON.stringify(gameConfig));
-    localStorage.setItem("players", JSON.stringify(players));
-  }, [gameConfig, players]);
+    localStorage.setItem("gameConfig", JSON.stringify(gameState));
+  }, [gameState]);
 
   useEffect(() => {
-    if (players.length < gameConfig.count) {
-      let newPlayers: PlayerProps[] = [];
-      for (let i = 0; i < gameConfig.count - players.length; i++) {
-        newPlayers.push({ name: `Player ${players.length + i}`, score: 0, group: "" })
+    if (gameState.players.length < gameState.config.count) {
+      let newPlayers: { name: string; score: number; group: string }[] = [];
+      for (let i = 1; i <= gameState.config.count - gameState.players.length; i++) {
+        newPlayers.push({ name: `Player ${gameState.players.length + i}`, score: 0, group: "" })
       }
-      setPlayers([...players, ...newPlayers]);
+      setGameState(produce(gameState, draft => { draft.players = [...gameState.players, ...newPlayers] }));
     } else {
-      setPlayers(players.slice(0, gameConfig.count));
+      setGameState(produce(gameState, draft => { draft.players = gameState.players.slice(0, gameState.config.count) }));
     }
-  }, [gameConfig.count]);
+  }, [gameState.config.count]);
 
-  return (
+  const reset = () => {
+    setGameState(countInitialGameState);
+  }
+
+  return (<Box>
+    <Box>
+      <Link to="/">
+        <Image src="../src/assets/images/logo.png" sx={{ maxHeight: "10vh", margin: "auto" }} />
+      </Link>
+    </Box>
     <Box p={5}>
       <Heading fontSize="3xl" >スコア計算</Heading>
-      <Flex pt={5} gap={5}>
+      <Flex pt={5}>
         <Heading fontSize="2xl" width={200}>形式設定</Heading>
-        <Flex flexGrow={1} flexDirection="column" gap={5}>
+        <Flex flexGrow={1} gap={5}>
           <FormControl>
-            <FormLabel>大会名</FormLabel>
-            <Input type='text' value={gameConfig.name} onChange={e => setGameConfig(produce(gameConfig, draft => { draft.name = e.target.value }))} />
+            <FormLabel>大会名<Badge colorScheme="red" mx={2}>必須</Badge></FormLabel>
+            <Input type='text' value={gameState.config.name} onChange={e => setGameState(produce(gameState, draft => { draft.config.name = e.target.value }))} />
           </FormControl>
           <FormControl>
             <FormLabel>プレイヤーの人数<Badge colorScheme="red" mx={2}>必須</Badge></FormLabel>
             <NumberInput min={1} max={15}
-              value={gameConfig.count} onChange={e => setGameConfig(produce(gameConfig, draft => { draft.count = e as any }))} >
+              value={gameState.config.count} onChange={e => setGameState(produce(gameState, draft => { draft.config.count = e as any }))} >
               <NumberInputField />
               <NumberInputStepper>
                 <NumberIncrementStepper />
@@ -64,21 +81,21 @@ export const CountConfig: React.FC = () => {
           </FormControl>
         </Flex>
       </Flex>
-      <Flex pt={5} gap={5}>
+      <Flex pt={5}>
         <Heading fontSize="2xl" width={200}>参加者設定</Heading>
         <Flex flexGrow={1} flexDirection="column" gap={5}>
-          {players.map((player, i) => (
+          {gameState.players.map((player, i) => (
             <Box key={i}>
-              <Heading fontSize="2xl" width={200}>プレイヤー {i + 1}</Heading>
+              <Heading fontSize="xl" width={200}>プレイヤー {i + 1}</Heading>
               <Flex gap={5}>
                 <FormControl>
                   <FormLabel>名前<Badge colorScheme="red" mx={2}>必須</Badge></FormLabel>
-                  <Input type='text' value={player.name} onChange={e => setPlayers(produce(players, draft => { draft[i].name = e.target.value }))} />
+                  <Input type='text' value={player.name} onChange={e => setGameState(produce(gameState, draft => { draft.players[i].name = e.target.value }))} />
                 </FormControl>
                 <FormControl>
-                  <FormLabel>初期値<Badge colorScheme="red" mx={2}>必須</Badge></FormLabel>
+                  <FormLabel>初期値</FormLabel>
                   <NumberInput min={1} max={15}
-                    value={player.score} onChange={e => setPlayers(produce(players, draft => { draft[i].score = e as any }))} >
+                    value={player.score} onChange={e => setGameState(produce(gameState, draft => { draft.players[i].score = e as any }))} >
                     <NumberInputField />
                     <NumberInputStepper>
                       <NumberIncrementStepper />
@@ -87,41 +104,46 @@ export const CountConfig: React.FC = () => {
                   </NumberInput>
                 </FormControl>
                 <FormControl>
-                  <FormLabel>所属<Badge colorScheme="red" mx={2}>必須</Badge></FormLabel>
-                  <Input type='text' value={player.group} onChange={e => setPlayers(produce(players, draft => { draft[i].group = e.target.value }))} />
+                  <FormLabel>所属</FormLabel>
+                  <Input type='text' value={player.group} onChange={e => setGameState(produce(gameState, draft => { draft.players[i].group = e.target.value }))} />
                 </FormControl>
               </Flex>
             </Box>
           ))}
         </Flex>
       </Flex>
+      <Flex pt={5}>
+        <Heading fontSize="2xl" width={200}>クイズ</Heading>
+        <Box flexGrow={1}>
+          <Heading fontSize="xl" width={200}>問題をインポート</Heading>
+          <Text>準備中</Text>
+        </Box>
+      </Flex>
       <Box height={20}></Box>
-      <Box sx={{ position: "fixed", bottom: 0, left: 0, width: "100%", textAlign: "right", bgColor: "white", p: 5 }}>
+      <Flex sx={{ position: "fixed", bottom: 0, left: 0, width: "100%", justifyContent: "end", bgColor: "white", p: 3, gap: 3 }}>
+        <Button colorScheme="red" onClick={reset}>設定をリセット</Button>
         <Link to="/board/count">
           <Button colorScheme="green">ボードを表示</Button>
         </Link>
-      </Box>
-    </Box >
+      </Flex>
+    </Box>
+  </Box>
   );
 };
 
 export const CountBoard: React.FC = () => {
-  const localGameConfig = localStorage.getItem("gameConfig");
-  const [gameConfig, setGameConfig] = useState<GameConfigProps>(localGameConfig ? JSON.parse(localGameConfig) : { name: "", count: 5 });
-  const localPlayers = localStorage.getItem("players");
-  const [players, setPlayers] = useState<PlayerProps[]>(localPlayers ? JSON.parse(localPlayers) : []);
-  const localLog = localStorage.getItem("log");
-  const [log, setLog] = useState<LogPropps[]>(localLog ? JSON.parse(localLog) : []);
+  const [gameState, setGameState] = useState<CountGameStateProps>(getCountGameState());
 
   useEffect(() => {
-    localStorage.setItem("gameConfig", JSON.stringify(gameConfig));
-    localStorage.setItem("players", JSON.stringify(players));
-    localStorage.setItem("log", JSON.stringify(log));
-  }, [gameConfig, players]);
+    localStorage.setItem("gameConfig", JSON.stringify(gameState));
+    localStorage.setItem("gameState.players", JSON.stringify(gameState.players));
+  }, [gameState]);
 
   const correct = (playerIndex: number) => {
-    setPlayers(produce(players, draft => { draft[playerIndex].score++ }));
-    setLog(produce(log, draft => { draft.unshift({ type: "correct", player: playerIndex }) }));
+    setGameState(produce(gameState, draft => {
+      draft.players[playerIndex].score++;
+      draft.logs.unshift({ type: "count", variant: "correct", player: playerIndex });
+    }));
   }
 
   return (
@@ -131,7 +153,7 @@ export const CountBoard: React.FC = () => {
         borderBottomWidth: 2,
       }}>
         <Box sx={{ width: 200, p: 2, bgColor: "green.500", borderRightRadius: 50 }}>
-          <Heading fontSize="3xl" color="white">{gameConfig.name}</Heading>
+          <Heading fontSize="3xl" color="white">{gameState.config.name}</Heading>
           <Text color="white">スコア計算</Text>
         </Box>
         <Flex sx={{ flexGrow: 1, alignItems: "center" }}>
@@ -145,7 +167,7 @@ export const CountBoard: React.FC = () => {
         </Link>
       </Flex>
       <Flex sx={{ width: "100%", justifyContent: "space-evenly", mt: 5 }}>
-        {players.map((player, i) => (
+        {gameState.players.map((player, i) => (
           <Flex key={i} direction="column" sx={{ textAlign: "center", gap: 5 }}>
             <Flex direction="column">
               <Box>{player.group}</Box>
@@ -158,7 +180,7 @@ export const CountBoard: React.FC = () => {
           </Flex>
         ))}
       </Flex>
-      {log.length !== 0 && (
+      {gameState.logs.length !== 0 && (
         <Flex direction="column" sx={{
           m: 5,
           p: 3,
@@ -167,7 +189,7 @@ export const CountBoard: React.FC = () => {
           borderWidth: 2,
         }}>
           <UnorderedList>
-            {log.map((activity, i) => <ListItem key={i}>{players[activity.player].name} が {activity.type === "correct" ? "正答" : "誤答"}しました。</ListItem>)}
+            {gameState.logs.map((activity, i) => <ListItem key={i}>{gameState.players[activity.player].name} が {activity.variant === "correct" ? "正答" : "誤答"}しました。</ListItem>)}
           </UnorderedList>
         </Flex>
       )}

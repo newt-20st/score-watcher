@@ -24,7 +24,7 @@ const Home: React.FC = () => {
     <Flex direction="column">
       <Box>
         <Link to="/">
-          <Image src="src/assets/images/logo.png" sx={{ maxHeight: "10vh", margin: "auto" }} />
+          <Image src="/src/assets/images/logo.png" sx={{ maxHeight: "10vh", margin: "auto" }} />
         </Link>
       </Box>
       <Box p={5}>
