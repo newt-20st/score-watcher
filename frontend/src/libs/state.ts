@@ -80,6 +80,47 @@ export const getNomxGameState = () => {
 }
 
 
+export type NbynGameStateProps = {
+  type: "nomx";
+  config: {
+    name: string;
+    count: number;
+    n: number;
+    end: number | null;
+  };
+  players: {
+    name: string;
+    correct: number;
+    incorrect: number;
+    group: string;
+  }[];
+  logs: {
+    type: string;
+    variant: "correct" | "incorrect";
+    player: number;
+  }[];
+}
+export const NbynInitialGameState: NbynGameStateProps = {
+  type: "nomx",
+  config: { name: "", count: 3, n: 7, end: 10 },
+  players: [
+    { name: "Player 1", correct: 0, incorrect: 0, group: "" },
+    { name: "Player 2", correct: 0, incorrect: 0, group: "" },
+    { name: "Player 3", correct: 0, incorrect: 0, group: "" },
+  ],
+  logs: [],
+};
+export const getNbynGameState = () => {
+  if (localGameState) {
+    const parsedLocalGameConfig: NbynGameStateProps = JSON.parse(localGameState);
+    if (parsedLocalGameConfig.type === "nomx") {
+      return parsedLocalGameConfig;
+    }
+  }
+  return NbynInitialGameState;
+}
+
+
 const localQuizData = localStorage.getItem("quizData");
 
 export type QuizDataProps = {

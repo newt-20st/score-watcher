@@ -6,6 +6,7 @@ import { CountBoard, CountConfig } from "./components/config/Count";
 
 import Home from "./pages/Home";
 import { NomxBoard, NomxConfig } from "./components/config/Nomx";
+import { NbynBoard, NbynConfig } from "./components/config/Nbyn";
 
 const App: React.FC = () => {
   return (
@@ -17,10 +18,12 @@ const App: React.FC = () => {
             <Route path="config">
               <Route path="count" element={<CountConfig />} />
               <Route path="nomx" element={<NomxConfig />} />
+              <Route path="nbyn" element={<NbynConfig />} />
             </Route>
             <Route path="board">
               <Route path="count" element={<CountBoard />} />
               <Route path="nomx" element={<NomxBoard />} />
+              <Route path="nbyn" element={<NbynBoard />} />
             </Route>
           </Route>
         </Routes>
