@@ -269,6 +269,60 @@ export const getAttacksurvivalGameState = () => {
   return AttacksurvivalInitialGameState;
 }
 
+export type SquarexGameStateProps = {
+  type: "squarex";
+  config: {
+    name: string;
+    count: number;
+    x: number;
+    odd: number;
+    even: number;
+    through: number;
+    end: number;
+  };
+  players: {
+    name: string;
+    correct: number;
+    incorrect: number;
+    odd: number;
+    even: number;
+    group: string;
+  }[];
+  logs: {
+    type: "squarex";
+    variant: "correct" | "incorrect";
+    player: number;
+  }[];
+}
+export const SquarexInitialGameState: SquarexGameStateProps = {
+  type: "squarex",
+  config: {
+    name: "",
+    count: 3,
+    x: 10,
+    odd: 1,
+    even: 1,
+    through: 0,
+    end: 10
+  },
+  players: [
+    { name: "Player 1", correct: 0, incorrect: 0, odd: 0, even: 0, group: "" },
+    { name: "Player 2", correct: 0, incorrect: 0, odd: 0, even: 0, group: "" },
+    { name: "Player 3", correct: 0, incorrect: 0, odd: 0, even: 0, group: "" },
+  ],
+  logs: [],
+};
+export const getSquarexGameState = () => {
+  const localGameState = localStorage.getItem("gameState");
+  if (localGameState) {
+    const parsedLocalGameConfig: SquarexGameStateProps = JSON.parse(localGameState);
+    if (parsedLocalGameConfig.type === "squarex") {
+      return parsedLocalGameConfig;
+    }
+  }
+  return SquarexInitialGameState;
+}
+
 
 const localQuizData = localStorage.getItem("quizData");
 
