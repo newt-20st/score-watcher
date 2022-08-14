@@ -9,6 +9,7 @@ import {
   Image,
   Text,
 } from "@chakra-ui/react";
+import Header from "../components/Header";
 
 const Card: React.FC<BoxProps> = (props) => (
   <Box
@@ -31,14 +32,7 @@ const Card: React.FC<BoxProps> = (props) => (
 const Home: React.FC = () => {
   return (
     <Flex direction="column">
-      <Box>
-        <Link to="/">
-          <Image
-            src="/src/assets/images/logo.png"
-            sx={{ maxHeight: "10vh", margin: "auto" }}
-          />
-        </Link>
-      </Box>
+      <Header />
       <Box p={5}>
         <Text>Ver.2.0-dev</Text>
         <Text>

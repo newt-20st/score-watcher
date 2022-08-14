@@ -21,17 +21,18 @@ import {
   Image,
 } from "@chakra-ui/react";
 import {
-  getSwedishxGameState,
+  getNupdownGameState,
   initialQuizData,
-  SwedishxGameStateProps,
-  SwedishxInitialGameState,
+  NupdownGameStateProps,
+  NupdownInitialGameState,
   QuizDataProps,
 } from "../libs/state";
-import LoadQuiz from "./LoadQuiz";
+import LoadQuiz from "../components/LoadQuiz";
+import Header from "../components/Header";
 
-export const SwedishxConfig: React.FC = () => {
-  const [gameState, setGameState] = useState<SwedishxGameStateProps>(
-    getSwedishxGameState()
+export const NupdownConfig: React.FC = () => {
+  const [gameState, setGameState] = useState<NupdownGameStateProps>(
+    getNupdownGameState()
   );
 
   useEffect(() => {
@@ -73,21 +74,14 @@ export const SwedishxConfig: React.FC = () => {
   }, [gameState.config.count]);
 
   const reset = () => {
-    setGameState(SwedishxInitialGameState);
+    setGameState(NupdownInitialGameState);
   };
 
   return (
     <Box>
-      <Box>
-        <Link to="/">
-          <Image
-            src="../src/assets/images/logo.png"
-            sx={{ maxHeight: "10vh", margin: "auto" }}
-          />
-        </Link>
-      </Box>
+      <Header />
       <Box p={5}>
-        <Heading fontSize="3xl">SwedishX</Heading>
+        <Heading fontSize="3xl">Nupdown</Heading>
         <Flex pt={5} gap={5}>
           <Heading fontSize="2xl" width={200}>
             形式設定
@@ -140,7 +134,7 @@ export const SwedishxConfig: React.FC = () => {
             </FormControl>
             <FormControl>
               <FormLabel>
-                X{" "}
+                N{" "}
                 <Badge colorScheme="red" mx={2}>
                   必須
                 </Badge>
@@ -148,11 +142,11 @@ export const SwedishxConfig: React.FC = () => {
               <NumberInput
                 min={1}
                 max={1000}
-                value={gameState.config.x}
+                value={gameState.config.n}
                 onChange={(e) =>
                   setGameState(
                     produce(gameState, (draft) => {
-                      draft.config.x = e as any;
+                      draft.config.n = e as any;
                     })
                   )
                 }
@@ -309,7 +303,7 @@ export const SwedishxConfig: React.FC = () => {
           <Button colorScheme="red" onClick={reset}>
             設定をリセット
           </Button>
-          <Link to="/board/swedishx">
+          <Link to="/board/nupdown">
             <Button colorScheme="green">ボードを表示</Button>
           </Link>
         </Flex>
@@ -318,10 +312,10 @@ export const SwedishxConfig: React.FC = () => {
   );
 };
 
-export const SwedishxBoard: React.FC = () => {
+export const NupdownBoard: React.FC = () => {
   const navigate = useNavigate();
-  const [gameState, setGameState] = useState<SwedishxGameStateProps>(
-    getSwedishxGameState()
+  const [gameState, setGameState] = useState<NupdownGameStateProps>(
+    getNupdownGameState()
   );
   const quizData: QuizDataProps[] = initialQuizData;
 
@@ -336,6 +330,14 @@ export const SwedishxBoard: React.FC = () => {
           draft.players[draft.logs[draft.logs.length - 1].player].correct--;
         } else {
           draft.players[draft.logs[draft.logs.length - 1].player].incorrect--;
+          const i = draft.logs.lastIndexOf({
+            type: "nupdown",
+            player: draft.logs[draft.logs.length - 1].player,
+            variant: "incorrect",
+          });
+          draft.players[
+            draft.logs[draft.logs.length - 1].player
+          ].lastIncorrect = i == -1 ? undefined : i;
         }
         draft.logs.pop();
       })
@@ -347,7 +349,7 @@ export const SwedishxBoard: React.FC = () => {
       produce(gameState, (draft) => {
         draft.players[playerIndex].correct++;
         draft.logs.unshift({
-          type: "swedishx",
+          type: "nupdown",
           variant: "correct",
           player: playerIndex,
         });
@@ -359,8 +361,9 @@ export const SwedishxBoard: React.FC = () => {
     setGameState(
       produce(gameState, (draft) => {
         draft.players[playerIndex].incorrect++;
+        draft.players[playerIndex].lastIncorrect = draft.logs.length + 1;
         draft.logs.unshift({
-          type: "swedishx",
+          type: "nupdown",
           variant: "incorrect",
           player: playerIndex,
         });
@@ -369,15 +372,22 @@ export const SwedishxBoard: React.FC = () => {
   };
 
   const calcScore = (i: number) => {
-    const incorrect = gameState.players[i].incorrect;
-    return gameState.players[i].correct - ((1 + incorrect) * incorrect) / 2;
+    if (
+      gameState.players[i].incorrect > 0 &&
+      gameState.players[i].lastIncorrect
+    ) {
+      return gameState.logs
+        .slice(gameState.players[i].lastIncorrect, gameState.logs.length)
+        .filter((v) => v.variant === "correct" && v.player == i).length;
+    } else {
+      return gameState.players[i].correct;
+    }
   };
   const checkState = (i: number) => {
-    const score = calcScore(i);
-    if (score >= gameState.config.x) {
+    if (calcScore(i) >= gameState.config.n) {
       return "WIN!";
     } else {
-      return score;
+      return calcScore(i);
     }
   };
 
@@ -419,7 +429,7 @@ export const SwedishxBoard: React.FC = () => {
             )}
         </Flex>
       </Flex>
-      <Flex p={3} justifyContent="flex-end" gap={2}>
+      <Flex p={3} gap={2} justifyContent="flex-end">
         <Button
           onClick={undo}
           disabled={gameState.logs.length === 0}
@@ -429,7 +439,7 @@ export const SwedishxBoard: React.FC = () => {
           元に戻す
         </Button>
         <Button
-          onClick={() => navigate("/config/swedishx")}
+          onClick={() => navigate("/config/nupdown")}
           colorScheme="teal"
           size="xs"
         >

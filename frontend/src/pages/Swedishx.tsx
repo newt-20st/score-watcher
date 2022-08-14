@@ -21,19 +21,19 @@ import {
   Image,
 } from "@chakra-ui/react";
 import {
-  getSquarexGameState,
+  getSwedishxGameState,
   initialQuizData,
-  SquarexGameStateProps,
-  SquarexInitialGameState,
+  SwedishxGameStateProps,
+  SwedishxInitialGameState,
   QuizDataProps,
 } from "../libs/state";
-import LoadQuiz from "./LoadQuiz";
+import LoadQuiz from "../components/LoadQuiz";
+import Header from "../components/Header";
 
-export const SquarexConfig: React.FC = () => {
-  const [gameState, setGameState] = useState<SquarexGameStateProps>(
-    getSquarexGameState()
+export const SwedishxConfig: React.FC = () => {
+  const [gameState, setGameState] = useState<SwedishxGameStateProps>(
+    getSwedishxGameState()
   );
-  const [quizData, setQuizData] = useState<QuizDataProps[]>(initialQuizData);
 
   useEffect(() => {
     localStorage.setItem("gameState", JSON.stringify(gameState));
@@ -45,8 +45,6 @@ export const SquarexConfig: React.FC = () => {
         name: string;
         correct: number;
         incorrect: number;
-        odd: number;
-        even: number;
         group: string;
       }[] = [];
       for (
@@ -58,8 +56,6 @@ export const SquarexConfig: React.FC = () => {
           name: `Player ${gameState.players.length + i}`,
           correct: 0,
           incorrect: 0,
-          odd: 0,
-          even: 0,
           group: "",
         });
       }
@@ -78,21 +74,14 @@ export const SquarexConfig: React.FC = () => {
   }, [gameState.config.count]);
 
   const reset = () => {
-    setGameState(SquarexInitialGameState);
+    setGameState(SwedishxInitialGameState);
   };
 
   return (
     <Box>
-      <Box>
-        <Link to="/">
-          <Image
-            src="../src/assets/images/logo.png"
-            sx={{ maxHeight: "10vh", margin: "auto" }}
-          />
-        </Link>
-      </Box>
+      <Header />
       <Box p={5}>
-        <Heading fontSize="3xl">SquareX</Heading>
+        <Heading fontSize="3xl">SwedishX</Heading>
         <Flex pt={5} gap={5}>
           <Heading fontSize="2xl" width={200}>
             形式設定
@@ -314,7 +303,7 @@ export const SquarexConfig: React.FC = () => {
           <Button colorScheme="red" onClick={reset}>
             設定をリセット
           </Button>
-          <Link to="/board/squarex">
+          <Link to="/board/swedishx">
             <Button colorScheme="green">ボードを表示</Button>
           </Link>
         </Flex>
@@ -323,10 +312,10 @@ export const SquarexConfig: React.FC = () => {
   );
 };
 
-export const SquarexBoard: React.FC = () => {
+export const SwedishxBoard: React.FC = () => {
   const navigate = useNavigate();
-  const [gameState, setGameState] = useState<SquarexGameStateProps>(
-    getSquarexGameState()
+  const [gameState, setGameState] = useState<SwedishxGameStateProps>(
+    getSwedishxGameState()
   );
   const quizData: QuizDataProps[] = initialQuizData;
 
@@ -351,13 +340,8 @@ export const SquarexBoard: React.FC = () => {
     setGameState(
       produce(gameState, (draft) => {
         draft.players[playerIndex].correct++;
-        if (gameState.logs.length % 2 === 1) {
-          draft.players[playerIndex].even += draft.config.even;
-        } else {
-          draft.players[playerIndex].odd += draft.config.odd;
-        }
         draft.logs.unshift({
-          type: "squarex",
+          type: "swedishx",
           variant: "correct",
           player: playerIndex,
         });
@@ -369,13 +353,8 @@ export const SquarexBoard: React.FC = () => {
     setGameState(
       produce(gameState, (draft) => {
         draft.players[playerIndex].incorrect++;
-        if (gameState.logs.length % 2 === 1) {
-          draft.players[playerIndex].even -= draft.config.even;
-        } else {
-          draft.players[playerIndex].odd -= draft.config.odd;
-        }
         draft.logs.unshift({
-          type: "squarex",
+          type: "swedishx",
           variant: "incorrect",
           player: playerIndex,
         });
@@ -384,7 +363,8 @@ export const SquarexBoard: React.FC = () => {
   };
 
   const calcScore = (i: number) => {
-    return gameState.players[i].odd * gameState.players[i].even;
+    const incorrect = gameState.players[i].incorrect;
+    return gameState.players[i].correct - ((1 + incorrect) * incorrect) / 2;
   };
   const checkState = (i: number) => {
     const score = calcScore(i);
@@ -443,7 +423,7 @@ export const SquarexBoard: React.FC = () => {
           元に戻す
         </Button>
         <Button
-          onClick={() => navigate("/config/squarex")}
+          onClick={() => navigate("/config/swedishx")}
           colorScheme="teal"
           size="xs"
         >

@@ -21,17 +21,19 @@ import {
   Image,
 } from "@chakra-ui/react";
 import {
-  getNupdownGameState,
+  getAttacksurvivalGameState,
   initialQuizData,
-  NupdownGameStateProps,
-  NupdownInitialGameState,
+  AttacksurvivalGameStateProps,
+  AttacksurvivalInitialGameState,
   QuizDataProps,
 } from "../libs/state";
-import LoadQuiz from "./LoadQuiz";
 
-export const NupdownConfig: React.FC = () => {
-  const [gameState, setGameState] = useState<NupdownGameStateProps>(
-    getNupdownGameState()
+import LoadQuiz from "../components/LoadQuiz";
+import Header from "../components/Header";
+
+export const AttacksurvivalConfig: React.FC = () => {
+  const [gameState, setGameState] = useState<AttacksurvivalGameStateProps>(
+    getAttacksurvivalGameState()
   );
 
   useEffect(() => {
@@ -42,6 +44,7 @@ export const NupdownConfig: React.FC = () => {
     if (gameState.players.length < gameState.config.count) {
       let newPlayers: {
         name: string;
+        score: number;
         correct: number;
         incorrect: number;
         group: string;
@@ -53,6 +56,7 @@ export const NupdownConfig: React.FC = () => {
       ) {
         newPlayers.push({
           name: `Player ${gameState.players.length + i}`,
+          score: gameState.config.n,
           correct: 0,
           incorrect: 0,
           group: "",
@@ -73,98 +77,91 @@ export const NupdownConfig: React.FC = () => {
   }, [gameState.config.count]);
 
   const reset = () => {
-    setGameState(NupdownInitialGameState);
+    setGameState(AttacksurvivalInitialGameState);
   };
 
   return (
     <Box>
-      <Box>
-        <Link to="/">
-          <Image
-            src="../src/assets/images/logo.png"
-            sx={{ maxHeight: "10vh", margin: "auto" }}
-          />
-        </Link>
-      </Box>
+      <Header />
       <Box p={5}>
-        <Heading fontSize="3xl">Nupdown</Heading>
+        <Heading fontSize="3xl">SwedishX</Heading>
         <Flex pt={5} gap={5}>
           <Heading fontSize="2xl" width={200}>
             形式設定
           </Heading>
-          <Flex flexGrow={1} gap={5}>
-            <FormControl>
-              <FormLabel>
-                大会名
-                <Badge colorScheme="red" mx={2}>
-                  必須
-                </Badge>
-              </FormLabel>
-              <Input
-                type="text"
-                value={gameState.config.name}
-                onChange={(e) =>
-                  setGameState(
-                    produce(gameState, (draft) => {
-                      draft.config.name = e.target.value;
-                    })
-                  )
-                }
-              />
-            </FormControl>
-            <FormControl>
-              <FormLabel>
-                プレイヤーの人数
-                <Badge colorScheme="red" mx={2}>
-                  必須
-                </Badge>
-              </FormLabel>
-              <NumberInput
-                min={1}
-                max={15}
-                value={gameState.config.count}
-                onChange={(e) =>
-                  setGameState(
-                    produce(gameState, (draft) => {
-                      draft.config.count = e as any;
-                    })
-                  )
-                }
-              >
-                <NumberInputField />
-                <NumberInputStepper>
-                  <NumberIncrementStepper />
-                  <NumberDecrementStepper />
-                </NumberInputStepper>
-              </NumberInput>
-            </FormControl>
-            <FormControl>
-              <FormLabel>
-                N{" "}
-                <Badge colorScheme="red" mx={2}>
-                  必須
-                </Badge>
-              </FormLabel>
-              <NumberInput
-                min={1}
-                max={1000}
-                value={gameState.config.n}
-                onChange={(e) =>
-                  setGameState(
-                    produce(gameState, (draft) => {
-                      draft.config.n = e as any;
-                    })
-                  )
-                }
-              >
-                <NumberInputField />
-                <NumberInputStepper>
-                  <NumberIncrementStepper />
-                  <NumberDecrementStepper />
-                </NumberInputStepper>
-              </NumberInput>
-            </FormControl>
-            {gameState.config.end && (
+          <Flex direction="column" flexGrow={1} gap={5}>
+            <Flex>
+              <FormControl>
+                <FormLabel>
+                  大会名
+                  <Badge colorScheme="red" mx={2}>
+                    必須
+                  </Badge>
+                </FormLabel>
+                <Input
+                  type="text"
+                  value={gameState.config.name}
+                  onChange={(e) =>
+                    setGameState(
+                      produce(gameState, (draft) => {
+                        draft.config.name = e.target.value;
+                      })
+                    )
+                  }
+                />
+              </FormControl>
+              <FormControl>
+                <FormLabel>
+                  プレイヤーの人数
+                  <Badge colorScheme="red" mx={2}>
+                    必須
+                  </Badge>
+                </FormLabel>
+                <NumberInput
+                  min={1}
+                  max={15}
+                  value={gameState.config.count}
+                  onChange={(e) =>
+                    setGameState(
+                      produce(gameState, (draft) => {
+                        draft.config.count = e as any;
+                      })
+                    )
+                  }
+                >
+                  <NumberInputField />
+                  <NumberInputStepper>
+                    <NumberIncrementStepper />
+                    <NumberDecrementStepper />
+                  </NumberInputStepper>
+                </NumberInput>
+              </FormControl>
+              <FormControl>
+                <FormLabel>
+                  初期ポイント{" "}
+                  <Badge colorScheme="red" mx={2}>
+                    必須
+                  </Badge>
+                </FormLabel>
+                <NumberInput
+                  min={1}
+                  max={1000}
+                  value={gameState.config.n}
+                  onChange={(e) =>
+                    setGameState(
+                      produce(gameState, (draft) => {
+                        draft.config.n = e as any;
+                      })
+                    )
+                  }
+                >
+                  <NumberInputField />
+                  <NumberInputStepper>
+                    <NumberIncrementStepper />
+                    <NumberDecrementStepper />
+                  </NumberInputStepper>
+                </NumberInput>
+              </FormControl>
               <FormControl>
                 <FormLabel>限定問題数 </FormLabel>
                 <NumberInput
@@ -186,7 +183,139 @@ export const NupdownConfig: React.FC = () => {
                   </NumberInputStepper>
                 </NumberInput>
               </FormControl>
-            )}
+            </Flex>
+            <Flex>
+              <FormControl>
+                <FormLabel>
+                  自分が正答
+                  <Badge colorScheme="red" mx={2}>
+                    必須
+                  </Badge>
+                </FormLabel>
+                <NumberInput
+                  min={1}
+                  max={15}
+                  value={gameState.config.correct.me}
+                  onChange={(e) =>
+                    setGameState(
+                      produce(gameState, (draft) => {
+                        draft.config.correct.me = e as any;
+                      })
+                    )
+                  }
+                >
+                  <NumberInputField />
+                  <NumberInputStepper>
+                    <NumberIncrementStepper />
+                    <NumberDecrementStepper />
+                  </NumberInputStepper>
+                </NumberInput>
+              </FormControl>
+              <FormControl>
+                <FormLabel>
+                  他人が正答
+                  <Badge colorScheme="red" mx={2}>
+                    必須
+                  </Badge>
+                </FormLabel>
+                <NumberInput
+                  min={1}
+                  max={15}
+                  value={gameState.config.correct.other}
+                  onChange={(e) =>
+                    setGameState(
+                      produce(gameState, (draft) => {
+                        draft.config.correct.other = e as any;
+                      })
+                    )
+                  }
+                >
+                  <NumberInputField />
+                  <NumberInputStepper>
+                    <NumberIncrementStepper />
+                    <NumberDecrementStepper />
+                  </NumberInputStepper>
+                </NumberInput>
+              </FormControl>
+              <FormControl>
+                <FormLabel>
+                  自分が誤答
+                  <Badge colorScheme="red" mx={2}>
+                    必須
+                  </Badge>
+                </FormLabel>
+                <NumberInput
+                  min={1}
+                  max={15}
+                  value={gameState.config.incorrect.me}
+                  onChange={(e) =>
+                    setGameState(
+                      produce(gameState, (draft) => {
+                        draft.config.incorrect.me = e as any;
+                      })
+                    )
+                  }
+                >
+                  <NumberInputField />
+                  <NumberInputStepper>
+                    <NumberIncrementStepper />
+                    <NumberDecrementStepper />
+                  </NumberInputStepper>
+                </NumberInput>
+              </FormControl>
+              <FormControl>
+                <FormLabel>
+                  他人が誤答
+                  <Badge colorScheme="red" mx={2}>
+                    必須
+                  </Badge>
+                </FormLabel>
+                <NumberInput
+                  min={1}
+                  max={15}
+                  value={gameState.config.incorrect.other}
+                  onChange={(e) =>
+                    setGameState(
+                      produce(gameState, (draft) => {
+                        draft.config.incorrect.other = e as any;
+                      })
+                    )
+                  }
+                >
+                  <NumberInputField />
+                  <NumberInputStepper>
+                    <NumberIncrementStepper />
+                    <NumberDecrementStepper />
+                  </NumberInputStepper>
+                </NumberInput>
+              </FormControl>
+              <FormControl>
+                <FormLabel>
+                  スルー
+                  <Badge colorScheme="red" mx={2}>
+                    必須
+                  </Badge>
+                </FormLabel>
+                <NumberInput
+                  min={1}
+                  max={15}
+                  value={gameState.config.through}
+                  onChange={(e) =>
+                    setGameState(
+                      produce(gameState, (draft) => {
+                        draft.config.through = e as any;
+                      })
+                    )
+                  }
+                >
+                  <NumberInputField />
+                  <NumberInputStepper>
+                    <NumberIncrementStepper />
+                    <NumberDecrementStepper />
+                  </NumberInputStepper>
+                </NumberInput>
+              </FormControl>
+            </Flex>
           </Flex>
         </Flex>
         <Flex pt={5} gap={5}>
@@ -309,7 +438,7 @@ export const NupdownConfig: React.FC = () => {
           <Button colorScheme="red" onClick={reset}>
             設定をリセット
           </Button>
-          <Link to="/board/nupdown">
+          <Link to="/board/attacksurvival">
             <Button colorScheme="green">ボードを表示</Button>
           </Link>
         </Flex>
@@ -318,10 +447,10 @@ export const NupdownConfig: React.FC = () => {
   );
 };
 
-export const NupdownBoard: React.FC = () => {
+export const AttacksurvivalBoard: React.FC = () => {
   const navigate = useNavigate();
-  const [gameState, setGameState] = useState<NupdownGameStateProps>(
-    getNupdownGameState()
+  const [gameState, setGameState] = useState<AttacksurvivalGameStateProps>(
+    getAttacksurvivalGameState()
   );
   const quizData: QuizDataProps[] = initialQuizData;
 
@@ -329,33 +458,27 @@ export const NupdownBoard: React.FC = () => {
     localStorage.setItem("gameState", JSON.stringify(gameState));
   }, [gameState]);
 
-  const undo = () => {
-    setGameState(
-      produce(gameState, (draft) => {
-        if (draft.logs[draft.logs.length - 1].variant === "correct") {
-          draft.players[draft.logs[draft.logs.length - 1].player].correct--;
-        } else {
-          draft.players[draft.logs[draft.logs.length - 1].player].incorrect--;
-          const i = draft.logs.lastIndexOf({
-            type: "nupdown",
-            player: draft.logs[draft.logs.length - 1].player,
-            variant: "incorrect",
-          });
-          draft.players[
-            draft.logs[draft.logs.length - 1].player
-          ].lastIncorrect = i == -1 ? undefined : i;
-        }
-        draft.logs.pop();
-      })
-    );
-  };
-
   const correct = (playerIndex: number) => {
     setGameState(
       produce(gameState, (draft) => {
-        draft.players[playerIndex].correct++;
+        const newPlayerState = draft.players.map((player, i) => {
+          if (i === playerIndex) {
+            return {
+              ...player,
+              score: player.score + draft.config.correct.me,
+              correct: player.correct + 1,
+            };
+          } else {
+            return {
+              ...player,
+              score: player.score + draft.config.correct.other,
+            };
+          }
+        });
+        console.log(newPlayerState);
+        draft.players = newPlayerState;
         draft.logs.unshift({
-          type: "nupdown",
+          type: "attacksurvival",
           variant: "correct",
           player: playerIndex,
         });
@@ -366,10 +489,23 @@ export const NupdownBoard: React.FC = () => {
   const incorrect = (playerIndex: number) => {
     setGameState(
       produce(gameState, (draft) => {
-        draft.players[playerIndex].incorrect++;
-        draft.players[playerIndex].lastIncorrect = draft.logs.length + 1;
+        const newPlayerState = draft.players.map((player, i) => {
+          if (i === playerIndex) {
+            return {
+              ...player,
+              score: player.score + draft.config.incorrect.me,
+              incorrect: player.incorrect + 1,
+            };
+          } else {
+            return {
+              ...player,
+              score: player.score + draft.config.incorrect.other,
+            };
+          }
+        });
+        draft.players = newPlayerState;
         draft.logs.unshift({
-          type: "nupdown",
+          type: "attacksurvival",
           variant: "incorrect",
           player: playerIndex,
         });
@@ -377,24 +513,54 @@ export const NupdownBoard: React.FC = () => {
     );
   };
 
-  const calcScore = (i: number) => {
-    if (
-      gameState.players[i].incorrect > 0 &&
-      gameState.players[i].lastIncorrect
-    ) {
-      return gameState.logs
-        .slice(gameState.players[i].lastIncorrect, gameState.logs.length)
-        .filter((v) => v.variant === "correct" && v.player == i).length;
+  const checkState = (i: number) => {
+    if (gameState.players[i].score <= 0) {
+      return "LOSE";
     } else {
-      return gameState.players[i].correct;
+      return gameState.players[i].score;
     }
   };
-  const checkState = (i: number) => {
-    if (calcScore(i) >= gameState.config.n) {
-      return "WIN!";
-    } else {
-      return calcScore(i);
-    }
+
+  const undo = () => {
+    setGameState(
+      produce(gameState, (draft) => {
+        const lastLog = draft.logs[0];
+        if (lastLog.variant === "correct") {
+          const newPlayerState = draft.players.map((player, i) => {
+            if (i === lastLog.player) {
+              return {
+                ...player,
+                score: player.score - draft.config.correct.me,
+                correct: player.correct - 1,
+              };
+            } else {
+              return {
+                ...player,
+                score: player.score - draft.config.correct.other,
+              };
+            }
+          });
+          draft.players = newPlayerState;
+        } else {
+          const newPlayerState = draft.players.map((player, i) => {
+            if (i === lastLog.player) {
+              return {
+                ...player,
+                score: player.score - draft.config.incorrect.me,
+                correct: player.incorrect - 1,
+              };
+            } else {
+              return {
+                ...player,
+                score: player.score - draft.config.incorrect.other,
+              };
+            }
+          });
+          draft.players = newPlayerState;
+        }
+        draft.logs.pop();
+      })
+    );
   };
 
   return (
@@ -435,17 +601,12 @@ export const NupdownBoard: React.FC = () => {
             )}
         </Flex>
       </Flex>
-      <Flex p={3} gap={2} justifyContent="flex-end">
-        <Button
-          onClick={undo}
-          disabled={gameState.logs.length === 0}
-          colorScheme="blue"
-          size="xs"
-        >
+      <Flex p={3} justifyContent="flex-end" gap={2} alignItems="center">
+        <Button onClick={undo} colorScheme="blue" size="xs">
           元に戻す
         </Button>
         <Button
-          onClick={() => navigate("/config/nupdown")}
+          onClick={() => navigate("/config/attacksurvival")}
           colorScheme="teal"
           size="xs"
         >
@@ -462,7 +623,7 @@ export const NupdownBoard: React.FC = () => {
               gap: 5,
               p: 3,
               borderRadius: 30,
-              bgColor: checkState(i) === "WIN!" ? "red.500" : "white",
+              bgColor: checkState(i) === "LOSE" ? "blue.500" : "white",
             }}
           >
             <Flex direction="column">

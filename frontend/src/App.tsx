@@ -2,18 +2,18 @@ import React from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { Box } from "@chakra-ui/react";
 
-import { CountBoard, CountConfig } from "./components/Count";
+import { CountBoard, CountConfig } from "./pages/Count";
 
 import Home from "./pages/Home";
-import { NomxBoard, NomxConfig } from "./components/Nomx";
-import { NbynBoard, NbynConfig } from "./components/Nbyn";
-import { NupdownBoard, NupdownConfig } from "./components/Nupdown";
-import { SwedishxBoard, SwedishxConfig } from "./components/Swedishx";
+import { NomxBoard, NomxConfig } from "./pages/Nomx";
+import { NbynBoard, NbynConfig } from "./pages/Nbyn";
+import { NupdownBoard, NupdownConfig } from "./pages/Nupdown";
+import { SwedishxBoard, SwedishxConfig } from "./pages/Swedishx";
 import {
   AttacksurvivalBoard,
   AttacksurvivalConfig,
-} from "./components/Attacksurvival";
-import { SquarexBoard, SquarexConfig } from "./components/Squarex";
+} from "./pages/Attacksurvival";
+import { SquarexBoard, SquarexConfig } from "./pages/Squarex";
 
 const App: React.FC = () => {
   return (

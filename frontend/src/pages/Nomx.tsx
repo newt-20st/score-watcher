@@ -21,21 +21,19 @@ import {
   Image,
 } from "@chakra-ui/react";
 import {
-  CountGameStateProps,
-  countInitialGameState,
-  getCountGameState,
+  getNomxGameState,
   initialQuizData,
+  NomxGameStateProps,
+  NomxInitialGameState,
   QuizDataProps,
 } from "../libs/state";
-import LoadQuiz from "./LoadQuiz";
 
-export const CountConfig: React.FC = () => {
-  const [gameState, setGameState] = useState<CountGameStateProps>(
-    getCountGameState()
-  );
-  const localQuizData = localStorage.getItem("quizData");
-  const [quizData, setQuizData] = useState<QuizDataProps[]>(
-    localQuizData ? JSON.parse(localQuizData) : initialQuizData
+import LoadQuiz from "../components/LoadQuiz";
+import Header from "../components/Header";
+
+export const NomxConfig: React.FC = () => {
+  const [gameState, setGameState] = useState<NomxGameStateProps>(
+    getNomxGameState()
   );
 
   useEffect(() => {
@@ -44,7 +42,12 @@ export const CountConfig: React.FC = () => {
 
   useEffect(() => {
     if (gameState.players.length < gameState.config.count) {
-      let newPlayers: { name: string; score: number; group: string }[] = [];
+      let newPlayers: {
+        name: string;
+        correct: number;
+        incorrect: number;
+        group: string;
+      }[] = [];
       for (
         let i = 1;
         i <= gameState.config.count - gameState.players.length;
@@ -52,7 +55,8 @@ export const CountConfig: React.FC = () => {
       ) {
         newPlayers.push({
           name: `Player ${gameState.players.length + i}`,
-          score: 0,
+          correct: 0,
+          incorrect: 0,
           group: "",
         });
       }
@@ -71,22 +75,15 @@ export const CountConfig: React.FC = () => {
   }, [gameState.config.count]);
 
   const reset = () => {
-    setGameState(countInitialGameState);
+    setGameState(NomxInitialGameState);
   };
 
   return (
     <Box>
-      <Box>
-        <Link to="/">
-          <Image
-            src="../src/assets/images/logo.png"
-            sx={{ maxHeight: "10vh", margin: "auto" }}
-          />
-        </Link>
-      </Box>
+      <Header />
       <Box p={5}>
-        <Heading fontSize="3xl">スコア計算</Heading>
-        <Flex pt={5}>
+        <Heading fontSize="3xl">NoMx</Heading>
+        <Flex pt={5} gap={5}>
           <Heading fontSize="2xl" width={200}>
             形式設定
           </Heading>
@@ -136,9 +133,61 @@ export const CountConfig: React.FC = () => {
                 </NumberInputStepper>
               </NumberInput>
             </FormControl>
+            <FormControl>
+              <FormLabel>
+                勝ち抜け正解数
+                <Badge colorScheme="red" mx={2}>
+                  必須
+                </Badge>
+              </FormLabel>
+              <NumberInput
+                min={1}
+                max={1000}
+                value={gameState.config.win}
+                onChange={(e) =>
+                  setGameState(
+                    produce(gameState, (draft) => {
+                      draft.config.win = e as any;
+                    })
+                  )
+                }
+              >
+                <NumberInputField />
+                <NumberInputStepper>
+                  <NumberIncrementStepper />
+                  <NumberDecrementStepper />
+                </NumberInputStepper>
+              </NumberInput>
+            </FormControl>
+            <FormControl>
+              <FormLabel>
+                失格誤答数
+                <Badge colorScheme="red" mx={2}>
+                  必須
+                </Badge>
+              </FormLabel>
+              <NumberInput
+                min={1}
+                max={1000}
+                value={gameState.config.lose}
+                onChange={(e) =>
+                  setGameState(
+                    produce(gameState, (draft) => {
+                      draft.config.lose = e as any;
+                    })
+                  )
+                }
+              >
+                <NumberInputField />
+                <NumberInputStepper>
+                  <NumberIncrementStepper />
+                  <NumberDecrementStepper />
+                </NumberInputStepper>
+              </NumberInput>
+            </FormControl>
           </Flex>
         </Flex>
-        <Flex pt={5}>
+        <Flex pt={5} gap={5}>
           <Heading fontSize="2xl" width={200}>
             参加者設定
           </Heading>
@@ -169,15 +218,36 @@ export const CountConfig: React.FC = () => {
                     />
                   </FormControl>
                   <FormControl>
-                    <FormLabel>初期値</FormLabel>
+                    <FormLabel>初期正解数</FormLabel>
                     <NumberInput
                       min={1}
                       max={15}
-                      value={player.score}
+                      value={player.correct}
                       onChange={(e) =>
                         setGameState(
                           produce(gameState, (draft) => {
-                            draft.players[i].score = e as any;
+                            draft.players[i].correct = e as any;
+                          })
+                        )
+                      }
+                    >
+                      <NumberInputField />
+                      <NumberInputStepper>
+                        <NumberIncrementStepper />
+                        <NumberDecrementStepper />
+                      </NumberInputStepper>
+                    </NumberInput>
+                  </FormControl>
+                  <FormControl>
+                    <FormLabel>初期誤答数</FormLabel>
+                    <NumberInput
+                      min={1}
+                      max={15}
+                      value={player.incorrect}
+                      onChange={(e) =>
+                        setGameState(
+                          produce(gameState, (draft) => {
+                            draft.players[i].incorrect = e as any;
                           })
                         )
                       }
@@ -208,7 +278,7 @@ export const CountConfig: React.FC = () => {
             ))}
           </Flex>
         </Flex>
-        <Flex pt={5}>
+        <Flex pt={5} gap={5}>
           <Heading fontSize="2xl" width={200}>
             クイズ
           </Heading>
@@ -237,7 +307,7 @@ export const CountConfig: React.FC = () => {
           <Button colorScheme="red" onClick={reset}>
             設定をリセット
           </Button>
-          <Link to="/board/count">
+          <Link to="/board/nomx">
             <Button colorScheme="green">ボードを表示</Button>
           </Link>
         </Flex>
@@ -246,10 +316,10 @@ export const CountConfig: React.FC = () => {
   );
 };
 
-export const CountBoard: React.FC = () => {
+export const NomxBoard: React.FC = () => {
   const navigate = useNavigate();
-  const [gameState, setGameState] = useState<CountGameStateProps>(
-    getCountGameState()
+  const [gameState, setGameState] = useState<NomxGameStateProps>(
+    getNomxGameState()
   );
   const quizData: QuizDataProps[] = initialQuizData;
 
@@ -260,10 +330,23 @@ export const CountBoard: React.FC = () => {
   const correct = (playerIndex: number) => {
     setGameState(
       produce(gameState, (draft) => {
-        draft.players[playerIndex].score++;
+        draft.players[playerIndex].correct++;
         draft.logs.unshift({
-          type: "count",
+          type: "nomx",
           variant: "correct",
+          player: playerIndex,
+        });
+      })
+    );
+  };
+
+  const incorrect = (playerIndex: number) => {
+    setGameState(
+      produce(gameState, (draft) => {
+        draft.players[playerIndex].incorrect++;
+        draft.logs.unshift({
+          type: "nomx",
+          variant: "incorrect",
           player: playerIndex,
         });
       })
@@ -273,7 +356,11 @@ export const CountBoard: React.FC = () => {
   const undo = () => {
     setGameState(
       produce(gameState, (draft) => {
-        draft.players[draft.logs[draft.logs.length - 1].player].score--;
+        if (draft.logs[draft.logs.length - 1].variant === "correct") {
+          draft.players[draft.logs[0].player].correct--;
+        } else {
+          draft.players[draft.logs[0].player].incorrect--;
+        }
         draft.logs.pop();
       })
     );
@@ -290,8 +377,8 @@ export const CountBoard: React.FC = () => {
         <Box
           sx={{ width: 200, p: 2, bgColor: "green.500", borderRightRadius: 50 }}
         >
-          <Heading fontSize="3xl" color="white" height={50}>
-            {gameState.config.name} a
+          <Heading fontSize="3xl" color="white">
+            {gameState.config.name}
           </Heading>
           <Text color="white">スコア計算</Text>
         </Box>
@@ -327,7 +414,7 @@ export const CountBoard: React.FC = () => {
           元に戻す
         </Button>
         <Button
-          onClick={() => navigate("/config/count")}
+          onClick={() => navigate("/config/nomx")}
           colorScheme="teal"
           size="xs"
         >
@@ -357,7 +444,16 @@ export const CountBoard: React.FC = () => {
               fontSize="4xl"
               onClick={() => correct(i)}
             >
-              {player.score}
+              {player.correct}
+            </Button>
+            <Button
+              colorScheme="blue"
+              variant="ghost"
+              size="lg"
+              fontSize="4xl"
+              onClick={() => incorrect(i)}
+            >
+              {player.incorrect}
             </Button>
           </Flex>
         ))}
