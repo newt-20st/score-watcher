@@ -150,7 +150,10 @@ export const SquarexConfig: React.FC = () => {
           </Box>
         </Flex>
         <Box height={20}></Box>
-        <Flex sx={{ position: "fixed", bottom: 0, left: 0, width: "100%", justifyContent: "end", bgColor: "white", p: 3, gap: 3 }}>
+        <Flex sx={{
+          position: "fixed", bottom: 0, left: 0, width: "100%", justifyContent: "end", bgColor: "white", p: 3, gap: 3, borderColor: "green.500",
+          borderTopWidth: 2,
+        }}>
           <Button colorScheme="red" onClick={reset}>設定をリセット</Button>
           <Link to="/board/squarex">
             <Button colorScheme="green">ボードを表示</Button>
@@ -232,7 +235,7 @@ export const SquarexBoard: React.FC = () => {
           <Box p={2}>quiz</Box>
         </Flex>
       </Flex>
-      <Flex p={3} justifyContent="flex-end" gap={2} alignItems="center">
+      <Flex p={3} justifyContent="flex-end" gap={2}>
         <Button onClick={undo} disabled={gameState.logs.length === 0} colorScheme="blue" size="xs">元に戻す</Button>
         <Button onClick={() => navigate("/config/squarex")} colorScheme="teal" size="xs">設定に戻る</Button>
       </Flex>

@@ -207,7 +207,10 @@ export const AttacksurvivalConfig: React.FC = () => {
           </Box>
         </Flex>
         <Box height={20}></Box>
-        <Flex sx={{ position: "fixed", bottom: 0, left: 0, width: "100%", justifyContent: "end", bgColor: "white", p: 3, gap: 3 }}>
+        <Flex sx={{
+          position: "fixed", bottom: 0, left: 0, width: "100%", justifyContent: "end", bgColor: "white", p: 3, gap: 3, borderColor: "green.500",
+          borderTopWidth: 2,
+        }}>
           <Button colorScheme="red" onClick={reset}>設定をリセット</Button>
           <Link to="/board/attacksurvival">
             <Button colorScheme="green">ボードを表示</Button>
