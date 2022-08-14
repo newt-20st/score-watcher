@@ -21,6 +21,7 @@ import {
   Image
 } from "@chakra-ui/react";
 import { getSquarexGameState, initialQuizData, SquarexGameStateProps, SquarexInitialGameState, QuizDataProps } from "../libs/state";
+import LoadQuiz from "./LoadQuiz";
 
 export const SquarexConfig: React.FC = () => {
   const [gameState, setGameState] = useState<SquarexGameStateProps>(getSquarexGameState());
@@ -55,7 +56,7 @@ export const SquarexConfig: React.FC = () => {
         </Link>
       </Box>
       <Box p={5}>
-        <Heading fontSize="3xl" >SwedishX</Heading>
+        <Heading fontSize="3xl" >SquareX</Heading>
         <Flex pt={5} gap={5}>
           <Heading fontSize="2xl" width={200}>形式設定</Heading>
           <Flex flexGrow={1} gap={5}>
@@ -146,7 +147,7 @@ export const SquarexConfig: React.FC = () => {
           <Heading fontSize="2xl" width={200}>クイズ</Heading>
           <Box flexGrow={1}>
             <Heading fontSize="xl" width={200}>問題をインポート</Heading>
-            <Text>準備中</Text>
+            <LoadQuiz />
           </Box>
         </Flex>
         <Box height={20}></Box>
@@ -166,8 +167,8 @@ export const SquarexConfig: React.FC = () => {
 
 export const SquarexBoard: React.FC = () => {
   const navigate = useNavigate();
-
   const [gameState, setGameState] = useState<SquarexGameStateProps>(getSquarexGameState());
+  const quizData: QuizDataProps[] = initialQuizData;
 
   useEffect(() => {
     localStorage.setItem("gameState", JSON.stringify(gameState));
@@ -231,8 +232,17 @@ export const SquarexBoard: React.FC = () => {
           <Text color="white">スコア計算</Text>
         </Box>
         <Flex sx={{ flexGrow: 1, alignItems: "center" }}>
-          <Box p={2}>Q {gameState.logs.length}</Box>
-          <Box p={2}>quiz</Box>
+          <Box p={2} minWidth={50}>Q {gameState.logs.length + 1}</Box>
+          {0 < gameState.logs.length && gameState.logs.length < quizData.length && (
+            <Flex direction="column" sx={{
+              px: 2,
+              borderColor: "green.500",
+              borderLeftWidth: 2,
+            }}>
+              <Box fontSize="xl">{quizData[gameState.logs.length].q}</Box>
+              <Box fontWeight={800} color="red.500">{quizData[gameState.logs.length].a}</Box>
+            </Flex>
+          )}
         </Flex>
       </Flex>
       <Flex p={3} justifyContent="flex-end" gap={2}>

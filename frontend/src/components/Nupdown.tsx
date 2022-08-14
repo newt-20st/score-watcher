@@ -21,10 +21,10 @@ import {
   Image
 } from "@chakra-ui/react";
 import { getNupdownGameState, initialQuizData, NupdownGameStateProps, NupdownInitialGameState, QuizDataProps } from "../libs/state";
+import LoadQuiz from "./LoadQuiz";
 
 export const NupdownConfig: React.FC = () => {
   const [gameState, setGameState] = useState<NupdownGameStateProps>(getNupdownGameState());
-  const [quizData, setQuizData] = useState<QuizDataProps[]>(initialQuizData);
 
   useEffect(() => {
     localStorage.setItem("gameState", JSON.stringify(gameState));
@@ -146,7 +146,7 @@ export const NupdownConfig: React.FC = () => {
           <Heading fontSize="2xl" width={200}>クイズ</Heading>
           <Box flexGrow={1}>
             <Heading fontSize="xl" width={200}>問題をインポート</Heading>
-            <Text>準備中</Text>
+            <LoadQuiz />
           </Box>
         </Flex>
         <Box height={20}></Box>
@@ -167,6 +167,7 @@ export const NupdownConfig: React.FC = () => {
 export const NupdownBoard: React.FC = () => {
   const navigate = useNavigate();
   const [gameState, setGameState] = useState<NupdownGameStateProps>(getNupdownGameState());
+  const quizData: QuizDataProps[] = initialQuizData;
 
   useEffect(() => {
     localStorage.setItem("gameState", JSON.stringify(gameState));
@@ -226,13 +227,22 @@ export const NupdownBoard: React.FC = () => {
           <Text color="white">スコア計算</Text>
         </Box>
         <Flex sx={{ flexGrow: 1, alignItems: "center" }}>
-          <Box p={2}>Q {gameState.logs.length}</Box>
-          <Box p={2}>quiz</Box>
+          <Box p={2} minWidth={50}>Q {gameState.logs.length + 1}</Box>
+          {0 < gameState.logs.length && gameState.logs.length < quizData.length && (
+            <Flex direction="column" sx={{
+              px: 2,
+              borderColor: "green.500",
+              borderLeftWidth: 2,
+            }}>
+              <Box fontSize="xl">{quizData[gameState.logs.length].q}</Box>
+              <Box fontWeight={800} color="red.500">{quizData[gameState.logs.length].a}</Box>
+            </Flex>
+          )}
         </Flex>
       </Flex>
       <Flex p={3} gap={2} justifyContent="flex-end">
         <Button onClick={undo} disabled={gameState.logs.length === 0} colorScheme="blue" size="xs">元に戻す</Button>
-        <Button onClick={() => navigate("/config/squarex")} colorScheme="teal" size="xs">設定に戻る</Button>
+        <Button onClick={() => navigate("/config/nupdown")} colorScheme="teal" size="xs">設定に戻る</Button>
       </Flex>
       <Flex sx={{ width: "100%", justifyContent: "space-evenly", mt: 5 }}>
         {gameState.players.map((player, i) => (

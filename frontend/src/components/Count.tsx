@@ -20,13 +20,8 @@ import {
   ListItem,
   Image
 } from "@chakra-ui/react";
-import { CountGameStateProps, countInitialGameState, getCountGameState } from "../libs/state";
-
-type QuizDataProps = {
-  q: string;
-  a: string;
-};
-const initialQuizData: QuizDataProps[] = [];
+import { CountGameStateProps, countInitialGameState, getCountGameState, initialQuizData, QuizDataProps } from "../libs/state";
+import LoadQuiz from "./LoadQuiz";
 
 export const CountConfig: React.FC = () => {
   const [gameState, setGameState] = useState<CountGameStateProps>(getCountGameState());
@@ -116,7 +111,7 @@ export const CountConfig: React.FC = () => {
         <Heading fontSize="2xl" width={200}>クイズ</Heading>
         <Box flexGrow={1}>
           <Heading fontSize="xl" width={200}>問題をインポート</Heading>
-          <Text>準備中</Text>
+          <LoadQuiz />
         </Box>
       </Flex>
       <Box height={20}></Box>
@@ -138,6 +133,7 @@ export const CountConfig: React.FC = () => {
 export const CountBoard: React.FC = () => {
   const navigate = useNavigate();
   const [gameState, setGameState] = useState<CountGameStateProps>(getCountGameState());
+  const quizData: QuizDataProps[] = initialQuizData;
 
   useEffect(() => {
     localStorage.setItem("gameState", JSON.stringify(gameState));
@@ -164,17 +160,26 @@ export const CountBoard: React.FC = () => {
         borderBottomWidth: 2,
       }}>
         <Box sx={{ width: 200, p: 2, bgColor: "green.500", borderRightRadius: 50 }}>
-          <Heading fontSize="3xl" color="white">{gameState.config.name}</Heading>
+          <Heading fontSize="3xl" color="white" height={50}>{gameState.config.name} a</Heading>
           <Text color="white">スコア計算</Text>
         </Box>
         <Flex sx={{ flexGrow: 1, alignItems: "center" }}>
-          <Box p={2}>Q1</Box>
-          <Box p={2}>quiz</Box>
+          <Box p={2} minWidth={50}>Q {gameState.logs.length + 1}</Box>
+          {0 < gameState.logs.length && gameState.logs.length < quizData.length && (
+            <Flex direction="column" sx={{
+              px: 2,
+              borderColor: "green.500",
+              borderLeftWidth: 2,
+            }}>
+              <Box fontSize="xl">{quizData[gameState.logs.length].q}</Box>
+              <Box fontWeight={800} color="red.500">{quizData[gameState.logs.length].a}</Box>
+            </Flex>
+          )}
         </Flex>
       </Flex>
       <Flex p={3} gap={2} justifyContent="flex-end">
         <Button onClick={undo} disabled={gameState.logs.length === 0} colorScheme="blue" size="xs">元に戻す</Button>
-        <Button onClick={() => navigate("/config/squarex")} colorScheme="teal" size="xs">設定に戻る</Button>
+        <Button onClick={() => navigate("/config/count")} colorScheme="teal" size="xs">設定に戻る</Button>
       </Flex>
       <Flex sx={{ width: "100%", justifyContent: "space-evenly", mt: 5 }}>
         {gameState.players.map((player, i) => (

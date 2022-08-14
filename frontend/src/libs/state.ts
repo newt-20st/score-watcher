@@ -325,7 +325,6 @@ export const getSquarexGameState = () => {
 
 
 const localQuizData = localStorage.getItem("quizData");
-
 export type QuizDataProps = {
   q: string;
   a: string;
