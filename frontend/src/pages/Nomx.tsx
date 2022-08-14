@@ -30,6 +30,8 @@ import {
 
 import LoadQuiz from "../components/LoadQuiz";
 import Header from "../components/Header";
+import BoardHeader from "../components/BoardHeader";
+import FormNumberInput from "../components/FormINumbernput";
 
 export const NomxConfig: React.FC = () => {
   const [gameState, setGameState] = useState<NomxGameStateProps>(
@@ -107,84 +109,48 @@ export const NomxConfig: React.FC = () => {
                 }
               />
             </FormControl>
-            <FormControl>
-              <FormLabel>
-                プレイヤーの人数
-                <Badge colorScheme="red" mx={2}>
-                  必須
-                </Badge>
-              </FormLabel>
-              <NumberInput
-                min={1}
-                max={15}
-                value={gameState.config.count}
-                onChange={(e) =>
-                  setGameState(
-                    produce(gameState, (draft) => {
-                      draft.config.count = e as any;
-                    })
-                  )
-                }
-              >
-                <NumberInputField />
-                <NumberInputStepper>
-                  <NumberIncrementStepper />
-                  <NumberDecrementStepper />
-                </NumberInputStepper>
-              </NumberInput>
-            </FormControl>
-            <FormControl>
-              <FormLabel>
-                勝ち抜け正解数
-                <Badge colorScheme="red" mx={2}>
-                  必須
-                </Badge>
-              </FormLabel>
-              <NumberInput
-                min={1}
-                max={1000}
-                value={gameState.config.win}
-                onChange={(e) =>
-                  setGameState(
-                    produce(gameState, (draft) => {
-                      draft.config.win = e as any;
-                    })
-                  )
-                }
-              >
-                <NumberInputField />
-                <NumberInputStepper>
-                  <NumberIncrementStepper />
-                  <NumberDecrementStepper />
-                </NumberInputStepper>
-              </NumberInput>
-            </FormControl>
-            <FormControl>
-              <FormLabel>
-                失格誤答数
-                <Badge colorScheme="red" mx={2}>
-                  必須
-                </Badge>
-              </FormLabel>
-              <NumberInput
-                min={1}
-                max={1000}
-                value={gameState.config.lose}
-                onChange={(e) =>
-                  setGameState(
-                    produce(gameState, (draft) => {
-                      draft.config.lose = e as any;
-                    })
-                  )
-                }
-              >
-                <NumberInputField />
-                <NumberInputStepper>
-                  <NumberIncrementStepper />
-                  <NumberDecrementStepper />
-                </NumberInputStepper>
-              </NumberInput>
-            </FormControl>
+            <FormNumberInput
+              label="プレイヤーの人数"
+              value={gameState.config.count}
+              min={1}
+              max={15}
+              onChange={(e) =>
+                setGameState(
+                  produce(gameState, (draft) => {
+                    draft.config.count = e as any;
+                  })
+                )
+              }
+              required
+            />
+            <FormNumberInput
+              label="勝ち抜け正解数"
+              value={gameState.config.win}
+              min={1}
+              max={15}
+              onChange={(e) =>
+                setGameState(
+                  produce(gameState, (draft) => {
+                    draft.config.win = e as any;
+                  })
+                )
+              }
+              required
+            />
+            <FormNumberInput
+              label="失格誤答数"
+              value={gameState.config.lose}
+              min={1}
+              max={15}
+              onChange={(e) =>
+                setGameState(
+                  produce(gameState, (draft) => {
+                    draft.config.lose = e as any;
+                  })
+                )
+              }
+              required
+            />
           </Flex>
         </Flex>
         <Flex pt={5} gap={5}>
@@ -217,48 +183,34 @@ export const NomxConfig: React.FC = () => {
                       }
                     />
                   </FormControl>
-                  <FormControl>
-                    <FormLabel>初期正解数</FormLabel>
-                    <NumberInput
-                      min={1}
-                      max={15}
-                      value={player.correct}
-                      onChange={(e) =>
-                        setGameState(
-                          produce(gameState, (draft) => {
-                            draft.players[i].correct = e as any;
-                          })
-                        )
-                      }
-                    >
-                      <NumberInputField />
-                      <NumberInputStepper>
-                        <NumberIncrementStepper />
-                        <NumberDecrementStepper />
-                      </NumberInputStepper>
-                    </NumberInput>
-                  </FormControl>
-                  <FormControl>
-                    <FormLabel>初期誤答数</FormLabel>
-                    <NumberInput
-                      min={1}
-                      max={15}
-                      value={player.incorrect}
-                      onChange={(e) =>
-                        setGameState(
-                          produce(gameState, (draft) => {
-                            draft.players[i].incorrect = e as any;
-                          })
-                        )
-                      }
-                    >
-                      <NumberInputField />
-                      <NumberInputStepper>
-                        <NumberIncrementStepper />
-                        <NumberDecrementStepper />
-                      </NumberInputStepper>
-                    </NumberInput>
-                  </FormControl>
+                  <FormNumberInput
+                    label="初期正答数"
+                    value={player.correct}
+                    min={1}
+                    max={15}
+                    onChange={(e) =>
+                      setGameState(
+                        produce(gameState, (draft) => {
+                          draft.players[i].correct = e as any;
+                        })
+                      )
+                    }
+                    required
+                  />
+                  <FormNumberInput
+                    label="初期誤答数"
+                    value={player.incorrect}
+                    min={1}
+                    max={15}
+                    onChange={(e) =>
+                      setGameState(
+                        produce(gameState, (draft) => {
+                          draft.players[i].incorrect = e as any;
+                        })
+                      )
+                    }
+                    required
+                  />
                   <FormControl>
                     <FormLabel>所属</FormLabel>
                     <Input
@@ -378,42 +330,7 @@ export const NomxBoard: React.FC = () => {
 
   return (
     <Box>
-      <Flex
-        sx={{
-          borderColor: "green.500",
-          borderBottomWidth: 2,
-        }}
-      >
-        <Box
-          sx={{ width: 200, p: 2, bgColor: "green.500", borderRightRadius: 50 }}
-        >
-          <Heading fontSize="3xl" color="white">
-            {gameState.config.name}
-          </Heading>
-          <Text color="white">{gameState.config.win} o {gameState.config.lose} x</Text>
-        </Box>
-        <Flex sx={{ flexGrow: 1, alignItems: "center" }}>
-          <Box p={2} minWidth={50}>
-            Q {gameState.logs.length + 1}
-          </Box>
-          {0 < gameState.logs.length &&
-            gameState.logs.length < quizData.length && (
-              <Flex
-                direction="column"
-                sx={{
-                  px: 2,
-                  borderColor: "green.500",
-                  borderLeftWidth: 2,
-                }}
-              >
-                <Box fontSize="xl">{quizData[gameState.logs.length].q}</Box>
-                <Box fontWeight={800} color="red.500">
-                  {quizData[gameState.logs.length].a}
-                </Box>
-              </Flex>
-            )}
-        </Flex>
-      </Flex>
+      <BoardHeader name={gameState.config.name} type={gameState.type} current={gameState.logs.length} undo={undo} />
       <Flex p={3} gap={2} justifyContent="flex-end">
         <Button
           onClick={undo}

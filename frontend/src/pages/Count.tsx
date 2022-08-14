@@ -30,6 +30,8 @@ import {
 
 import LoadQuiz from "../components/LoadQuiz";
 import Header from "../components/Header";
+import BoardHeader from "../components/BoardHeader";
+import FormNumberInput from "../components/FormINumbernput";
 
 export const CountConfig: React.FC = () => {
   const [gameState, setGameState] = useState<CountGameStateProps>(
@@ -105,32 +107,20 @@ export const CountConfig: React.FC = () => {
                 }
               />
             </FormControl>
-            <FormControl>
-              <FormLabel>
-                プレイヤーの人数
-                <Badge colorScheme="red" mx={2}>
-                  必須
-                </Badge>
-              </FormLabel>
-              <NumberInput
-                min={1}
-                max={15}
-                value={gameState.config.count}
-                onChange={(e) =>
-                  setGameState(
-                    produce(gameState, (draft) => {
-                      draft.config.count = e as any;
-                    })
-                  )
-                }
-              >
-                <NumberInputField />
-                <NumberInputStepper>
-                  <NumberIncrementStepper />
-                  <NumberDecrementStepper />
-                </NumberInputStepper>
-              </NumberInput>
-            </FormControl>
+            <FormNumberInput
+              label="プレイヤーの人数"
+              value={gameState.config.count}
+              min={1}
+              max={15}
+              onChange={(e) =>
+                setGameState(
+                  produce(gameState, (draft) => {
+                    draft.config.count = e as any;
+                  })
+                )
+              }
+              required
+            />
           </Flex>
         </Flex>
         <Flex pt={5}>
@@ -163,27 +153,20 @@ export const CountConfig: React.FC = () => {
                       }
                     />
                   </FormControl>
-                  <FormControl>
-                    <FormLabel>初期値</FormLabel>
-                    <NumberInput
-                      min={1}
-                      max={15}
-                      value={player.score}
-                      onChange={(e) =>
-                        setGameState(
-                          produce(gameState, (draft) => {
-                            draft.players[i].score = e as any;
-                          })
-                        )
-                      }
-                    >
-                      <NumberInputField />
-                      <NumberInputStepper>
-                        <NumberIncrementStepper />
-                        <NumberDecrementStepper />
-                      </NumberInputStepper>
-                    </NumberInput>
-                  </FormControl>
+                  <FormNumberInput
+                    label="初期値"
+                    value={player.score}
+                    min={1}
+                    max={15}
+                    onChange={(e) =>
+                      setGameState(
+                        produce(gameState, (draft) => {
+                          draft.players[i].score = e as any;
+                        })
+                      )
+                    }
+                    required
+                  />
                   <FormControl>
                     <FormLabel>所属</FormLabel>
                     <Input
@@ -242,11 +225,9 @@ export const CountConfig: React.FC = () => {
 };
 
 export const CountBoard: React.FC = () => {
-  const navigate = useNavigate();
   const [gameState, setGameState] = useState<CountGameStateProps>(
     getCountGameState()
   );
-  const quizData: QuizDataProps[] = initialQuizData;
 
   useEffect(() => {
     localStorage.setItem("gameState", JSON.stringify(gameState));
@@ -276,59 +257,7 @@ export const CountBoard: React.FC = () => {
 
   return (
     <Box>
-      <Flex
-        sx={{
-          borderColor: "green.500",
-          borderBottomWidth: 2,
-        }}
-      >
-        <Box
-          sx={{ width: 200, p: 2, bgColor: "green.500", borderRightRadius: 50 }}
-        >
-          <Heading fontSize="3xl" color="white" height={50}>
-            {gameState.config.name} a
-          </Heading>
-          <Text color="white">スコア計算</Text>
-        </Box>
-        <Flex sx={{ flexGrow: 1, alignItems: "center" }}>
-          <Box p={2} minWidth={50}>
-            Q {gameState.logs.length + 1}
-          </Box>
-          {0 < gameState.logs.length &&
-            gameState.logs.length < quizData.length && (
-              <Flex
-                direction="column"
-                sx={{
-                  px: 2,
-                  borderColor: "green.500",
-                  borderLeftWidth: 2,
-                }}
-              >
-                <Box fontSize="xl">{quizData[gameState.logs.length].q}</Box>
-                <Box fontWeight={800} color="red.500">
-                  {quizData[gameState.logs.length].a}
-                </Box>
-              </Flex>
-            )}
-        </Flex>
-      </Flex>
-      <Flex p={3} gap={2} justifyContent="flex-end">
-        <Button
-          onClick={undo}
-          disabled={gameState.logs.length === 0}
-          colorScheme="blue"
-          size="xs"
-        >
-          元に戻す
-        </Button>
-        <Button
-          onClick={() => navigate("/config/count")}
-          colorScheme="teal"
-          size="xs"
-        >
-          設定に戻る
-        </Button>
-      </Flex>
+      <BoardHeader name={gameState.config.name} type={gameState.type} current={gameState.logs.length} undo={undo} />
       <Flex sx={{ width: "100%", justifyContent: "space-evenly", mt: 5 }}>
         {gameState.players.map((player, i) => (
           <Flex key={i} direction="column" sx={{ textAlign: "center", gap: 5 }}>

@@ -87,7 +87,7 @@ export type NbynGameStateProps = {
     name: string;
     count: number;
     n: number;
-    end: number | null;
+    end?: number;
   };
   players: {
     name: string;

@@ -30,6 +30,8 @@ import {
 
 import LoadQuiz from "../components/LoadQuiz";
 import Header from "../components/Header";
+import BoardHeader from "../components/BoardHeader";
+import FormNumberInput from "../components/FormINumbernput";
 
 export const NbynConfig: React.FC = () => {
   const [gameState, setGameState] = useState<NbynGameStateProps>(
@@ -107,80 +109,45 @@ export const NbynConfig: React.FC = () => {
                 }
               />
             </FormControl>
-            <FormControl>
-              <FormLabel>
-                プレイヤーの人数
-                <Badge colorScheme="red" mx={2}>
-                  必須
-                </Badge>
-              </FormLabel>
-              <NumberInput
-                min={1}
-                max={15}
-                value={gameState.config.count}
-                onChange={(e) =>
-                  setGameState(
-                    produce(gameState, (draft) => {
-                      draft.config.count = e as any;
-                    })
-                  )
-                }
-              >
-                <NumberInputField />
-                <NumberInputStepper>
-                  <NumberIncrementStepper />
-                  <NumberDecrementStepper />
-                </NumberInputStepper>
-              </NumberInput>
-            </FormControl>
-            <FormControl>
-              <FormLabel>
-                N{" "}
-                <Badge colorScheme="red" mx={2}>
-                  必須
-                </Badge>
-              </FormLabel>
-              <NumberInput
+            <FormNumberInput
+              label="プレイヤーの人数"
+              value={gameState.config.count}
+              min={1}
+              max={15}
+              onChange={(e) =>
+                setGameState(
+                  produce(gameState, (draft) => {
+                    draft.config.count = e as any;
+                  })
+                )
+              }
+              required
+            />
+            <FormNumberInput
+              label="N"
+              value={gameState.config.n}
+              min={1}
+              max={1000}
+              onChange={(e) =>
+                setGameState(
+                  produce(gameState, (draft) => {
+                    draft.config.n = e as any;
+                  })
+                )
+              } />
+            {gameState.config.end && (
+              <FormNumberInput
+                label="限定問題数"
+                value={gameState.config.end}
                 min={1}
                 max={1000}
-                value={gameState.config.n}
                 onChange={(e) =>
                   setGameState(
                     produce(gameState, (draft) => {
-                      draft.config.n = e as any;
+                      draft.config.end = e as any;
                     })
                   )
-                }
-              >
-                <NumberInputField />
-                <NumberInputStepper>
-                  <NumberIncrementStepper />
-                  <NumberDecrementStepper />
-                </NumberInputStepper>
-              </NumberInput>
-            </FormControl>
-            {gameState.config.end && (
-              <FormControl>
-                <FormLabel>限定問題数 </FormLabel>
-                <NumberInput
-                  min={1}
-                  max={1000}
-                  value={gameState.config.end}
-                  onChange={(e) =>
-                    setGameState(
-                      produce(gameState, (draft) => {
-                        draft.config.end = e as any;
-                      })
-                    )
-                  }
-                >
-                  <NumberInputField />
-                  <NumberInputStepper>
-                    <NumberIncrementStepper />
-                    <NumberDecrementStepper />
-                  </NumberInputStepper>
-                </NumberInput>
-              </FormControl>
+                } />
             )}
           </Flex>
         </Flex>
@@ -214,48 +181,34 @@ export const NbynConfig: React.FC = () => {
                       }
                     />
                   </FormControl>
-                  <FormControl>
-                    <FormLabel>初期正解数</FormLabel>
-                    <NumberInput
-                      min={1}
-                      max={15}
-                      value={player.correct}
-                      onChange={(e) =>
-                        setGameState(
-                          produce(gameState, (draft) => {
-                            draft.players[i].correct = e as any;
-                          })
-                        )
-                      }
-                    >
-                      <NumberInputField />
-                      <NumberInputStepper>
-                        <NumberIncrementStepper />
-                        <NumberDecrementStepper />
-                      </NumberInputStepper>
-                    </NumberInput>
-                  </FormControl>
-                  <FormControl>
-                    <FormLabel>初期誤答数</FormLabel>
-                    <NumberInput
-                      min={1}
-                      max={15}
-                      value={player.incorrect}
-                      onChange={(e) =>
-                        setGameState(
-                          produce(gameState, (draft) => {
-                            draft.players[i].incorrect = e as any;
-                          })
-                        )
-                      }
-                    >
-                      <NumberInputField />
-                      <NumberInputStepper>
-                        <NumberIncrementStepper />
-                        <NumberDecrementStepper />
-                      </NumberInputStepper>
-                    </NumberInput>
-                  </FormControl>
+                  <FormNumberInput
+                    label="初期正答数"
+                    value={player.correct}
+                    min={1}
+                    max={15}
+                    onChange={(e) =>
+                      setGameState(
+                        produce(gameState, (draft) => {
+                          draft.players[i].correct = e as any;
+                        })
+                      )
+                    }
+                    required
+                  />
+                  <FormNumberInput
+                    label="初期誤答数"
+                    value={player.incorrect}
+                    min={1}
+                    max={15}
+                    onChange={(e) =>
+                      setGameState(
+                        produce(gameState, (draft) => {
+                          draft.players[i].incorrect = e as any;
+                        })
+                      )
+                    }
+                    required
+                  />
                   <FormControl>
                     <FormLabel>所属</FormLabel>
                     <Input
@@ -314,11 +267,9 @@ export const NbynConfig: React.FC = () => {
 };
 
 export const NbynBoard: React.FC = () => {
-  const navigate = useNavigate();
   const [gameState, setGameState] = useState<NbynGameStateProps>(
     getNbynGameState()
   );
-  const quizData: QuizDataProps[] = initialQuizData;
 
   useEffect(() => {
     localStorage.setItem("gameState", JSON.stringify(gameState));
@@ -376,59 +327,7 @@ export const NbynBoard: React.FC = () => {
 
   return (
     <Box>
-      <Flex
-        sx={{
-          borderColor: "green.500",
-          borderBottomWidth: 2,
-        }}
-      >
-        <Box
-          sx={{ width: 200, p: 2, bgColor: "green.500", borderRightRadius: 50 }}
-        >
-          <Heading fontSize="3xl" color="white">
-            {gameState.config.name}
-          </Heading>
-          <Text color="white">{gameState.config.n} by {gameState.config.n}</Text>
-        </Box>
-        <Flex sx={{ flexGrow: 1, alignItems: "center" }}>
-          <Box p={2} minWidth={50}>
-            Q {gameState.logs.length + 1}
-          </Box>
-          {0 < gameState.logs.length &&
-            gameState.logs.length < quizData.length && (
-              <Flex
-                direction="column"
-                sx={{
-                  px: 2,
-                  borderColor: "green.500",
-                  borderLeftWidth: 2,
-                }}
-              >
-                <Box fontSize="xl">{quizData[gameState.logs.length].q}</Box>
-                <Box fontWeight={800} color="red.500">
-                  {quizData[gameState.logs.length].a}
-                </Box>
-              </Flex>
-            )}
-        </Flex>
-      </Flex>
-      <Flex p={3} gap={2} justifyContent="flex-end">
-        <Button
-          onClick={undo}
-          disabled={gameState.logs.length === 0}
-          colorScheme="blue"
-          size="xs"
-        >
-          元に戻す
-        </Button>
-        <Button
-          onClick={() => navigate("/config/nbyn")}
-          colorScheme="teal"
-          size="xs"
-        >
-          設定に戻る
-        </Button>
-      </Flex>
+      <BoardHeader name={gameState.config.name} type={gameState.type} current={gameState.logs.length} undo={undo} />
       <Flex sx={{ width: "100%", justifyContent: "space-evenly", mt: 5 }}>
         {gameState.players.map((player, i) => (
           <Flex
