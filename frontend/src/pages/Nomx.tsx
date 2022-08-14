@@ -269,11 +269,9 @@ export const NomxConfig: React.FC = () => {
 };
 
 export const NomxBoard: React.FC = () => {
-  const navigate = useNavigate();
   const [gameState, setGameState] = useState<NomxGameStateProps>(
     getNomxGameState()
   );
-  const quizData: QuizDataProps[] = initialQuizData;
 
   useEffect(() => {
     localStorage.setItem("gameState", JSON.stringify(gameState));
@@ -331,23 +329,6 @@ export const NomxBoard: React.FC = () => {
   return (
     <Box>
       <BoardHeader name={gameState.config.name} type={gameState.type} current={gameState.logs.length} undo={undo} />
-      <Flex p={3} gap={2} justifyContent="flex-end">
-        <Button
-          onClick={undo}
-          disabled={gameState.logs.length === 0}
-          colorScheme="blue"
-          size="xs"
-        >
-          元に戻す
-        </Button>
-        <Button
-          onClick={() => navigate("/config/nomx")}
-          colorScheme="teal"
-          size="xs"
-        >
-          設定に戻る
-        </Button>
-      </Flex>
       <Flex sx={{ width: "100%", justifyContent: "space-evenly", mt: 5 }}>
         {gameState.players.map((player, i) => (
           <Flex key={i} direction="column" sx={{

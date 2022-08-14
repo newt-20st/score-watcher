@@ -272,11 +272,9 @@ export const SquarexConfig: React.FC = () => {
 };
 
 export const SquarexBoard: React.FC = () => {
-  const navigate = useNavigate();
   const [gameState, setGameState] = useState<SquarexGameStateProps>(
     getSquarexGameState()
   );
-  const quizData: QuizDataProps[] = initialQuizData;
 
   useEffect(() => {
     localStorage.setItem("gameState", JSON.stringify(gameState));
@@ -346,23 +344,6 @@ export const SquarexBoard: React.FC = () => {
   return (
     <Box>
       <BoardHeader name={gameState.config.name} type={gameState.type} current={gameState.logs.length} undo={undo} />
-      <Flex p={3} justifyContent="flex-end" gap={2}>
-        <Button
-          onClick={undo}
-          disabled={gameState.logs.length === 0}
-          colorScheme="blue"
-          size="xs"
-        >
-          元に戻す
-        </Button>
-        <Button
-          onClick={() => navigate("/config/squarex")}
-          colorScheme="teal"
-          size="xs"
-        >
-          設定に戻る
-        </Button>
-      </Flex>
       <Flex sx={{ width: "100%", justifyContent: "space-evenly", mt: 5 }}>
         {gameState.players.map((player, i) => (
           <Flex
