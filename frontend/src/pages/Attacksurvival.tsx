@@ -84,13 +84,13 @@ export const AttacksurvivalConfig: React.FC = () => {
     <Box>
       <Header />
       <Box p={5}>
-        <Heading fontSize="3xl">SwedishX</Heading>
+        <Heading fontSize="3xl">アタックサバイバル</Heading>
         <Flex pt={5} gap={5}>
           <Heading fontSize="2xl" width={200}>
             形式設定
           </Heading>
-          <Flex direction="column" flexGrow={1} gap={5}>
-            <Flex>
+          <Flex direction="column" flexGrow={1}>
+            <Flex gap={5}>
               <FormControl>
                 <FormLabel>
                   大会名
@@ -184,7 +184,7 @@ export const AttacksurvivalConfig: React.FC = () => {
                 </NumberInput>
               </FormControl>
             </Flex>
-            <Flex>
+            <Flex gap={5} pt={3}>
               <FormControl>
                 <FormLabel>
                   自分が正答
@@ -193,7 +193,7 @@ export const AttacksurvivalConfig: React.FC = () => {
                   </Badge>
                 </FormLabel>
                 <NumberInput
-                  min={1}
+                  min={-15}
                   max={15}
                   value={gameState.config.correct.me}
                   onChange={(e) =>
@@ -219,7 +219,7 @@ export const AttacksurvivalConfig: React.FC = () => {
                   </Badge>
                 </FormLabel>
                 <NumberInput
-                  min={1}
+                  min={-15}
                   max={15}
                   value={gameState.config.correct.other}
                   onChange={(e) =>
@@ -245,7 +245,7 @@ export const AttacksurvivalConfig: React.FC = () => {
                   </Badge>
                 </FormLabel>
                 <NumberInput
-                  min={1}
+                  min={-15}
                   max={15}
                   value={gameState.config.incorrect.me}
                   onChange={(e) =>
@@ -271,7 +271,7 @@ export const AttacksurvivalConfig: React.FC = () => {
                   </Badge>
                 </FormLabel>
                 <NumberInput
-                  min={1}
+                  min={-15}
                   max={15}
                   value={gameState.config.incorrect.other}
                   onChange={(e) =>
@@ -297,7 +297,7 @@ export const AttacksurvivalConfig: React.FC = () => {
                   </Badge>
                 </FormLabel>
                 <NumberInput
-                  min={1}
+                  min={-15}
                   max={15}
                   value={gameState.config.through}
                   onChange={(e) =>
@@ -577,7 +577,7 @@ export const AttacksurvivalBoard: React.FC = () => {
           <Heading fontSize="3xl" color="white">
             {gameState.config.name}
           </Heading>
-          <Text color="white">スコア計算</Text>
+          <Text color="white">アタックサバイバル</Text>
         </Box>
         <Flex sx={{ flexGrow: 1, alignItems: "center" }}>
           <Box p={2} minWidth={50}>

@@ -388,7 +388,7 @@ export const NbynBoard: React.FC = () => {
           <Heading fontSize="3xl" color="white">
             {gameState.config.name}
           </Heading>
-          <Text color="white">スコア計算</Text>
+          <Text color="white">{gameState.config.n} by {gameState.config.n}</Text>
         </Box>
         <Flex sx={{ flexGrow: 1, alignItems: "center" }}>
           <Box p={2} minWidth={50}>
