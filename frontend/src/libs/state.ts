@@ -204,6 +204,71 @@ export const getSwedishxGameState = () => {
   return SwedishxInitialGameState;
 }
 
+export type AttacksurvivalGameStateProps = {
+  type: "attacksurvival";
+  config: {
+    name: string;
+    count: number;
+    n: number;
+    correct: {
+      me: number;
+      other: number;
+    };
+    incorrect: {
+      me: number;
+      other: number;
+    };
+    through: number;
+    end: number;
+  };
+  players: {
+    name: string;
+    score: number;
+    correct: number;
+    incorrect: number;
+    group: string;
+  }[];
+  logs: {
+    type: "attacksurvival";
+    variant: "correct" | "incorrect";
+    player: number;
+  }[];
+}
+export const AttacksurvivalInitialGameState: AttacksurvivalGameStateProps = {
+  type: "attacksurvival",
+  config: {
+    name: "",
+    count: 3,
+    n: 10,
+    correct: {
+      me: 0,
+      other: -1,
+    },
+    incorrect: {
+      me: -2,
+      other: 0,
+    },
+    through: 0,
+    end: 10
+  },
+  players: [
+    { name: "Player 1", score: 10, correct: 0, incorrect: 0, group: "" },
+    { name: "Player 2", score: 10, correct: 0, incorrect: 0, group: "" },
+    { name: "Player 3", score: 10, correct: 0, incorrect: 0, group: "" },
+  ],
+  logs: [],
+};
+export const getAttacksurvivalGameState = () => {
+  const localGameState = localStorage.getItem("gameState");
+  if (localGameState) {
+    const parsedLocalGameConfig: AttacksurvivalGameStateProps = JSON.parse(localGameState);
+    if (parsedLocalGameConfig.type === "attacksurvival") {
+      return parsedLocalGameConfig;
+    }
+  }
+  return AttacksurvivalInitialGameState;
+}
+
 
 const localQuizData = localStorage.getItem("quizData");
 

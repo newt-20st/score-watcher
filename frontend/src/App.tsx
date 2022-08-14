@@ -9,6 +9,7 @@ import { NomxBoard, NomxConfig } from "./components/Nomx";
 import { NbynBoard, NbynConfig } from "./components/Nbyn";
 import { NupdownBoard, NupdownConfig } from "./components/Nupdown";
 import { SwedishxBoard, SwedishxConfig } from "./components/Swedishx";
+import { AttacksurvivalBoard, AttacksurvivalConfig } from "./components/Attacksurvival";
 
 const App: React.FC = () => {
   return (
@@ -23,6 +24,7 @@ const App: React.FC = () => {
               <Route path="nbyn" element={<NbynConfig />} />
               <Route path="nupdown" element={<NupdownConfig />} />
               <Route path="swedishx" element={<SwedishxConfig />} />
+              <Route path="attacksurvival" element={<AttacksurvivalConfig />} />
             </Route>
             <Route path="board">
               <Route path="count" element={<CountBoard />} />
@@ -30,6 +32,7 @@ const App: React.FC = () => {
               <Route path="nbyn" element={<NbynBoard />} />
               <Route path="nupdown" element={<NupdownBoard />} />
               <Route path="swedishx" element={<SwedishxBoard />} />
+              <Route path="attacksurvival" element={<AttacksurvivalBoard />} />
             </Route>
           </Route>
         </Routes>
