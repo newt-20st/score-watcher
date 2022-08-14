@@ -227,22 +227,11 @@ export const AttacksurvivalBoard: React.FC = () => {
     localStorage.setItem("gameState", JSON.stringify(gameState));
   }, [gameState]);
 
-  const undo = () => {
-    setGameState(produce(gameState, draft => {
-      if (draft.logs[draft.logs.length - 1].variant === "correct") {
-        draft.players[draft.logs[draft.logs.length - 1].player].correct--;
-      } else {
-        draft.players[draft.logs[draft.logs.length - 1].player].incorrect--;
-      }
-      draft.logs.pop();
-    }))
-  }
-
   const correct = (playerIndex: number) => {
     setGameState(produce(gameState, draft => {
       const newPlayerState = draft.players.map((player, i) => {
         if (i === playerIndex) {
-          return { ...player, score: player.score + draft.config.correct.me, correct: player.score + 1 }
+          return { ...player, score: player.score + draft.config.correct.me, correct: player.correct + 1 }
         } else {
           return { ...player, score: player.score + draft.config.correct.other }
         }
@@ -257,7 +246,7 @@ export const AttacksurvivalBoard: React.FC = () => {
     setGameState(produce(gameState, draft => {
       const newPlayerState = draft.players.map((player, i) => {
         if (i === playerIndex) {
-          return { ...player, score: player.score + draft.config.incorrect.me, incorrect: player.score + 1 }
+          return { ...player, score: player.score + draft.config.incorrect.me, incorrect: player.incorrect + 1 }
         } else {
           return { ...player, score: player.score + draft.config.incorrect.other }
         }
@@ -273,6 +262,32 @@ export const AttacksurvivalBoard: React.FC = () => {
     } else {
       return gameState.players[i].score
     }
+  }
+
+  const undo = () => {
+    setGameState(produce(gameState, draft => {
+      const lastLog = draft.logs[0];
+      if (lastLog.variant === "correct") {
+        const newPlayerState = draft.players.map((player, i) => {
+          if (i === lastLog.player) {
+            return { ...player, score: player.score - draft.config.correct.me, correct: player.correct - 1 }
+          } else {
+            return { ...player, score: player.score - draft.config.correct.other }
+          }
+        })
+        draft.players = newPlayerState;
+      } else {
+        const newPlayerState = draft.players.map((player, i) => {
+          if (i === lastLog.player) {
+            return { ...player, score: player.score - draft.config.incorrect.me, correct: player.incorrect - 1 }
+          } else {
+            return { ...player, score: player.score - draft.config.incorrect.other }
+          }
+        })
+        draft.players = newPlayerState;
+      }
+      draft.logs.pop();
+    }))
   }
 
   return (
