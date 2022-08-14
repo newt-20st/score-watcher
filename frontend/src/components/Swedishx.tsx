@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import produce from "immer";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import {
   Badge,
   Box,
@@ -20,10 +20,10 @@ import {
   ListItem,
   Image
 } from "@chakra-ui/react";
-import { getNupdownGameState, initialQuizData, NupdownGameStateProps, NupdownInitialGameState, QuizDataProps } from "../../libs/state";
+import { getSwedishxGameState, initialQuizData, SwedishxGameStateProps, SwedishxInitialGameState, QuizDataProps } from "../libs/state";
 
-export const NupdownConfig: React.FC = () => {
-  const [gameState, setGameState] = useState<NupdownGameStateProps>(getNupdownGameState());
+export const SwedishxConfig: React.FC = () => {
+  const [gameState, setGameState] = useState<SwedishxGameStateProps>(getSwedishxGameState());
   const [quizData, setQuizData] = useState<QuizDataProps[]>(initialQuizData);
 
   useEffect(() => {
@@ -44,7 +44,7 @@ export const NupdownConfig: React.FC = () => {
   }, [gameState.config.count]);
 
   const reset = () => {
-    setGameState(NupdownInitialGameState);
+    setGameState(SwedishxInitialGameState);
   }
 
   return (
@@ -55,7 +55,7 @@ export const NupdownConfig: React.FC = () => {
         </Link>
       </Box>
       <Box p={5}>
-        <Heading fontSize="3xl" >スコア計算</Heading>
+        <Heading fontSize="3xl" >SwedishX</Heading>
         <Flex pt={5} gap={5}>
           <Heading fontSize="2xl" width={200}>形式設定</Heading>
           <Flex flexGrow={1} gap={5}>
@@ -75,9 +75,9 @@ export const NupdownConfig: React.FC = () => {
               </NumberInput>
             </FormControl>
             <FormControl>
-              <FormLabel>N <Badge colorScheme="red" mx={2}>必須</Badge></FormLabel>
+              <FormLabel>X <Badge colorScheme="red" mx={2}>必須</Badge></FormLabel>
               <NumberInput min={1} max={1000}
-                value={gameState.config.n} onChange={e => setGameState(produce(gameState, draft => { draft.config.n = e as any }))} >
+                value={gameState.config.x} onChange={e => setGameState(produce(gameState, draft => { draft.config.x = e as any }))} >
                 <NumberInputField />
                 <NumberInputStepper>
                   <NumberIncrementStepper />
@@ -152,7 +152,7 @@ export const NupdownConfig: React.FC = () => {
         <Box height={20}></Box>
         <Flex sx={{ position: "fixed", bottom: 0, left: 0, width: "100%", justifyContent: "end", bgColor: "white", p: 3, gap: 3 }}>
           <Button colorScheme="red" onClick={reset}>設定をリセット</Button>
-          <Link to="/board/nupdown">
+          <Link to="/board/swedishx">
             <Button colorScheme="green">ボードを表示</Button>
           </Link>
         </Flex>
@@ -161,8 +161,10 @@ export const NupdownConfig: React.FC = () => {
   );
 };
 
-export const NupdownBoard: React.FC = () => {
-  const [gameState, setGameState] = useState<NupdownGameStateProps>(getNupdownGameState());
+export const SwedishxBoard: React.FC = () => {
+  const navigate = useNavigate();
+
+  const [gameState, setGameState] = useState<SwedishxGameStateProps>(getSwedishxGameState());
 
   useEffect(() => {
     localStorage.setItem("gameState", JSON.stringify(gameState));
@@ -174,8 +176,6 @@ export const NupdownBoard: React.FC = () => {
         draft.players[draft.logs[draft.logs.length - 1].player].correct--;
       } else {
         draft.players[draft.logs[draft.logs.length - 1].player].incorrect--;
-        const i = draft.logs.lastIndexOf({ type: "nupdown", player: draft.logs[draft.logs.length - 1].player, variant: "incorrect" });
-        draft.players[draft.logs[draft.logs.length - 1].player].lastIncorrect = i == -1 ? undefined : i;
       }
       draft.logs.pop();
     }))
@@ -184,30 +184,27 @@ export const NupdownBoard: React.FC = () => {
   const correct = (playerIndex: number) => {
     setGameState(produce(gameState, draft => {
       draft.players[playerIndex].correct++;
-      draft.logs.unshift({ type: "nupdown", variant: "correct", player: playerIndex });
+      draft.logs.unshift({ type: "swedishx", variant: "correct", player: playerIndex });
     }));
   }
 
   const incorrect = (playerIndex: number) => {
     setGameState(produce(gameState, draft => {
       draft.players[playerIndex].incorrect++;
-      draft.players[playerIndex].lastIncorrect = draft.logs.length + 1;
-      draft.logs.unshift({ type: "nupdown", variant: "incorrect", player: playerIndex });
+      draft.logs.unshift({ type: "swedishx", variant: "incorrect", player: playerIndex });
     }));
   }
 
   const calcScore = (i: number) => {
-    if (gameState.players[i].incorrect > 0 && gameState.players[i].lastIncorrect) {
-      return gameState.logs.slice(gameState.players[i].lastIncorrect, gameState.logs.length).filter(v => v.variant === "correct" && v.player == i).length;
-    } else {
-      return gameState.players[i].correct;
-    }
+    const incorrect = gameState.players[i].incorrect;
+    return gameState.players[i].correct - (1 + incorrect) * incorrect / 2;
   };
   const checkState = (i: number) => {
-    if (calcScore(i) >= gameState.config.n) {
+    const score = calcScore(i);
+    if (score >= gameState.config.x) {
       return "WIN!"
     } else {
-      return calcScore(i)
+      return score
     }
   }
 
@@ -226,10 +223,9 @@ export const NupdownBoard: React.FC = () => {
           <Box p={2}>quiz</Box>
         </Flex>
       </Flex>
-      <Flex p={3} justifyContent="flex-end">
-        <Link to="/config/nupdown">
-          <Button colorScheme="teal" size="xs">設定に戻る</Button>
-        </Link>
+      <Flex p={3} justifyContent="flex-end" gap={2} alignItems="center">
+        <Button onClick={undo} colorScheme="blue" size="xs">元に戻す</Button>
+        <Button onClick={() => navigate("/config/swedishx")} colorScheme="teal" size="xs">設定に戻る</Button>
       </Flex>
       <Flex sx={{ width: "100%", justifyContent: "space-evenly", mt: 5 }}>
         {gameState.players.map((player, i) => (

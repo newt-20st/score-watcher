@@ -20,7 +20,7 @@ import {
   ListItem,
   Image
 } from "@chakra-ui/react";
-import { CountGameStateProps, countInitialGameState, getCountGameState } from "../../libs/state";
+import { CountGameStateProps, countInitialGameState, getCountGameState } from "../libs/state";
 
 type QuizDataProps = {
   q: string;

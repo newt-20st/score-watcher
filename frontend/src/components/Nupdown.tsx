@@ -20,10 +20,10 @@ import {
   ListItem,
   Image
 } from "@chakra-ui/react";
-import { getNomxGameState, initialQuizData, NomxGameStateProps, NomxInitialGameState, QuizDataProps } from "../../libs/state";
+import { getNupdownGameState, initialQuizData, NupdownGameStateProps, NupdownInitialGameState, QuizDataProps } from "../libs/state";
 
-export const NomxConfig: React.FC = () => {
-  const [gameState, setGameState] = useState<NomxGameStateProps>(getNomxGameState());
+export const NupdownConfig: React.FC = () => {
+  const [gameState, setGameState] = useState<NupdownGameStateProps>(getNupdownGameState());
   const [quizData, setQuizData] = useState<QuizDataProps[]>(initialQuizData);
 
   useEffect(() => {
@@ -44,7 +44,7 @@ export const NomxConfig: React.FC = () => {
   }, [gameState.config.count]);
 
   const reset = () => {
-    setGameState(NomxInitialGameState);
+    setGameState(NupdownInitialGameState);
   }
 
   return (
@@ -55,7 +55,7 @@ export const NomxConfig: React.FC = () => {
         </Link>
       </Box>
       <Box p={5}>
-        <Heading fontSize="3xl" >スコア計算</Heading>
+        <Heading fontSize="3xl">Nupdown</Heading>
         <Flex pt={5} gap={5}>
           <Heading fontSize="2xl" width={200}>形式設定</Heading>
           <Flex flexGrow={1} gap={5}>
@@ -75,9 +75,9 @@ export const NomxConfig: React.FC = () => {
               </NumberInput>
             </FormControl>
             <FormControl>
-              <FormLabel>勝ち抜け正解数<Badge colorScheme="red" mx={2}>必須</Badge></FormLabel>
+              <FormLabel>N <Badge colorScheme="red" mx={2}>必須</Badge></FormLabel>
               <NumberInput min={1} max={1000}
-                value={gameState.config.win} onChange={e => setGameState(produce(gameState, draft => { draft.config.win = e as any }))} >
+                value={gameState.config.n} onChange={e => setGameState(produce(gameState, draft => { draft.config.n = e as any }))} >
                 <NumberInputField />
                 <NumberInputStepper>
                   <NumberIncrementStepper />
@@ -85,17 +85,19 @@ export const NomxConfig: React.FC = () => {
                 </NumberInputStepper>
               </NumberInput>
             </FormControl>
-            <FormControl>
-              <FormLabel>失格誤答数<Badge colorScheme="red" mx={2}>必須</Badge></FormLabel>
-              <NumberInput min={1} max={1000}
-                value={gameState.config.lose} onChange={e => setGameState(produce(gameState, draft => { draft.config.lose = e as any }))} >
-                <NumberInputField />
-                <NumberInputStepper>
-                  <NumberIncrementStepper />
-                  <NumberDecrementStepper />
-                </NumberInputStepper>
-              </NumberInput>
-            </FormControl>
+            {gameState.config.end && (
+              <FormControl>
+                <FormLabel>限定問題数 </FormLabel>
+                <NumberInput min={1} max={1000}
+                  value={gameState.config.end} onChange={e => setGameState(produce(gameState, draft => { draft.config.end = e as any }))} >
+                  <NumberInputField />
+                  <NumberInputStepper>
+                    <NumberIncrementStepper />
+                    <NumberDecrementStepper />
+                  </NumberInputStepper>
+                </NumberInput>
+              </FormControl>
+            )}
           </Flex>
         </Flex>
         <Flex pt={5} gap={5}>
@@ -150,7 +152,7 @@ export const NomxConfig: React.FC = () => {
         <Box height={20}></Box>
         <Flex sx={{ position: "fixed", bottom: 0, left: 0, width: "100%", justifyContent: "end", bgColor: "white", p: 3, gap: 3 }}>
           <Button colorScheme="red" onClick={reset}>設定をリセット</Button>
-          <Link to="/board/nomx">
+          <Link to="/board/nupdown">
             <Button colorScheme="green">ボードを表示</Button>
           </Link>
         </Flex>
@@ -159,25 +161,54 @@ export const NomxConfig: React.FC = () => {
   );
 };
 
-export const NomxBoard: React.FC = () => {
-  const [gameState, setGameState] = useState<NomxGameStateProps>(getNomxGameState());
+export const NupdownBoard: React.FC = () => {
+  const [gameState, setGameState] = useState<NupdownGameStateProps>(getNupdownGameState());
 
   useEffect(() => {
     localStorage.setItem("gameState", JSON.stringify(gameState));
-  }, [gameState,]);
+  }, [gameState]);
+
+  const undo = () => {
+    setGameState(produce(gameState, draft => {
+      if (draft.logs[draft.logs.length - 1].variant === "correct") {
+        draft.players[draft.logs[draft.logs.length - 1].player].correct--;
+      } else {
+        draft.players[draft.logs[draft.logs.length - 1].player].incorrect--;
+        const i = draft.logs.lastIndexOf({ type: "nupdown", player: draft.logs[draft.logs.length - 1].player, variant: "incorrect" });
+        draft.players[draft.logs[draft.logs.length - 1].player].lastIncorrect = i == -1 ? undefined : i;
+      }
+      draft.logs.pop();
+    }))
+  }
 
   const correct = (playerIndex: number) => {
     setGameState(produce(gameState, draft => {
       draft.players[playerIndex].correct++;
-      draft.logs.unshift({ type: "nomx", variant: "correct", player: playerIndex });
+      draft.logs.unshift({ type: "nupdown", variant: "correct", player: playerIndex });
     }));
   }
 
   const incorrect = (playerIndex: number) => {
     setGameState(produce(gameState, draft => {
       draft.players[playerIndex].incorrect++;
-      draft.logs.unshift({ type: "nomx", variant: "incorrect", player: playerIndex });
+      draft.players[playerIndex].lastIncorrect = draft.logs.length + 1;
+      draft.logs.unshift({ type: "nupdown", variant: "incorrect", player: playerIndex });
     }));
+  }
+
+  const calcScore = (i: number) => {
+    if (gameState.players[i].incorrect > 0 && gameState.players[i].lastIncorrect) {
+      return gameState.logs.slice(gameState.players[i].lastIncorrect, gameState.logs.length).filter(v => v.variant === "correct" && v.player == i).length;
+    } else {
+      return gameState.players[i].correct;
+    }
+  };
+  const checkState = (i: number) => {
+    if (calcScore(i) >= gameState.config.n) {
+      return "WIN!"
+    } else {
+      return calcScore(i)
+    }
   }
 
   return (
@@ -191,27 +222,33 @@ export const NomxBoard: React.FC = () => {
           <Text color="white">スコア計算</Text>
         </Box>
         <Flex sx={{ flexGrow: 1, alignItems: "center" }}>
-          <Box p={2}>Q1</Box>
+          <Box p={2}>Q {gameState.logs.length}</Box>
           <Box p={2}>quiz</Box>
         </Flex>
       </Flex>
       <Flex p={3} justifyContent="flex-end">
-        <Link to="/config/nomx">
+        <Link to="/config/nupdown">
           <Button colorScheme="teal" size="xs">設定に戻る</Button>
         </Link>
       </Flex>
       <Flex sx={{ width: "100%", justifyContent: "space-evenly", mt: 5 }}>
         {gameState.players.map((player, i) => (
-          <Flex key={i} direction="column" sx={{ textAlign: "center", gap: 5 }}>
+          <Flex key={i} direction="column" sx={{
+            textAlign: "center", gap: 5, p: 3, borderRadius: 30,
+            bgColor: checkState(i) === "WIN!" ? "red.500" : "white"
+          }}>
             <Flex direction="column">
               <Box>{player.group}</Box>
               <Box>{i + 1}</Box>
             </Flex>
-            <Box sx={{ writingMode: "vertical-rl", fontSize: "clamp(8vh, 2rem, 8vw)", height: "40vh" }}>
-              {player.name}
+            <Box sx={{ writingMode: "vertical-rl", fontSize: "clamp(8vh, 2rem, 8vw)", height: "40vh", margin: "auto" }}>
+              <Text>{player.name}</Text>
             </Box>
-            <Button colorScheme="red" variant="ghost" size="lg" fontSize="4xl" onClick={() => correct(i)}>{player.correct}</Button>
-            <Button colorScheme="blue" variant="ghost" size="lg" fontSize="4xl" onClick={() => incorrect(i)}>{player.incorrect}</Button>
+            <Text fontSize="4xl" color="green.500">{checkState(i)}</Text>
+            <Flex>
+              <Button colorScheme="red" variant="ghost" size="lg" fontSize="4xl" onClick={() => correct(i)}>{player.correct}</Button>
+              <Button colorScheme="blue" variant="ghost" size="lg" fontSize="4xl" onClick={() => incorrect(i)}>{player.incorrect}</Button>
+            </Flex>
           </Flex>
         ))}
       </Flex>

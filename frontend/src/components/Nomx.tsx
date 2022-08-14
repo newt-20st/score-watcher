@@ -20,10 +20,10 @@ import {
   ListItem,
   Image
 } from "@chakra-ui/react";
-import { getNbynGameState, initialQuizData, NbynGameStateProps, NbynInitialGameState, QuizDataProps } from "../../libs/state";
+import { getNomxGameState, initialQuizData, NomxGameStateProps, NomxInitialGameState, QuizDataProps } from "../libs/state";
 
-export const NbynConfig: React.FC = () => {
-  const [gameState, setGameState] = useState<NbynGameStateProps>(getNbynGameState());
+export const NomxConfig: React.FC = () => {
+  const [gameState, setGameState] = useState<NomxGameStateProps>(getNomxGameState());
   const [quizData, setQuizData] = useState<QuizDataProps[]>(initialQuizData);
 
   useEffect(() => {
@@ -44,7 +44,7 @@ export const NbynConfig: React.FC = () => {
   }, [gameState.config.count]);
 
   const reset = () => {
-    setGameState(NbynInitialGameState);
+    setGameState(NomxInitialGameState);
   }
 
   return (
@@ -55,7 +55,7 @@ export const NbynConfig: React.FC = () => {
         </Link>
       </Box>
       <Box p={5}>
-        <Heading fontSize="3xl" >スコア計算</Heading>
+        <Heading fontSize="3xl">NoMx</Heading>
         <Flex pt={5} gap={5}>
           <Heading fontSize="2xl" width={200}>形式設定</Heading>
           <Flex flexGrow={1} gap={5}>
@@ -75,9 +75,9 @@ export const NbynConfig: React.FC = () => {
               </NumberInput>
             </FormControl>
             <FormControl>
-              <FormLabel>N <Badge colorScheme="red" mx={2}>必須</Badge></FormLabel>
+              <FormLabel>勝ち抜け正解数<Badge colorScheme="red" mx={2}>必須</Badge></FormLabel>
               <NumberInput min={1} max={1000}
-                value={gameState.config.n} onChange={e => setGameState(produce(gameState, draft => { draft.config.n = e as any }))} >
+                value={gameState.config.win} onChange={e => setGameState(produce(gameState, draft => { draft.config.win = e as any }))} >
                 <NumberInputField />
                 <NumberInputStepper>
                   <NumberIncrementStepper />
@@ -85,19 +85,17 @@ export const NbynConfig: React.FC = () => {
                 </NumberInputStepper>
               </NumberInput>
             </FormControl>
-            {gameState.config.end && (
-              <FormControl>
-                <FormLabel>限定問題数 </FormLabel>
-                <NumberInput min={1} max={1000}
-                  value={gameState.config.end} onChange={e => setGameState(produce(gameState, draft => { draft.config.end = e as any }))} >
-                  <NumberInputField />
-                  <NumberInputStepper>
-                    <NumberIncrementStepper />
-                    <NumberDecrementStepper />
-                  </NumberInputStepper>
-                </NumberInput>
-              </FormControl>
-            )}
+            <FormControl>
+              <FormLabel>失格誤答数<Badge colorScheme="red" mx={2}>必須</Badge></FormLabel>
+              <NumberInput min={1} max={1000}
+                value={gameState.config.lose} onChange={e => setGameState(produce(gameState, draft => { draft.config.lose = e as any }))} >
+                <NumberInputField />
+                <NumberInputStepper>
+                  <NumberIncrementStepper />
+                  <NumberDecrementStepper />
+                </NumberInputStepper>
+              </NumberInput>
+            </FormControl>
           </Flex>
         </Flex>
         <Flex pt={5} gap={5}>
@@ -152,7 +150,7 @@ export const NbynConfig: React.FC = () => {
         <Box height={20}></Box>
         <Flex sx={{ position: "fixed", bottom: 0, left: 0, width: "100%", justifyContent: "end", bgColor: "white", p: 3, gap: 3 }}>
           <Button colorScheme="red" onClick={reset}>設定をリセット</Button>
-          <Link to="/board/nbyn">
+          <Link to="/board/nomx">
             <Button colorScheme="green">ボードを表示</Button>
           </Link>
         </Flex>
@@ -161,34 +159,25 @@ export const NbynConfig: React.FC = () => {
   );
 };
 
-export const NbynBoard: React.FC = () => {
-  const [gameState, setGameState] = useState<NbynGameStateProps>(getNbynGameState());
+export const NomxBoard: React.FC = () => {
+  const [gameState, setGameState] = useState<NomxGameStateProps>(getNomxGameState());
 
   useEffect(() => {
     localStorage.setItem("gameState", JSON.stringify(gameState));
-  }, [gameState]);
+  }, [gameState,]);
 
   const correct = (playerIndex: number) => {
     setGameState(produce(gameState, draft => {
       draft.players[playerIndex].correct++;
-      draft.logs.unshift({ type: "nbyn", variant: "correct", player: playerIndex });
+      draft.logs.unshift({ type: "nomx", variant: "correct", player: playerIndex });
     }));
   }
 
   const incorrect = (playerIndex: number) => {
     setGameState(produce(gameState, draft => {
       draft.players[playerIndex].incorrect++;
-      draft.logs.unshift({ type: "nbyn", variant: "incorrect", player: playerIndex });
+      draft.logs.unshift({ type: "nomx", variant: "incorrect", player: playerIndex });
     }));
-  }
-
-  const calcScore = (i: number) => gameState.players[i].correct * (gameState.config.n - gameState.players[i].incorrect);
-  const checkState = (i: number) => {
-    if (calcScore(i) >= gameState.config.n ** 2) {
-      return "WIN!"
-    } else {
-      return calcScore(i)
-    }
   }
 
   return (
@@ -207,28 +196,22 @@ export const NbynBoard: React.FC = () => {
         </Flex>
       </Flex>
       <Flex p={3} justifyContent="flex-end">
-        <Link to="/config/nbyn">
+        <Link to="/config/nomx">
           <Button colorScheme="teal" size="xs">設定に戻る</Button>
         </Link>
       </Flex>
       <Flex sx={{ width: "100%", justifyContent: "space-evenly", mt: 5 }}>
         {gameState.players.map((player, i) => (
-          <Flex key={i} direction="column" sx={{
-            textAlign: "center", gap: 5, p: 3, borderRadius: 30,
-            bgColor: checkState(i) === "WIN!" ? "red.500" : "white"
-          }}>
+          <Flex key={i} direction="column" sx={{ textAlign: "center", gap: 5 }}>
             <Flex direction="column">
               <Box>{player.group}</Box>
               <Box>{i + 1}</Box>
             </Flex>
-            <Box sx={{ writingMode: "vertical-rl", fontSize: "clamp(8vh, 2rem, 8vw)", height: "40vh", margin: "auto" }}>
-              <Text>{player.name}</Text>
+            <Box sx={{ writingMode: "vertical-rl", fontSize: "clamp(8vh, 2rem, 8vw)", height: "40vh" }}>
+              {player.name}
             </Box>
-            <Text fontSize="4xl" color="green.500">{checkState(i)}</Text>
-            <Flex>
-              <Button colorScheme="red" variant="ghost" size="lg" fontSize="4xl" onClick={() => correct(i)}>{player.correct}</Button>
-              <Button colorScheme="blue" variant="ghost" size="lg" fontSize="4xl" onClick={() => incorrect(i)}>{player.incorrect}</Button>
-            </Flex>
+            <Button colorScheme="red" variant="ghost" size="lg" fontSize="4xl" onClick={() => correct(i)}>{player.correct}</Button>
+            <Button colorScheme="blue" variant="ghost" size="lg" fontSize="4xl" onClick={() => incorrect(i)}>{player.incorrect}</Button>
           </Flex>
         ))}
       </Flex>

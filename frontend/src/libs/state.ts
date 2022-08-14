@@ -163,6 +163,47 @@ export const getNupdownGameState = () => {
   return NupdownInitialGameState;
 }
 
+export type SwedishxGameStateProps = {
+  type: "swedishx";
+  config: {
+    name: string;
+    count: number;
+    x: number;
+    end?: number;
+  };
+  players: {
+    name: string;
+    correct: number;
+    incorrect: number;
+    group: string;
+  }[];
+  logs: {
+    type: "swedishx";
+    variant: "correct" | "incorrect";
+    player: number;
+  }[];
+}
+export const SwedishxInitialGameState: SwedishxGameStateProps = {
+  type: "swedishx",
+  config: { name: "", count: 3, x: 10, end: 10 },
+  players: [
+    { name: "Player 1", correct: 0, incorrect: 0, group: "" },
+    { name: "Player 2", correct: 0, incorrect: 0, group: "" },
+    { name: "Player 3", correct: 0, incorrect: 0, group: "" },
+  ],
+  logs: [],
+};
+export const getSwedishxGameState = () => {
+  const localGameState = localStorage.getItem("gameState");
+  if (localGameState) {
+    const parsedLocalGameConfig: SwedishxGameStateProps = JSON.parse(localGameState);
+    if (parsedLocalGameConfig.type === "swedishx") {
+      return parsedLocalGameConfig;
+    }
+  }
+  return SwedishxInitialGameState;
+}
+
 
 const localQuizData = localStorage.getItem("quizData");
 
