@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import produce from "immer";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import {
   Badge,
   Box,
@@ -160,6 +160,7 @@ export const NomxConfig: React.FC = () => {
 };
 
 export const NomxBoard: React.FC = () => {
+  const navigate = useNavigate();
   const [gameState, setGameState] = useState<NomxGameStateProps>(getNomxGameState());
 
   useEffect(() => {
@@ -180,6 +181,17 @@ export const NomxBoard: React.FC = () => {
     }));
   }
 
+  const undo = () => {
+    setGameState(produce(gameState, draft => {
+      if (draft.logs[draft.logs.length - 1].variant === "correct") {
+        draft.players[draft.logs[0].player].correct--;
+      } else {
+        draft.players[draft.logs[0].player].incorrect--;
+      }
+      draft.logs.pop();
+    }))
+  }
+
   return (
     <Box>
       <Flex sx={{
@@ -196,9 +208,8 @@ export const NomxBoard: React.FC = () => {
         </Flex>
       </Flex>
       <Flex p={3} justifyContent="flex-end">
-        <Link to="/config/nomx">
-          <Button colorScheme="teal" size="xs">設定に戻る</Button>
-        </Link>
+        <Button onClick={undo} disabled={gameState.logs.length === 0} colorScheme="blue" size="xs">元に戻す</Button>
+        <Button onClick={() => navigate("/config/squarex")} colorScheme="teal" size="xs">設定に戻る</Button>
       </Flex>
       <Flex sx={{ width: "100%", justifyContent: "space-evenly", mt: 5 }}>
         {gameState.players.map((player, i) => (

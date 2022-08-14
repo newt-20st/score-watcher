@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import produce from "immer";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import {
   Badge,
   Box,
@@ -162,6 +162,7 @@ export const NbynConfig: React.FC = () => {
 };
 
 export const NbynBoard: React.FC = () => {
+  const navigate = useNavigate();
   const [gameState, setGameState] = useState<NbynGameStateProps>(getNbynGameState());
 
   useEffect(() => {
@@ -191,6 +192,17 @@ export const NbynBoard: React.FC = () => {
     }
   }
 
+  const undo = () => {
+    setGameState(produce(gameState, draft => {
+      if (draft.logs[draft.logs.length - 1].variant === "correct") {
+        draft.players[draft.logs[draft.logs.length - 1].player].correct--;
+      } else {
+        draft.players[draft.logs[draft.logs.length - 1].player].incorrect--;
+      }
+      draft.logs.pop();
+    }))
+  }
+
   return (
     <Box>
       <Flex sx={{
@@ -207,9 +219,8 @@ export const NbynBoard: React.FC = () => {
         </Flex>
       </Flex>
       <Flex p={3} justifyContent="flex-end">
-        <Link to="/config/nbyn">
-          <Button colorScheme="teal" size="xs">設定に戻る</Button>
-        </Link>
+        <Button onClick={undo} disabled={gameState.logs.length === 0} colorScheme="blue" size="xs">元に戻す</Button>
+        <Button onClick={() => navigate("/config/squarex")} colorScheme="teal" size="xs">設定に戻る</Button>
       </Flex>
       <Flex sx={{ width: "100%", justifyContent: "space-evenly", mt: 5 }}>
         {gameState.players.map((player, i) => (

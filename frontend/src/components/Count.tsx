@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import produce from "immer";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import {
   Badge,
   Box,
@@ -132,6 +132,7 @@ export const CountConfig: React.FC = () => {
 };
 
 export const CountBoard: React.FC = () => {
+  const navigate = useNavigate();
   const [gameState, setGameState] = useState<CountGameStateProps>(getCountGameState());
 
   useEffect(() => {
@@ -143,6 +144,13 @@ export const CountBoard: React.FC = () => {
       draft.players[playerIndex].score++;
       draft.logs.unshift({ type: "count", variant: "correct", player: playerIndex });
     }));
+  }
+
+  const undo = () => {
+    setGameState(produce(gameState, draft => {
+      draft.players[draft.logs[draft.logs.length - 1].player].score--;
+      draft.logs.pop();
+    }))
   }
 
   return (
@@ -161,9 +169,8 @@ export const CountBoard: React.FC = () => {
         </Flex>
       </Flex>
       <Flex p={3} justifyContent="flex-end">
-        <Link to="/config/count">
-          <Button colorScheme="teal" size="xs">設定に戻る</Button>
-        </Link>
+        <Button onClick={undo} disabled={gameState.logs.length === 0} colorScheme="blue" size="xs">元に戻す</Button>
+        <Button onClick={() => navigate("/config/squarex")} colorScheme="teal" size="xs">設定に戻る</Button>
       </Flex>
       <Flex sx={{ width: "100%", justifyContent: "space-evenly", mt: 5 }}>
         {gameState.players.map((player, i) => (

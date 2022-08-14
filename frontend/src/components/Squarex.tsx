@@ -233,7 +233,7 @@ export const SquarexBoard: React.FC = () => {
         </Flex>
       </Flex>
       <Flex p={3} justifyContent="flex-end" gap={2} alignItems="center">
-        <Button onClick={undo} colorScheme="blue" size="xs">元に戻す</Button>
+        <Button onClick={undo} disabled={gameState.logs.length === 0} colorScheme="blue" size="xs">元に戻す</Button>
         <Button onClick={() => navigate("/config/squarex")} colorScheme="teal" size="xs">設定に戻る</Button>
       </Flex>
       <Flex sx={{ width: "100%", justifyContent: "space-evenly", mt: 5 }}>
