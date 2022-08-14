@@ -366,6 +366,16 @@ export const NomxBoard: React.FC = () => {
     );
   };
 
+  const checkState = (i: number) => {
+    if (gameState.players[i].correct >= gameState.config.win) {
+      return "WIN";
+    } else if (gameState.players[i].incorrect >= gameState.config.lose) {
+      return "LOSE";
+    } else {
+      return "playing"
+    }
+  };
+
   return (
     <Box>
       <Flex
@@ -423,37 +433,45 @@ export const NomxBoard: React.FC = () => {
       </Flex>
       <Flex sx={{ width: "100%", justifyContent: "space-evenly", mt: 5 }}>
         {gameState.players.map((player, i) => (
-          <Flex key={i} direction="column" sx={{ textAlign: "center", gap: 5 }}>
+          <Flex key={i} direction="column" sx={{
+            textAlign: "center",
+            p: 3,
+            gap: 5,
+            borderRadius: 30,
+            bgColor: checkState(i) === "WIN" ? "red.500" : checkState(i) === "LOSE" ? "blue.500" : "white",
+            color: checkState(i) === "WIN" || checkState(i) === "LOSE" ? "white" : undefined,
+          }}>
             <Flex direction="column">
               <Box>{player.group}</Box>
               <Box>{i + 1}</Box>
             </Flex>
-            <Box
+            <Flex
               sx={{
                 writingMode: "vertical-rl",
                 fontSize: "clamp(8vh, 2rem, 8vw)",
                 height: "40vh",
+                margin: "auto",
               }}
             >
               {player.name}
-            </Box>
+            </Flex>
             <Button
-              colorScheme="red"
+              colorScheme={checkState(i) === "WIN" || checkState(i) === "LOSE" ? "white" : "red"}
               variant="ghost"
               size="lg"
               fontSize="4xl"
               onClick={() => correct(i)}
             >
-              {player.correct}
+              {player.correct >= gameState.config.win ? "WIN" : player.correct}
             </Button>
             <Button
-              colorScheme="blue"
+              colorScheme={checkState(i) === "WIN" || checkState(i) === "LOSE" ? "white" : "blue"}
               variant="ghost"
               size="lg"
               fontSize="4xl"
               onClick={() => incorrect(i)}
             >
-              {player.incorrect}
+              {player.incorrect >= gameState.config.lose ? "LOSE" : player.incorrect}
             </Button>
           </Flex>
         ))}

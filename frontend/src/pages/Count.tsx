@@ -336,15 +336,16 @@ export const CountBoard: React.FC = () => {
               <Box>{player.group}</Box>
               <Box>{i + 1}</Box>
             </Flex>
-            <Box
+            <Flex
               sx={{
                 writingMode: "vertical-rl",
                 fontSize: "clamp(8vh, 2rem, 8vw)",
                 height: "40vh",
+                margin: "auto",
               }}
             >
               {player.name}
-            </Box>
+            </Flex>
             <Button
               colorScheme="red"
               variant="ghost"

@@ -463,7 +463,7 @@ export const NupdownBoard: React.FC = () => {
               <Box>{player.group}</Box>
               <Box>{i + 1}</Box>
             </Flex>
-            <Box
+            <Flex
               sx={{
                 writingMode: "vertical-rl",
                 fontSize: "clamp(8vh, 2rem, 8vw)",
@@ -471,8 +471,8 @@ export const NupdownBoard: React.FC = () => {
                 margin: "auto",
               }}
             >
-              <Text>{player.name}</Text>
-            </Box>
+              {player.name}
+            </Flex>
             <Text fontSize="4xl" color="green.500">
               {checkState(i)}
             </Text>
