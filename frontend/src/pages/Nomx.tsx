@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import produce from "immer";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import {
   Badge,
   Box,
@@ -8,30 +8,20 @@ import {
   FormControl,
   FormLabel,
   Heading,
-  Text,
   Input,
-  NumberDecrementStepper,
-  NumberIncrementStepper,
-  NumberInput,
-  NumberInputField,
-  NumberInputStepper,
   Button,
-  UnorderedList,
-  ListItem,
-  Image,
 } from "@chakra-ui/react";
 import {
   getNomxGameState,
-  initialQuizData,
   NomxGameStateProps,
   NomxInitialGameState,
-  QuizDataProps,
 } from "../libs/state";
 
 import LoadQuiz from "../components/LoadQuiz";
 import Header from "../components/Header";
 import BoardHeader from "../components/BoardHeader";
 import FormNumberInput from "../components/FormINumbernput";
+import LogArea from "../components/LogArea";
 
 export const NomxConfig: React.FC = () => {
   const [gameState, setGameState] = useState<NomxGameStateProps>(
@@ -374,27 +364,7 @@ export const NomxBoard: React.FC = () => {
           </Flex>
         ))}
       </Flex>
-      {gameState.logs.length !== 0 && (
-        <Flex
-          direction="column"
-          sx={{
-            m: 5,
-            p: 3,
-            borderColor: "green.500",
-            borderRadius: 5,
-            borderWidth: 2,
-          }}
-        >
-          <UnorderedList>
-            {gameState.logs.map((activity, i) => (
-              <ListItem key={i}>
-                {gameState.players[activity.player].name} が{" "}
-                {activity.variant === "correct" ? "正答" : "誤答"}しました。
-              </ListItem>
-            ))}
-          </UnorderedList>
-        </Flex>
-      )}
+      <LogArea logs={gameState.logs.map(log => `${gameState.players[log.player].name}が${log.variant === "correct" ? "正答" : "誤答"}しました。`)} />
     </Box>
   );
 };

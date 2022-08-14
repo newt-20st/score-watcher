@@ -1,5 +1,5 @@
-import { FormControl, FormLabel, NumberInput, NumberInputField, NumberInputStepper, NumberIncrementStepper, NumberDecrementStepper, Badge } from "@chakra-ui/react";
 import React from "react";
+import { FormControl, FormLabel, NumberInput, NumberInputField, NumberInputStepper, NumberIncrementStepper, NumberDecrementStepper, Badge } from "@chakra-ui/react";
 
 type FormInputProps = {
   onChange: (e: any) => void;
