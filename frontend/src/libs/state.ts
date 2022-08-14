@@ -10,7 +10,7 @@ export type CountGameStateProps = {
     variant: "correct";
     player: number;
   }[];
-}
+};
 export const countInitialGameState: CountGameStateProps = {
   type: "count",
   config: { name: "", count: 3 },
@@ -24,19 +24,20 @@ export const countInitialGameState: CountGameStateProps = {
 export const getCountGameState = () => {
   const localGameState = localStorage.getItem("gameState");
   if (localGameState) {
-    const parsedLocalGameState: CountGameStateProps = JSON.parse(localGameState);
+    const parsedLocalGameState: CountGameStateProps =
+      JSON.parse(localGameState);
     if (parsedLocalGameState.type === "count") {
       return parsedLocalGameState;
     }
   }
   return countInitialGameState;
-}
+};
 export type CountPlayerProps = {
   name: string;
   correct: number;
   incorrect: number;
   group: string;
-}
+};
 
 export type NomxGameStateProps = {
   type: "nomx";
@@ -57,7 +58,7 @@ export type NomxGameStateProps = {
     variant: "correct" | "incorrect";
     player: number;
   }[];
-}
+};
 export const NomxInitialGameState: NomxGameStateProps = {
   type: "nomx",
   config: { name: "", count: 3, win: 7, lose: 3 },
@@ -71,14 +72,14 @@ export const NomxInitialGameState: NomxGameStateProps = {
 export const getNomxGameState = () => {
   const localGameState = localStorage.getItem("gameState");
   if (localGameState) {
-    const parsedLocalGameConfig: NomxGameStateProps = JSON.parse(localGameState);
+    const parsedLocalGameConfig: NomxGameStateProps =
+      JSON.parse(localGameState);
     if (parsedLocalGameConfig.type === "nomx") {
       return parsedLocalGameConfig;
     }
   }
   return NomxInitialGameState;
-}
-
+};
 
 export type NbynGameStateProps = {
   type: "nbyn";
@@ -99,7 +100,7 @@ export type NbynGameStateProps = {
     variant: "correct" | "incorrect";
     player: number;
   }[];
-}
+};
 export const NbynInitialGameState: NbynGameStateProps = {
   type: "nbyn",
   config: { name: "", count: 3, n: 7, end: 10 },
@@ -113,13 +114,14 @@ export const NbynInitialGameState: NbynGameStateProps = {
 export const getNbynGameState = () => {
   const localGameState = localStorage.getItem("gameState");
   if (localGameState) {
-    const parsedLocalGameConfig: NbynGameStateProps = JSON.parse(localGameState);
+    const parsedLocalGameConfig: NbynGameStateProps =
+      JSON.parse(localGameState);
     if (parsedLocalGameConfig.type === "nbyn") {
       return parsedLocalGameConfig;
     }
   }
   return NbynInitialGameState;
-}
+};
 
 export type NupdownGameStateProps = {
   type: "nupdown";
@@ -141,7 +143,7 @@ export type NupdownGameStateProps = {
     variant: "correct" | "incorrect";
     player: number;
   }[];
-}
+};
 export const NupdownInitialGameState: NupdownGameStateProps = {
   type: "nupdown",
   config: { name: "", count: 3, n: 7, end: 10 },
@@ -155,13 +157,14 @@ export const NupdownInitialGameState: NupdownGameStateProps = {
 export const getNupdownGameState = () => {
   const localGameState = localStorage.getItem("gameState");
   if (localGameState) {
-    const parsedLocalGameConfig: NupdownGameStateProps = JSON.parse(localGameState);
+    const parsedLocalGameConfig: NupdownGameStateProps =
+      JSON.parse(localGameState);
     if (parsedLocalGameConfig.type === "nupdown") {
       return parsedLocalGameConfig;
     }
   }
   return NupdownInitialGameState;
-}
+};
 
 export type SwedishxGameStateProps = {
   type: "swedishx";
@@ -182,7 +185,7 @@ export type SwedishxGameStateProps = {
     variant: "correct" | "incorrect";
     player: number;
   }[];
-}
+};
 export const SwedishxInitialGameState: SwedishxGameStateProps = {
   type: "swedishx",
   config: { name: "", count: 3, x: 10, end: 10 },
@@ -196,13 +199,14 @@ export const SwedishxInitialGameState: SwedishxGameStateProps = {
 export const getSwedishxGameState = () => {
   const localGameState = localStorage.getItem("gameState");
   if (localGameState) {
-    const parsedLocalGameConfig: SwedishxGameStateProps = JSON.parse(localGameState);
+    const parsedLocalGameConfig: SwedishxGameStateProps =
+      JSON.parse(localGameState);
     if (parsedLocalGameConfig.type === "swedishx") {
       return parsedLocalGameConfig;
     }
   }
   return SwedishxInitialGameState;
-}
+};
 
 export type AttacksurvivalGameStateProps = {
   type: "attacksurvival";
@@ -233,7 +237,7 @@ export type AttacksurvivalGameStateProps = {
     variant: "correct" | "incorrect";
     player: number;
   }[];
-}
+};
 export const AttacksurvivalInitialGameState: AttacksurvivalGameStateProps = {
   type: "attacksurvival",
   config: {
@@ -249,7 +253,7 @@ export const AttacksurvivalInitialGameState: AttacksurvivalGameStateProps = {
       other: 0,
     },
     through: 0,
-    end: 10
+    end: 10,
   },
   players: [
     { name: "Player 1", score: 10, correct: 0, incorrect: 0, group: "" },
@@ -261,13 +265,14 @@ export const AttacksurvivalInitialGameState: AttacksurvivalGameStateProps = {
 export const getAttacksurvivalGameState = () => {
   const localGameState = localStorage.getItem("gameState");
   if (localGameState) {
-    const parsedLocalGameConfig: AttacksurvivalGameStateProps = JSON.parse(localGameState);
+    const parsedLocalGameConfig: AttacksurvivalGameStateProps =
+      JSON.parse(localGameState);
     if (parsedLocalGameConfig.type === "attacksurvival") {
       return parsedLocalGameConfig;
     }
   }
   return AttacksurvivalInitialGameState;
-}
+};
 
 export type SquarexGameStateProps = {
   type: "squarex";
@@ -293,7 +298,7 @@ export type SquarexGameStateProps = {
     variant: "correct" | "incorrect";
     player: number;
   }[];
-}
+};
 export const SquarexInitialGameState: SquarexGameStateProps = {
   type: "squarex",
   config: {
@@ -303,7 +308,7 @@ export const SquarexInitialGameState: SquarexGameStateProps = {
     odd: 1,
     even: 1,
     through: 0,
-    end: 10
+    end: 10,
   },
   players: [
     { name: "Player 1", correct: 0, incorrect: 0, odd: 0, even: 0, group: "" },
@@ -315,18 +320,20 @@ export const SquarexInitialGameState: SquarexGameStateProps = {
 export const getSquarexGameState = () => {
   const localGameState = localStorage.getItem("gameState");
   if (localGameState) {
-    const parsedLocalGameConfig: SquarexGameStateProps = JSON.parse(localGameState);
+    const parsedLocalGameConfig: SquarexGameStateProps =
+      JSON.parse(localGameState);
     if (parsedLocalGameConfig.type === "squarex") {
       return parsedLocalGameConfig;
     }
   }
   return SquarexInitialGameState;
-}
-
+};
 
 const localQuizData = localStorage.getItem("quizData");
 export type QuizDataProps = {
   q: string;
   a: string;
 };
-export const initialQuizData: QuizDataProps[] = localQuizData ? JSON.parse(localQuizData) : [];
+export const initialQuizData: QuizDataProps[] = localQuizData
+  ? JSON.parse(localQuizData)
+  : [];

@@ -9,7 +9,10 @@ import { NomxBoard, NomxConfig } from "./components/Nomx";
 import { NbynBoard, NbynConfig } from "./components/Nbyn";
 import { NupdownBoard, NupdownConfig } from "./components/Nupdown";
 import { SwedishxBoard, SwedishxConfig } from "./components/Swedishx";
-import { AttacksurvivalBoard, AttacksurvivalConfig } from "./components/Attacksurvival";
+import {
+  AttacksurvivalBoard,
+  AttacksurvivalConfig,
+} from "./components/Attacksurvival";
 import { SquarexBoard, SquarexConfig } from "./components/Squarex";
 
 const App: React.FC = () => {
@@ -39,8 +42,8 @@ const App: React.FC = () => {
             </Route>
           </Route>
         </Routes>
-      </BrowserRouter >
-    </Box >
+      </BrowserRouter>
+    </Box>
   );
 };
 

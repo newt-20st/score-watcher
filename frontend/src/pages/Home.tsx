@@ -1,6 +1,14 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { Box, BoxProps, Flex, Grid, Heading, Image, Text } from "@chakra-ui/react";
+import {
+  Box,
+  BoxProps,
+  Flex,
+  Grid,
+  Heading,
+  Image,
+  Text,
+} from "@chakra-ui/react";
 
 const Card: React.FC<BoxProps> = (props) => (
   <Box
@@ -17,29 +25,40 @@ const Card: React.FC<BoxProps> = (props) => (
       color: "white",
       backgroundColor: "green.500",
     }}
-    {...props} />
-)
+    {...props}
+  />
+);
 const Home: React.FC = () => {
   return (
     <Flex direction="column">
       <Box>
         <Link to="/">
-          <Image src="/src/assets/images/logo.png" sx={{ maxHeight: "10vh", margin: "auto" }} />
+          <Image
+            src="/src/assets/images/logo.png"
+            sx={{ maxHeight: "10vh", margin: "auto" }}
+          />
         </Link>
       </Box>
       <Box p={5}>
         <Text>Ver.2.0-dev</Text>
         <Text>
-          最新のバージョンは<a
+          最新のバージョンは
+          <a
             href="https://github.com/newt-20st/score-watcher/releases"
             target="_blank"
-          >こちらのリポジトリ</a
-          >から確認してください。
+          >
+            こちらのリポジトリ
+          </a>
+          から確認してください。
         </Text>
       </Box>
       <Box p={5}>
         <Heading fontSize="2xl">形式を選択</Heading>
-        <Grid templateColumns="repeat(auto-fit, minmax(250px, 1fr))" gap={5} py={5}>
+        <Grid
+          templateColumns="repeat(auto-fit, minmax(250px, 1fr))"
+          gap={5}
+          py={5}
+        >
           <Link to="/json">
             <Card>
               <Heading fontSize="xl">設定ファイルから読み込む</Heading>
@@ -80,9 +99,7 @@ const Home: React.FC = () => {
           <Link to="/config/swedishx">
             <Card>
               <Heading fontSize="xl">Swedish X</Heading>
-              <Box>
-                1回の正答で+1,n回目の誤答で-nでXを目指す形式です。
-              </Box>
+              <Box>1回の正答で+1,n回目の誤答で-nでXを目指す形式です。</Box>
             </Card>
           </Link>
           <Link to="/config/attacksurvival">
@@ -100,12 +117,6 @@ const Home: React.FC = () => {
             </Card>
           </Link>
         </Grid>
-      </Box>
-      <Box p={5}>
-        <Heading fontSize="2xl">大会モード</Heading>
-        <Text>
-          複数の形式が連結した、複数組や複数ステージに対応したモードです。v1.0のリリースで実装予定です。
-        </Text>
       </Box>
     </Flex>
   );
