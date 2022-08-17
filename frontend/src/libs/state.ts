@@ -32,12 +32,6 @@ export const getCountGameState = () => {
   }
   return countInitialGameState;
 };
-export type CountPlayerProps = {
-  name: string;
-  correct: number;
-  incorrect: number;
-  group: string;
-};
 
 export type NomxGameStateProps = {
   type: "nomx";
@@ -337,3 +331,5 @@ export type QuizDataProps = {
 export const initialQuizData: QuizDataProps[] = localQuizData
   ? JSON.parse(localQuizData)
   : [];
+
+export type AnyGameStateProps = CountGameStateProps | NomxGameStateProps | NbynGameStateProps | NupdownGameStateProps | SwedishxGameStateProps | AttacksurvivalGameStateProps | SquarexGameStateProps;

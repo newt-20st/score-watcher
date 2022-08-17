@@ -16,7 +16,6 @@ import {
   TabPanel,
   TabPanels,
   Tabs,
-  Divider,
 } from "@chakra-ui/react";
 import {
   getNomxGameState,
@@ -30,6 +29,8 @@ import BoardHeader from "../components/BoardHeader";
 import ConfigNumberInput from "../components/ConfigNumberInput";
 import LogArea from "../components/LogArea";
 import ConfigMenu from "../components/ConfigMenu";
+import FundamentalFormatConfig from "../block/FundamentalFormatConfig";
+import FundamentalPlayerConfig from "../block/FundamentalPlayerConfig";
 
 export const NomxConfig: React.FC = () => {
   const [gameState, setGameState] = useState<NomxGameStateProps>(
@@ -91,39 +92,7 @@ export const NomxConfig: React.FC = () => {
         <TabPanels>
           <TabPanel>
             <Flex direction="column" gap={5} my={5}>
-              <FormControl>
-                <FormLabel>
-                  大会名
-                  <Badge colorScheme="red" mx={2}>
-                    必須
-                  </Badge>
-                </FormLabel>
-                <Input
-                  type="text"
-                  value={gameState.config.name}
-                  onChange={(e) =>
-                    setGameState(
-                      produce(gameState, (draft) => {
-                        draft.config.name = e.target.value;
-                      })
-                    )
-                  }
-                />
-              </FormControl>
-              <ConfigNumberInput
-                label="プレイヤーの人数"
-                value={gameState.config.count}
-                min={1}
-                max={15}
-                onChange={(e) =>
-                  setGameState(
-                    produce(gameState, (draft) => {
-                      draft.config.count = e as any;
-                    })
-                  )
-                }
-                required
-              />
+              <FundamentalFormatConfig gameState={gameState} setGameState={setGameState} />
               <ConfigNumberInput
                 label="勝ち抜け正解数"
                 value={gameState.config.win}
@@ -162,25 +131,7 @@ export const NomxConfig: React.FC = () => {
                     プレイヤー {i + 1}
                   </Heading>
                   <Flex direction="column" gap={5}>
-                    <FormControl>
-                      <FormLabel>
-                        名前
-                        <Badge colorScheme="red" mx={2}>
-                          必須
-                        </Badge>
-                      </FormLabel>
-                      <Input
-                        type="text"
-                        value={player.name}
-                        onChange={(e) =>
-                          setGameState(
-                            produce(gameState, (draft) => {
-                              draft.players[i].name = e.target.value;
-                            })
-                          )
-                        }
-                      />
-                    </FormControl>
+                    <FundamentalPlayerConfig gameState={gameState} setGameState={setGameState} i={i} />
                     <ConfigNumberInput
                       label="初期正答数"
                       value={player.correct}
@@ -209,20 +160,6 @@ export const NomxConfig: React.FC = () => {
                       }
                       required
                     />
-                    <FormControl>
-                      <FormLabel>所属</FormLabel>
-                      <Input
-                        type="text"
-                        value={player.group}
-                        onChange={(e) =>
-                          setGameState(
-                            produce(gameState, (draft) => {
-                              draft.players[i].group = e.target.value;
-                            })
-                          )
-                        }
-                      />
-                    </FormControl>
                   </Flex>
                 </Box>
               ))}

@@ -29,6 +29,7 @@ import BoardHeader from "../components/BoardHeader";
 import ConfigNumberInput from "../components/ConfigNumberInput";
 import LogArea from "../components/LogArea";
 import ConfigMenu from "../components/ConfigMenu";
+import FundamentalPlayerConfig from "../block/FundamentalPlayerConfig";
 
 export const SwedishxConfig: React.FC = () => {
   const [gameState, setGameState] = useState<SwedishxGameStateProps>(
@@ -159,25 +160,7 @@ export const SwedishxConfig: React.FC = () => {
                     プレイヤー {i + 1}
                   </Heading>
                   <Flex direction="column" gap={5}>
-                    <FormControl>
-                      <FormLabel>
-                        名前
-                        <Badge colorScheme="red" mx={2}>
-                          必須
-                        </Badge>
-                      </FormLabel>
-                      <Input
-                        type="text"
-                        value={player.name}
-                        onChange={(e) =>
-                          setGameState(
-                            produce(gameState, (draft) => {
-                              draft.players[i].name = e.target.value;
-                            })
-                          )
-                        }
-                      />
-                    </FormControl>
+                    <FundamentalPlayerConfig gameState={gameState} setGameState={setGameState} i={i} />
                     <ConfigNumberInput
                       label="初期正答数"
                       value={player.correct}
@@ -206,20 +189,6 @@ export const SwedishxConfig: React.FC = () => {
                       }
                       required
                     />
-                    <FormControl>
-                      <FormLabel>所属</FormLabel>
-                      <Input
-                        type="text"
-                        value={player.group}
-                        onChange={(e) =>
-                          setGameState(
-                            produce(gameState, (draft) => {
-                              draft.players[i].group = e.target.value;
-                            })
-                          )
-                        }
-                      />
-                    </FormControl>
                   </Flex>
                 </Box>
               ))}

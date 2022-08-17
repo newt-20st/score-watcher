@@ -29,6 +29,8 @@ import BoardHeader from "../components/BoardHeader";
 import ConfigNumberInput from "../components/ConfigNumberInput";
 import LogArea from "../components/LogArea";
 import ConfigMenu from "../components/ConfigMenu";
+import FundamentalFormatConfig from "../block/FundamentalFormatConfig";
+import FundamentalPlayerConfig from "../block/FundamentalPlayerConfig";
 
 export const CountConfig: React.FC = () => {
   const [gameState, setGameState] = useState<CountGameStateProps>(
@@ -84,39 +86,7 @@ export const CountConfig: React.FC = () => {
         <TabPanels>
           <TabPanel>
             <Flex direction="column" gap={5} my={5}>
-              <FormControl>
-                <FormLabel>
-                  大会名
-                  <Badge colorScheme="red" mx={2}>
-                    必須
-                  </Badge>
-                </FormLabel>
-                <Input
-                  type="text"
-                  value={gameState.config.name}
-                  onChange={(e) =>
-                    setGameState(
-                      produce(gameState, (draft) => {
-                        draft.config.name = e.target.value;
-                      })
-                    )
-                  }
-                />
-              </FormControl>
-              <ConfigNumberInput
-                label="プレイヤーの人数"
-                value={gameState.config.count}
-                min={1}
-                max={15}
-                onChange={(e) =>
-                  setGameState(
-                    produce(gameState, (draft) => {
-                      draft.config.count = e as any;
-                    })
-                  )
-                }
-                required
-              />
+              <FundamentalFormatConfig gameState={gameState} setGameState={setGameState} />
             </Flex>
           </TabPanel>
           <TabPanel>
@@ -127,25 +97,7 @@ export const CountConfig: React.FC = () => {
                     プレイヤー {i + 1}
                   </Heading>
                   <Flex direction="column" gap={5}>
-                    <FormControl>
-                      <FormLabel>
-                        名前
-                        <Badge colorScheme="red" mx={2}>
-                          必須
-                        </Badge>
-                      </FormLabel>
-                      <Input
-                        type="text"
-                        value={player.name}
-                        onChange={(e) =>
-                          setGameState(
-                            produce(gameState, (draft) => {
-                              draft.players[i].name = e.target.value;
-                            })
-                          )
-                        }
-                      />
-                    </FormControl>
+                    <FundamentalPlayerConfig gameState={gameState} setGameState={setGameState} i={i} />
                     <ConfigNumberInput
                       label="初期値"
                       value={player.score}
@@ -160,20 +112,6 @@ export const CountConfig: React.FC = () => {
                       }
                       required
                     />
-                    <FormControl>
-                      <FormLabel>所属</FormLabel>
-                      <Input
-                        type="text"
-                        value={player.group}
-                        onChange={(e) =>
-                          setGameState(
-                            produce(gameState, (draft) => {
-                              draft.players[i].group = e.target.value;
-                            })
-                          )
-                        }
-                      />
-                    </FormControl>
                   </Flex>
                 </Box>
               ))}
