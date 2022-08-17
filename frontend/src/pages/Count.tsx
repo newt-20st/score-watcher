@@ -10,6 +10,12 @@ import {
   Heading,
   Input,
   Button,
+  Container,
+  Tab,
+  TabList,
+  TabPanel,
+  TabPanels,
+  Tabs,
 } from "@chakra-ui/react";
 import {
   CountGameStateProps,
@@ -65,125 +71,124 @@ export const CountConfig: React.FC = () => {
   };
 
   return (
-    <Box>
+    <Container maxW="3xl">
       <Header />
       <Box p={5}>
-        <Heading fontSize="3xl">スコア計算</Heading>
-        <Flex pt={5}>
-          <Heading fontSize="2xl" width={200}>
-            形式設定
-          </Heading>
-          <Flex flexGrow={1} gap={5}>
-            <FormControl>
-              <FormLabel>
-                大会名
-                <Badge colorScheme="red" mx={2}>
-                  必須
-                </Badge>
-              </FormLabel>
-              <Input
-                type="text"
-                value={gameState.config.name}
-                onChange={(e) =>
-                  setGameState(
-                    produce(gameState, (draft) => {
-                      draft.config.name = e.target.value;
-                    })
-                  )
-                }
-              />
-            </FormControl>
-            <ConfigNumberInput
-              label="プレイヤーの人数"
-              value={gameState.config.count}
-              min={1}
-              max={15}
-              onChange={(e) =>
-                setGameState(
-                  produce(gameState, (draft) => {
-                    draft.config.count = e as any;
-                  })
-                )
-              }
-              required
-            />
-          </Flex>
-        </Flex>
-        <Flex pt={5}>
-          <Heading fontSize="2xl" width={200}>
-            参加者設定
-          </Heading>
-          <Flex flexGrow={1} flexDirection="column" gap={5}>
-            {gameState.players.map((player, i) => (
-              <Box key={i}>
-                <Heading fontSize="xl" width={200}>
-                  プレイヤー {i + 1}
-                </Heading>
-                <Flex gap={5}>
-                  <FormControl>
-                    <FormLabel>
-                      名前
-                      <Badge colorScheme="red" mx={2}>
-                        必須
-                      </Badge>
-                    </FormLabel>
-                    <Input
-                      type="text"
-                      value={player.name}
-                      onChange={(e) =>
-                        setGameState(
-                          produce(gameState, (draft) => {
-                            draft.players[i].name = e.target.value;
-                          })
-                        )
-                      }
-                    />
-                  </FormControl>
-                  <ConfigNumberInput
-                    label="初期値"
-                    value={player.score}
-                    min={1}
-                    max={15}
+        <Heading fontSize="3xl" mb={5}>スコア計算</Heading>
+        <Tabs variant='enclosed'>
+          <TabList>
+            <Tab>形式設定</Tab>
+            <Tab>参加者設定</Tab>
+            <Tab>クイズ設定</Tab>
+          </TabList>
+          <TabPanels>
+            <TabPanel>
+              <Flex direction="column" gap={5} my={5}>
+                <FormControl>
+                  <FormLabel>
+                    大会名
+                    <Badge colorScheme="red" mx={2}>
+                      必須
+                    </Badge>
+                  </FormLabel>
+                  <Input
+                    type="text"
+                    value={gameState.config.name}
                     onChange={(e) =>
                       setGameState(
                         produce(gameState, (draft) => {
-                          draft.players[i].score = e as any;
+                          draft.config.name = e.target.value;
                         })
                       )
                     }
-                    required
                   />
-                  <FormControl>
-                    <FormLabel>所属</FormLabel>
-                    <Input
-                      type="text"
-                      value={player.group}
-                      onChange={(e) =>
-                        setGameState(
-                          produce(gameState, (draft) => {
-                            draft.players[i].group = e.target.value;
-                          })
-                        )
-                      }
-                    />
-                  </FormControl>
-                </Flex>
-              </Box>
-            ))}
-          </Flex>
-        </Flex>
-        <Flex pt={5}>
-          <Heading fontSize="2xl" width={200}>
-            クイズ
-          </Heading>
-          <Box flexGrow={1}>
-            <Heading fontSize="xl" width={200}>
-              問題をインポート
-            </Heading>
-            <LoadQuiz />
-          </Box>
-        </Flex>
-        <Box height={20}></Box>
+                </FormControl>
+                <ConfigNumberInput
+                  label="プレイヤーの人数"
+                  value={gameState.config.count}
+                  min={1}
+                  max={15}
+                  onChange={(e) =>
+                    setGameState(
+                      produce(gameState, (draft) => {
+                        draft.config.count = e as any;
+                      })
+                    )
+                  }
+                  required
+                />
+              </Flex>
+            </TabPanel>
+            <TabPanel>
+              <Flex direction="column" gap={5} my={5}>
+                {gameState.players.map((player, i) => (
+                  <Box key={i}>
+                    <Heading fontSize="xl" width={200} mb={5}>
+                      プレイヤー {i + 1}
+                    </Heading>
+                    <Flex direction="column" gap={5}>
+                      <FormControl>
+                        <FormLabel>
+                          名前
+                          <Badge colorScheme="red" mx={2}>
+                            必須
+                          </Badge>
+                        </FormLabel>
+                        <Input
+                          type="text"
+                          value={player.name}
+                          onChange={(e) =>
+                            setGameState(
+                              produce(gameState, (draft) => {
+                                draft.players[i].name = e.target.value;
+                              })
+                            )
+                          }
+                        />
+                      </FormControl>
+                      <ConfigNumberInput
+                        label="初期値"
+                        value={player.score}
+                        min={1}
+                        max={15}
+                        onChange={(e) =>
+                          setGameState(
+                            produce(gameState, (draft) => {
+                              draft.players[i].score = e as any;
+                            })
+                          )
+                        }
+                        required
+                      />
+                      <FormControl>
+                        <FormLabel>所属</FormLabel>
+                        <Input
+                          type="text"
+                          value={player.group}
+                          onChange={(e) =>
+                            setGameState(
+                              produce(gameState, (draft) => {
+                                draft.players[i].group = e.target.value;
+                              })
+                            )
+                          }
+                        />
+                      </FormControl>
+                    </Flex>
+                  </Box>
+                ))}
+              </Flex>
+            </TabPanel>
+            <TabPanel>
+              <Flex direction="column" gap={5} my={5}>
+                <Heading fontSize="xl" width={200}>
+                  問題をインポート
+                </Heading>
+                <LoadQuiz />
+              </Flex>
+            </TabPanel>
+          </TabPanels>
+        </Tabs>
         <Flex
           sx={{
             position: "fixed",
@@ -206,7 +211,7 @@ export const CountConfig: React.FC = () => {
           </Link>
         </Flex>
       </Box>
-    </Box>
+    </Container>
   );
 };
 

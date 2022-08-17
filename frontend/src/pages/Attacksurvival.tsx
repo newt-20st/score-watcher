@@ -11,6 +11,12 @@ import {
   Text,
   Input,
   Button,
+  Container,
+  Tab,
+  TabList,
+  TabPanel,
+  TabPanels,
+  Tabs,
 } from "@chakra-ui/react";
 import {
   getAttacksurvivalGameState,
@@ -74,239 +80,234 @@ export const AttacksurvivalConfig: React.FC = () => {
   };
 
   return (
-    <Box>
+    <Container maxW="3xl">
       <Header />
       <Box p={5}>
-        <Heading fontSize="3xl">アタックサバイバル</Heading>
-        <Flex pt={5} gap={5}>
-          <Heading fontSize="2xl" width={200}>
-            形式設定
-          </Heading>
-          <Flex direction="column" flexGrow={1}>
-            <Flex gap={5}>
-              <FormControl>
-                <FormLabel>
-                  大会名
-                  <Badge colorScheme="red" mx={2}>
-                    必須
-                  </Badge>
-                </FormLabel>
-                <Input
-                  type="text"
-                  value={gameState.config.name}
+        <Heading fontSize="3xl" mb={5}>アタックサバイバル</Heading>
+        <Tabs variant='enclosed'>
+          <TabList>
+            <Tab>形式設定</Tab>
+            <Tab>参加者設定</Tab>
+            <Tab>クイズ設定</Tab>
+          </TabList>
+          <TabPanels>
+            <TabPanel>
+              <Flex direction="column" gap={5} my={5}>
+                <FormControl>
+                  <FormLabel>
+                    大会名
+                    <Badge colorScheme="red" mx={2}>
+                      必須
+                    </Badge>
+                  </FormLabel>
+                  <Input
+                    type="text"
+                    value={gameState.config.name}
+                    onChange={(e) =>
+                      setGameState(
+                        produce(gameState, (draft) => {
+                          draft.config.name = e.target.value;
+                        })
+                      )
+                    }
+                  />
+                </FormControl>
+                <ConfigNumberInput
+                  label="プレイヤーの人数"
+                  value={gameState.config.count}
+                  min={1}
+                  max={15}
                   onChange={(e) =>
                     setGameState(
                       produce(gameState, (draft) => {
-                        draft.config.name = e.target.value;
+                        draft.config.count = e as any;
                       })
                     )
                   }
+                  required
                 />
-              </FormControl>
-              <ConfigNumberInput
-                label="プレイヤーの人数"
-                value={gameState.config.count}
-                min={1}
-                max={15}
-                onChange={(e) =>
-                  setGameState(
-                    produce(gameState, (draft) => {
-                      draft.config.count = e as any;
-                    })
-                  )
-                }
-                required
-              />
-              <ConfigNumberInput
-                label="初期ポイント"
-                value={gameState.config.n}
-                min={1}
-                max={1000}
-                onChange={(e) =>
-                  setGameState(
-                    produce(gameState, (draft) => {
-                      draft.config.n = e as any;
-                    })
-                  )
-                }
-                required
-              />
-              <ConfigNumberInput
-                label="限定問題数"
-                value={gameState.config.end}
-                min={1}
-                max={1000}
-                onChange={(e) =>
-                  setGameState(
-                    produce(gameState, (draft) => {
-                      draft.config.end = e as any;
-                    })
-                  )
-                } />
-            </Flex>
-            <Flex gap={5} pt={3}>
-              <ConfigNumberInput
-                label="自分が正答"
-                value={gameState.config.correct.me}
-                min={-15}
-                max={15}
-                onChange={(e) =>
-                  setGameState(
-                    produce(gameState, (draft) => {
-                      draft.config.correct.me = e as any;
-                    })
-                  )
-                }
-                required
-              />
-              <ConfigNumberInput
-                label="他人が正答"
-                value={gameState.config.correct.other}
-                min={-15}
-                max={15}
-                onChange={(e) =>
-                  setGameState(
-                    produce(gameState, (draft) => {
-                      draft.config.correct.other = e as any;
-                    })
-                  )
-                }
-                required
-              />
-              <ConfigNumberInput
-                label="自分が誤答"
-                value={gameState.config.incorrect.me}
-                min={-15}
-                max={15}
-                onChange={(e) =>
-                  setGameState(
-                    produce(gameState, (draft) => {
-                      draft.config.incorrect.me = e as any;
-                    })
-                  )
-                }
-                required
-              />
-              <ConfigNumberInput
-                label="他人が誤答"
-                value={gameState.config.incorrect.other}
-                min={-15}
-                max={15}
-                onChange={(e) =>
-                  setGameState(
-                    produce(gameState, (draft) => {
-                      draft.config.incorrect.other = e as any;
-                    })
-                  )
-                }
-                required
-              />
-              <ConfigNumberInput
-                label="スルー"
-                value={gameState.config.through}
-                min={-15}
-                max={15}
-                onChange={(e) =>
-                  setGameState(
-                    produce(gameState, (draft) => {
-                      draft.config.through = e as any;
-                    })
-                  )
-                }
-                required
-              />
-            </Flex>
-          </Flex>
-        </Flex>
-        <Flex pt={5} gap={5}>
-          <Heading fontSize="2xl" width={200}>
-            参加者設定
-          </Heading>
-          <Flex flexGrow={1} flexDirection="column" gap={5}>
-            {gameState.players.map((player, i) => (
-              <Box key={i}>
+                <ConfigNumberInput
+                  label="初期ポイント"
+                  value={gameState.config.n}
+                  min={1}
+                  max={1000}
+                  onChange={(e) =>
+                    setGameState(
+                      produce(gameState, (draft) => {
+                        draft.config.n = e as any;
+                      })
+                    )
+                  }
+                  required
+                />
+                <ConfigNumberInput
+                  label="限定問題数"
+                  value={gameState.config.end}
+                  min={1}
+                  max={1000}
+                  onChange={(e) =>
+                    setGameState(
+                      produce(gameState, (draft) => {
+                        draft.config.end = e as any;
+                      })
+                    )
+                  } />
+                <ConfigNumberInput
+                  label="自分が正答"
+                  value={gameState.config.correct.me}
+                  min={-15}
+                  max={15}
+                  onChange={(e) =>
+                    setGameState(
+                      produce(gameState, (draft) => {
+                        draft.config.correct.me = e as any;
+                      })
+                    )
+                  }
+                  required
+                />
+                <ConfigNumberInput
+                  label="他人が正答"
+                  value={gameState.config.correct.other}
+                  min={-15}
+                  max={15}
+                  onChange={(e) =>
+                    setGameState(
+                      produce(gameState, (draft) => {
+                        draft.config.correct.other = e as any;
+                      })
+                    )
+                  }
+                  required
+                />
+                <ConfigNumberInput
+                  label="自分が誤答"
+                  value={gameState.config.incorrect.me}
+                  min={-15}
+                  max={15}
+                  onChange={(e) =>
+                    setGameState(
+                      produce(gameState, (draft) => {
+                        draft.config.incorrect.me = e as any;
+                      })
+                    )
+                  }
+                  required
+                />
+                <ConfigNumberInput
+                  label="他人が誤答"
+                  value={gameState.config.incorrect.other}
+                  min={-15}
+                  max={15}
+                  onChange={(e) =>
+                    setGameState(
+                      produce(gameState, (draft) => {
+                        draft.config.incorrect.other = e as any;
+                      })
+                    )
+                  }
+                  required
+                />
+                <ConfigNumberInput
+                  label="スルー"
+                  value={gameState.config.through}
+                  min={-15}
+                  max={15}
+                  onChange={(e) =>
+                    setGameState(
+                      produce(gameState, (draft) => {
+                        draft.config.through = e as any;
+                      })
+                    )
+                  }
+                  required
+                />
+              </Flex>
+            </TabPanel>
+            <TabPanel>
+              <Flex direction="column" gap={5} my={5}>
+                {gameState.players.map((player, i) => (
+                  <Box key={i}>
+                    <Heading fontSize="xl" width={200} mb={5}>
+                      プレイヤー {i + 1}
+                    </Heading>
+                    <Flex direction="column" gap={5}>
+                      <FormControl>
+                        <FormLabel>
+                          名前
+                          <Badge colorScheme="red" mx={2}>
+                            必須
+                          </Badge>
+                        </FormLabel>
+                        <Input
+                          type="text"
+                          value={player.name}
+                          onChange={(e) =>
+                            setGameState(
+                              produce(gameState, (draft) => {
+                                draft.players[i].name = e.target.value;
+                              })
+                            )
+                          }
+                        />
+                      </FormControl>
+                      <ConfigNumberInput
+                        label="初期正答数"
+                        value={player.correct}
+                        min={1}
+                        max={15}
+                        onChange={(e) =>
+                          setGameState(
+                            produce(gameState, (draft) => {
+                              draft.players[i].correct = e as any;
+                            })
+                          )
+                        }
+                        required
+                      />
+                      <ConfigNumberInput
+                        label="初期誤答数"
+                        value={player.incorrect}
+                        min={1}
+                        max={15}
+                        onChange={(e) =>
+                          setGameState(
+                            produce(gameState, (draft) => {
+                              draft.players[i].incorrect = e as any;
+                            })
+                          )
+                        }
+                        required
+                      />
+                      <FormControl>
+                        <FormLabel>所属</FormLabel>
+                        <Input
+                          type="text"
+                          value={player.group}
+                          onChange={(e) =>
+                            setGameState(
+                              produce(gameState, (draft) => {
+                                draft.players[i].group = e.target.value;
+                              })
+                            )
+                          }
+                        />
+                      </FormControl>
+                    </Flex>
+                  </Box>
+                ))}
+              </Flex>
+            </TabPanel>
+            <TabPanel>
+              <Flex direction="column" gap={5} my={5}>
                 <Heading fontSize="xl" width={200}>
-                  プレイヤー {i + 1}
+                  問題をインポート
                 </Heading>
-                <Flex gap={5}>
-                  <FormControl>
-                    <FormLabel>
-                      名前
-                      <Badge colorScheme="red" mx={2}>
-                        必須
-                      </Badge>
-                    </FormLabel>
-                    <Input
-                      type="text"
-                      value={player.name}
-                      onChange={(e) =>
-                        setGameState(
-                          produce(gameState, (draft) => {
-                            draft.players[i].name = e.target.value;
-                          })
-                        )
-                      }
-                    />
-                  </FormControl>
-                  <ConfigNumberInput
-                    label="初期正答数"
-                    value={player.correct}
-                    min={1}
-                    max={15}
-                    onChange={(e) =>
-                      setGameState(
-                        produce(gameState, (draft) => {
-                          draft.players[i].correct = e as any;
-                        })
-                      )
-                    }
-                    required
-                  />
-                  <ConfigNumberInput
-                    label="初期誤答数"
-                    value={player.incorrect}
-                    min={1}
-                    max={15}
-                    onChange={(e) =>
-                      setGameState(
-                        produce(gameState, (draft) => {
-                          draft.players[i].incorrect = e as any;
-                        })
-                      )
-                    }
-                    required
-                  />
-                  <FormControl>
-                    <FormLabel>所属</FormLabel>
-                    <Input
-                      type="text"
-                      value={player.group}
-                      onChange={(e) =>
-                        setGameState(
-                          produce(gameState, (draft) => {
-                            draft.players[i].group = e.target.value;
-                          })
-                        )
-                      }
-                    />
-                  </FormControl>
-                </Flex>
-              </Box>
-            ))}
-          </Flex>
-        </Flex>
-        <Flex pt={5} gap={5}>
-          <Heading fontSize="2xl" width={200}>
-            クイズ
-          </Heading>
-          <Box flexGrow={1}>
-            <Heading fontSize="xl" width={200}>
-              問題をインポート
-            </Heading>
-            <LoadQuiz />
-          </Box>
-        </Flex>
-        <Box height={20}></Box>
+                <LoadQuiz />
+              </Flex>
+            </TabPanel>
+          </TabPanels>
+        </Tabs>
         <Flex
           sx={{
             position: "fixed",
@@ -329,7 +330,7 @@ export const AttacksurvivalConfig: React.FC = () => {
           </Link>
         </Flex>
       </Box>
-    </Box >
+    </Container>
   );
 };
 
