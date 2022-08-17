@@ -53,14 +53,6 @@ const Home: React.FC = () => {
           gap={5}
           py={5}
         >
-          <Link to="/json">
-            <Card>
-              <Heading fontSize="xl">設定ファイルから読み込む</Heading>
-              <Box>
-                過去に設定した際に出力したファイルから形式データを読み込みます。
-              </Box>
-            </Card>
-          </Link>
           <Link to="/config/count">
             <Card>
               <Heading fontSize="xl">スコア計算</Heading>
