@@ -101,7 +101,9 @@ const LoadQuiz: React.FC = () => {
         value={rawQuizText}
         onChange={handleChange}
         size="sm"
+        minH={500}
         resize="vertical"
+        mb={100}
       />
       <Drawer
         isOpen={drawerOpen}

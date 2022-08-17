@@ -17,7 +17,7 @@ import { SquarexBoard, SquarexConfig } from "./pages/Squarex";
 
 const App: React.FC = () => {
   return (
-    <Box bgColor={"gray.50"} minHeight="100vh">
+    <Box bgColor={"gray.50"} minHeight="110vh">
       <BrowserRouter>
         <Routes>
           <Route path="/">
