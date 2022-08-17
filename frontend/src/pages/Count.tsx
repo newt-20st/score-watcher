@@ -20,7 +20,7 @@ import {
 import LoadQuiz from "../components/LoadQuiz";
 import Header from "../components/Header";
 import BoardHeader from "../components/BoardHeader";
-import FormNumberInput from "../components/FormINumbernput";
+import ConfigNumberInput from "../components/ConfigNumberInput";
 import LogArea from "../components/LogArea";
 
 export const CountConfig: React.FC = () => {
@@ -93,7 +93,7 @@ export const CountConfig: React.FC = () => {
                 }
               />
             </FormControl>
-            <FormNumberInput
+            <ConfigNumberInput
               label="プレイヤーの人数"
               value={gameState.config.count}
               min={1}
@@ -139,7 +139,7 @@ export const CountConfig: React.FC = () => {
                       }
                     />
                   </FormControl>
-                  <FormNumberInput
+                  <ConfigNumberInput
                     label="初期値"
                     value={player.score}
                     min={1}

@@ -9,7 +9,7 @@ type FormInputProps = {
   max: number;
   required?: boolean;
 }
-const FormNumberInput: React.FC<FormInputProps> = ({ onChange, label, value, min, max, required }) => {
+const ConfigNumberInput: React.FC<FormInputProps> = ({ onChange, label, value, min, max, required }) => {
   return (
     <FormControl>
       <FormLabel>{label} {required && (
@@ -33,4 +33,4 @@ const FormNumberInput: React.FC<FormInputProps> = ({ onChange, label, value, min
   )
 }
 
-export default FormNumberInput;
+export default ConfigNumberInput;

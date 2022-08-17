@@ -20,7 +20,7 @@ import {
 
 import LoadQuiz from "../components/LoadQuiz";
 import Header from "../components/Header";
-import FormNumberInput from "../components/FormINumbernput";
+import ConfigNumberInput from "../components/ConfigNumberInput";
 import BoardHeader from "../components/BoardHeader";
 import LogArea from "../components/LogArea";
 
@@ -103,7 +103,7 @@ export const AttacksurvivalConfig: React.FC = () => {
                   }
                 />
               </FormControl>
-              <FormNumberInput
+              <ConfigNumberInput
                 label="プレイヤーの人数"
                 value={gameState.config.count}
                 min={1}
@@ -117,7 +117,7 @@ export const AttacksurvivalConfig: React.FC = () => {
                 }
                 required
               />
-              <FormNumberInput
+              <ConfigNumberInput
                 label="初期ポイント"
                 value={gameState.config.n}
                 min={1}
@@ -131,7 +131,7 @@ export const AttacksurvivalConfig: React.FC = () => {
                 }
                 required
               />
-              <FormNumberInput
+              <ConfigNumberInput
                 label="限定問題数"
                 value={gameState.config.end}
                 min={1}
@@ -145,7 +145,7 @@ export const AttacksurvivalConfig: React.FC = () => {
                 } />
             </Flex>
             <Flex gap={5} pt={3}>
-              <FormNumberInput
+              <ConfigNumberInput
                 label="自分が正答"
                 value={gameState.config.correct.me}
                 min={-15}
@@ -159,7 +159,7 @@ export const AttacksurvivalConfig: React.FC = () => {
                 }
                 required
               />
-              <FormNumberInput
+              <ConfigNumberInput
                 label="他人が正答"
                 value={gameState.config.correct.other}
                 min={-15}
@@ -173,7 +173,7 @@ export const AttacksurvivalConfig: React.FC = () => {
                 }
                 required
               />
-              <FormNumberInput
+              <ConfigNumberInput
                 label="自分が誤答"
                 value={gameState.config.incorrect.me}
                 min={-15}
@@ -187,7 +187,7 @@ export const AttacksurvivalConfig: React.FC = () => {
                 }
                 required
               />
-              <FormNumberInput
+              <ConfigNumberInput
                 label="他人が誤答"
                 value={gameState.config.incorrect.other}
                 min={-15}
@@ -201,7 +201,7 @@ export const AttacksurvivalConfig: React.FC = () => {
                 }
                 required
               />
-              <FormNumberInput
+              <ConfigNumberInput
                 label="スルー"
                 value={gameState.config.through}
                 min={-15}
@@ -248,7 +248,7 @@ export const AttacksurvivalConfig: React.FC = () => {
                       }
                     />
                   </FormControl>
-                  <FormNumberInput
+                  <ConfigNumberInput
                     label="初期正答数"
                     value={player.correct}
                     min={1}
@@ -262,7 +262,7 @@ export const AttacksurvivalConfig: React.FC = () => {
                     }
                     required
                   />
-                  <FormNumberInput
+                  <ConfigNumberInput
                     label="初期誤答数"
                     value={player.incorrect}
                     min={1}

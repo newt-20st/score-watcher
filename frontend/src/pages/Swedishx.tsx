@@ -20,7 +20,7 @@ import {
 import LoadQuiz from "../components/LoadQuiz";
 import Header from "../components/Header";
 import BoardHeader from "../components/BoardHeader";
-import FormNumberInput from "../components/FormINumbernput";
+import ConfigNumberInput from "../components/ConfigNumberInput";
 import LogArea from "../components/LogArea";
 
 export const SwedishxConfig: React.FC = () => {
@@ -99,7 +99,7 @@ export const SwedishxConfig: React.FC = () => {
                 }
               />
             </FormControl>
-            <FormNumberInput
+            <ConfigNumberInput
               label="プレイヤーの人数"
               value={gameState.config.count}
               min={1}
@@ -113,7 +113,7 @@ export const SwedishxConfig: React.FC = () => {
               }
               required
             />
-            <FormNumberInput
+            <ConfigNumberInput
               label="X"
               value={gameState.config.x}
               min={1}
@@ -126,7 +126,7 @@ export const SwedishxConfig: React.FC = () => {
                 )
               } />
             {gameState.config.end && (
-              <FormNumberInput
+              <ConfigNumberInput
                 label="限定問題数"
                 value={gameState.config.end}
                 min={1}
@@ -171,7 +171,7 @@ export const SwedishxConfig: React.FC = () => {
                       }
                     />
                   </FormControl>
-                  <FormNumberInput
+                  <ConfigNumberInput
                     label="初期正答数"
                     value={player.correct}
                     min={1}
@@ -185,7 +185,7 @@ export const SwedishxConfig: React.FC = () => {
                     }
                     required
                   />
-                  <FormNumberInput
+                  <ConfigNumberInput
                     label="初期誤答数"
                     value={player.incorrect}
                     min={1}
